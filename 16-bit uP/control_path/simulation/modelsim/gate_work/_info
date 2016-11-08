@@ -1,0 +1,70 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 d/home/rafi/Dropbox/project_1/vhdl codes/control_path_final/simulation/modelsim
+vcontrol_path
+Z1 !s110 1478609994
+!i10b 1
+!s100 dFMZ<2kg74F5djgCN^R2[1
+IIG=z0ELO<6fbFgmRbS^Qe1
+VDg1SIo80bB@j0V0VzS_@n1
+R0
+w1478609968
+8control_path_6_1200mv_85c_slow.vo
+Fcontrol_path_6_1200mv_85c_slow.vo
+L0 32
+OV;L;10.4d;61
+r1
+!s85 0
+31
+!s108 1478609993.000000
+!s107 control_path_6_1200mv_85c_slow.vo|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+.|control_path_6_1200mv_85c_slow.vo|
+!i113 1
+o-vlog01compat -work work
+!s92 -vlog01compat -work work +incdir+.
+Etestbench_control
+Z2 w1478561052
+Z3 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
+Z4 DPx4 ieee 14 std_logic_1164 0 22 eNV`TJ_GofJTzYa?f<@Oe1
+R0
+Z5 8/home/rafi/Dropbox/project_1/vhdl codes/control_path_final/simulation/modelsim/testbench_control.vhd
+Z6 F/home/rafi/Dropbox/project_1/vhdl codes/control_path_final/simulation/modelsim/testbench_control.vhd
+l0
+L6
+VLdz9m1=oz`4;]EdeX[GUP3
+!s100 PY>4HBL9<GG?Q:3JGMd[60
+Z7 OV;C;10.4d;61
+31
+R1
+!i10b 1
+Z8 !s108 1478609994.000000
+Z9 !s90 -reportprogress|300|-93|-work|work|/home/rafi/Dropbox/project_1/vhdl codes/control_path_final/simulation/modelsim/testbench_control.vhd|
+Z10 !s107 /home/rafi/Dropbox/project_1/vhdl codes/control_path_final/simulation/modelsim/testbench_control.vhd|
+!i113 1
+Z11 o-93 -work work
+Z12 tExplicit 1
+Abehave
+R3
+R4
+DEx4 work 17 testbench_control 0 22 Ldz9m1=oz`4;]EdeX[GUP3
+l144
+L8
+VJY=E8[N=X]zfZm]?VRMEG0
+!s100 NaYzOVBmf0HRNZXK0h:EP3
+R7
+31
+R1
+!i10b 1
+R8
+R9
+R10
+!i113 1
+R11
+R12

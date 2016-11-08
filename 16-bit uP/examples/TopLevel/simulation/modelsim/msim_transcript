@@ -1,0 +1,84 @@
+# do TopLevel_run_msim_gate_verilog.do
+# if {[file exists gate_work]} {
+# 	vdel -lib gate_work -all
+# }
+# vlib gate_work
+# vmap work gate_work
+# Model Technology ModelSim ALTERA vmap 10.4d Lib Mapping Utility 2015.12 Dec 30 2015
+# vmap work gate_work 
+# Copying /opt/modelsim_ase/linuxaloem/../modelsim.ini to modelsim.ini
+# Modifying modelsim.ini
+# 
+# vlog -vlog01compat -work work +incdir+. {TopLevel_6_1200mv_85c_slow.vo}
+# Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
+# Start time: 14:08:21 on Nov 06,2016
+# vlog -reportprogress 300 -vlog01compat -work work "+incdir+." TopLevel_6_1200mv_85c_slow.vo 
+# -- Compiling module TopLevel
+# 
+# Top level modules:
+# 	TopLevel
+# End time: 14:08:21 on Nov 06,2016, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# 
+# 
+# stdin: <EOF>
+vsim work.TopLevel
+# vsim work.TopLevel 
+# Start time: 14:08:53 on Nov 06,2016
+# Loading work.TopLevel
+# ** Error: (vsim-3033) TopLevel_6_1200mv_85c_slow.vo(63): Instantiation of 'cycloneive_io_ibuf' failed. The design unit was not found.
+#    Time: 0 ps  Iteration: 0  Instance: /TopLevel File: TopLevel_6_1200mv_85c_slow.vo
+#         Searched libraries:
+#             /home/rafi/Dropbox/project_1/vhdl codes/TopLevel/simulation/modelsim/gate_work
+# ** Error: (vsim-3033) TopLevel_6_1200mv_85c_slow.vo(73): Instantiation of 'cycloneive_io_ibuf' failed. The design unit was not found.
+#    Time: 0 ps  Iteration: 0  Instance: /TopLevel File: TopLevel_6_1200mv_85c_slow.vo
+#         Searched libraries:
+#             /home/rafi/Dropbox/project_1/vhdl codes/TopLevel/simulation/modelsim/gate_work
+# Error loading design
+vsim work.TopLevel
+# End time: 14:08:54 on Nov 06,2016, Elapsed time: 0:00:01
+# Errors: 2, Warnings: 0
+# vsim work.TopLevel 
+# Start time: 14:08:54 on Nov 06,2016
+# Loading work.TopLevel
+# ** Error: (vsim-3033) TopLevel_6_1200mv_85c_slow.vo(63): Instantiation of 'cycloneive_io_ibuf' failed. The design unit was not found.
+#    Time: 0 ps  Iteration: 0  Instance: /TopLevel File: TopLevel_6_1200mv_85c_slow.vo
+#         Searched libraries:
+#             /home/rafi/Dropbox/project_1/vhdl codes/TopLevel/simulation/modelsim/gate_work
+# ** Error: (vsim-3033) TopLevel_6_1200mv_85c_slow.vo(73): Instantiation of 'cycloneive_io_ibuf' failed. The design unit was not found.
+#    Time: 0 ps  Iteration: 0  Instance: /TopLevel File: TopLevel_6_1200mv_85c_slow.vo
+#         Searched libraries:
+#             /home/rafi/Dropbox/project_1/vhdl codes/TopLevel/simulation/modelsim/gate_work
+# Error loading design
+# End time: 14:08:55 on Nov 06,2016, Elapsed time: 0:00:01
+# Errors: 2, Warnings: 0
+vsim work.TopLevel
+# vsim work.TopLevel 
+# Start time: 14:08:56 on Nov 06,2016
+# Loading work.TopLevel
+# ** Error: (vsim-3033) TopLevel_6_1200mv_85c_slow.vo(63): Instantiation of 'cycloneive_io_ibuf' failed. The design unit was not found.
+#    Time: 0 ps  Iteration: 0  Instance: /TopLevel File: TopLevel_6_1200mv_85c_slow.vo
+#         Searched libraries:
+#             /home/rafi/Dropbox/project_1/vhdl codes/TopLevel/simulation/modelsim/gate_work
+# ** Error: (vsim-3033) TopLevel_6_1200mv_85c_slow.vo(73): Instantiation of 'cycloneive_io_ibuf' failed. The design unit was not found.
+#    Time: 0 ps  Iteration: 0  Instance: /TopLevel File: TopLevel_6_1200mv_85c_slow.vo
+#         Searched libraries:
+#             /home/rafi/Dropbox/project_1/vhdl codes/TopLevel/simulation/modelsim/gate_work
+# Error loading design
+# End time: 14:08:56 on Nov 06,2016, Elapsed time: 0:00:00
+# Errors: 2, Warnings: 0
+vsim gate_work.TopLevel
+# vsim gate_work.TopLevel 
+# Start time: 14:09:20 on Nov 06,2016
+# Loading gate_work.TopLevel
+# ** Error: (vsim-3033) TopLevel_6_1200mv_85c_slow.vo(63): Instantiation of 'cycloneive_io_ibuf' failed. The design unit was not found.
+#    Time: 0 ps  Iteration: 0  Instance: /TopLevel File: TopLevel_6_1200mv_85c_slow.vo
+#         Searched libraries:
+#             /home/rafi/Dropbox/project_1/vhdl codes/TopLevel/simulation/modelsim/gate_work
+# ** Error: (vsim-3033) TopLevel_6_1200mv_85c_slow.vo(73): Instantiation of 'cycloneive_io_ibuf' failed. The design unit was not found.
+#    Time: 0 ps  Iteration: 0  Instance: /TopLevel File: TopLevel_6_1200mv_85c_slow.vo
+#         Searched libraries:
+#             /home/rafi/Dropbox/project_1/vhdl codes/TopLevel/simulation/modelsim/gate_work
+# Error loading design
+# End time: 14:09:20 on Nov 06,2016, Elapsed time: 0:00:00
+# Errors: 2, Warnings: 0

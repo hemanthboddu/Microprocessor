@@ -1,0 +1,43 @@
+# do control_path_run_msim_gate_verilog.do
+# if {[file exists gate_work]} {
+# 	vdel -lib gate_work -all
+# }
+# vlib gate_work
+# vmap work gate_work
+# Model Technology ModelSim ALTERA vmap 10.4d Lib Mapping Utility 2015.12 Dec 30 2015
+# vmap work gate_work 
+# Copying /opt/modelsim_ase/linuxaloem/../modelsim.ini to modelsim.ini
+# Modifying modelsim.ini
+# 
+# vlog -vlog01compat -work work +incdir+. {control_path_6_1200mv_85c_slow.vo}
+# Model Technology ModelSim ALTERA vlog 10.4d Compiler 2015.12 Dec 30 2015
+# Start time: 23:56:19 on Nov 07,2016
+# vlog -reportprogress 300 -vlog01compat -work work "+incdir+." control_path_6_1200mv_85c_slow.vo 
+# -- Compiling module control_path
+# 
+# Top level modules:
+# 	control_path
+# End time: 23:56:19 on Nov 07,2016, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# 
+# vcom -93 -work work {/home/rafi/Dropbox/project_1/vhdl codes/controlpath/Hemanth/../../../../../Dropbox/project_1/vhdl codes/controlpath/Hemanth/simulation/modelsim/testbench_control.vhd}
+# Model Technology ModelSim ALTERA vcom 10.4d Compiler 2015.12 Dec 30 2015
+# Start time: 23:56:19 on Nov 07,2016
+# vcom -reportprogress 300 -93 -work work /home/rafi/Dropbox/project_1/vhdl codes/controlpath/Hemanth/../../../../../Dropbox/project_1/vhdl codes/controlpath/Hemanth/simulation/modelsim/testbench_control.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# ** Error: (vcom-11) Could not find work.components_project.
+# ** Error (suppressible): /home/rafi/Dropbox/project_1/vhdl codes/controlpath/Hemanth/../../../../../Dropbox/project_1/vhdl codes/controlpath/Hemanth/simulation/modelsim/testbench_control.vhd(4): (vcom-1195) Cannot find expanded name "work.Components_project".
+# ** Error: /home/rafi/Dropbox/project_1/vhdl codes/controlpath/Hemanth/../../../../../Dropbox/project_1/vhdl codes/controlpath/Hemanth/simulation/modelsim/testbench_control.vhd(4): Unknown expanded name.
+# ** Error: /home/rafi/Dropbox/project_1/vhdl codes/controlpath/Hemanth/../../../../../Dropbox/project_1/vhdl codes/controlpath/Hemanth/simulation/modelsim/testbench_control.vhd(8): VHDL Compiler exiting
+# End time: 23:56:19 on Nov 07,2016, Elapsed time: 0:00:00
+# Errors: 4, Warnings: 0
+# ** Error: /opt/modelsim_ase/linuxaloem/vcom failed.
+# Error in macro ./control_path_run_msim_gate_verilog.do line 10
+# /opt/modelsim_ase/linuxaloem/vcom failed.
+#     while executing
+# "vcom -93 -work work {/home/rafi/Dropbox/project_1/vhdl codes/controlpath/Hemanth/../../../../../Dropbox/project_1/vhdl codes/controlpath/Hemanth/simul..."
+# 
+# stdin: <EOF>
+quit

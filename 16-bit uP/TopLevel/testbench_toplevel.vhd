@@ -1,0 +1,67 @@
+library ieee;
+use ieee.std_logic_1164.all;
+library work;
+use work.Components_project.all;
+library std;
+use std.textio.all;
+
+entity testbench_toplevel is
+end entity;
+architecture Behave of testbench_toplevel is
+component TopLevel is
+	port(
+	clock, reset : in std_logic
+	);
+end component;
+
+signal clock, reset : std_logic := '0';
+
+  function to_stdlogic(x: bit) return std_logic is
+      variable ret_val: std_logic;
+  begin  
+      if (x = '1') then
+        ret_val := '1';
+      else 
+        ret_val := '0';
+      end if;
+      return(ret_val);
+  end to_stdlogic;
+begin
+  process 
+    variable err_flag : boolean := false;
+    File INFILE: text open read_mode is "TRACEFILE.txt";
+    FILE OUTFILE: text  open write_mode is "OUTPUTS.txt";
+    ---------------------------------------------------
+    -- edit the next two lines to customize
+    variable input_vector1 : bit;
+    variable input_vector2 : bit;
+    ----------------------------------------------------
+    variable INPUT_LINE: Line;
+    variable OUTPUT_LINE: Line;
+    variable LINE_COUNT: integer := 0;
+    
+      begin
+   
+    while not endfile(INFILE) loop 
+          LINE_COUNT := LINE_COUNT + 1;
+	
+	  readLine (INFILE, INPUT_LINE);
+          read (INPUT_LINE, input_vector1);
+          read(INPUT_LINE, input_vector2);
+          --------------------------------------
+          -- from input-vector to DUT inputs
+	  clock <= to_stdlogic(input_vector1);
+	  reset <= to_stdlogic(input_vector2);
+	  
+	  	  -- let circuit respond.
+          wait for 5 ns;
+                    --------------------------------------
+    end loop;
+    end process;
+    
+      dut: TopLevel
+     port map(clock,
+     		reset);
+
+end Behave;
+

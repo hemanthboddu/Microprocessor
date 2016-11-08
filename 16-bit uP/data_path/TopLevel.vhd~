@@ -1,0 +1,94 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+library work;
+use work.Components_project.all;
+use IEEE.numeric_STD.ALL;
+
+entity TopLevel is
+port(
+	clock, reset : in std_logic
+	);
+end entity;
+
+architecture behave of TopLevel is
+	signal pcWrite, rfWrite, irWrite, memWrite, memRead : std_logic;
+	signal alu_op : std_logic_vector(1 downto 0);
+	
+	--mux_sel
+	signal mux_mem_data : std_logic;
+	signal mux_mem_addr : std_logic_vector(1 downto 0);
+	signal mux_a3, mux_a2 : std_logic;
+	signal mux_a1 : std_logic_vector(1 downto 0);
+	signal mux_a : std_logic;
+	signal mux_b, mux_d3, mux_pc : std_logic_vector(1 downto 0);
+	signal mux_pe_tmp, mux_before_a : std_logic;
+	
+	--enable
+	signal enable_alu, enable_a, enable_b, enable_c : std_logic;
+	signal enable_mdr   : std_logic;
+	signal enable_pe_tmp, enable_pe_out, enable_pe_flag : std_logic;
+	signal enable_eqflag, enable_carry_flag, enable_Z_flag : std_logic;
+	signal enable_pe : std_logic;
+	signal enable_pe_1_3 : std_logic; --
+	signal se_6_16, se_9_16, prior_enc, ze_9_16 : std_logic;
+	
+	--reset
+	
+	--outputs
+	signal carry, Z, eqflag, pe_flag : std_logic;
+	signal opcode : std_logic_vector(3 downto 0);
+	signal CZ : std_logic_vector(1 downto 0);
+begin
+	DUT1 : data_path port map 
+			(clock,
+			
+			 pcWrite, rfWrite, irWrite, memWrite, memRead,
+			 alu_op,
+			 
+			 mux_mem_data,
+			 mux_mem_addr,
+			 mux_a3, mux_a2,
+			 mux_a1,
+			 mux_a,
+			 mux_b, mux_d3, mux_pc,
+			 mux_pe_tmp, mux_before_a,
+			 
+			 enable_alu, enable_a, enable_b, enable_c,
+			 enable_mdr,
+			 enable_pe_tmp, enable_pe_out, enable_pe_flag,
+			 enable_eqflag, enable_carry_flag, enable_Z_flag,
+			 enable_pe,
+			 enable_pe_1_3,
+			 se_6_16, se_9_16, ze_9_16,
+			 
+			 carry, Z, eqflag, pe_flag,
+			 opcode,
+			 CZ
+			);
+	DUT2 : control_path port map
+			(clock,
+			 reset,
+			 pcWrite, rfWrite, irWrite, memWrite, memRead,
+			 alu_op,
+			 
+			 mux_mem_data,
+			 mux_mem_addr,
+			 mux_a3, mux_a2,
+			 mux_a1,
+			 mux_a,
+			 mux_b, mux_d3, mux_pc,
+			 mux_pe_tmp, mux_before_a,
+			 
+			 enable_alu, enable_a, enable_b, enable_c,
+			 enable_mdr,
+			 enable_pe_tmp, enable_pe_out, enable_pe_flag,
+			 enable_eqflag, enable_carry_flag, enable_Z_flag,
+			 enable_pe,
+			 enable_pe_1_3,
+			 se_6_16, se_9_16, prior_enc, ze_9_16,
+			 
+			 carry, Z, eqflag, pe_flag,
+			 opcode,
+			 CZ
+			);
+end behave;

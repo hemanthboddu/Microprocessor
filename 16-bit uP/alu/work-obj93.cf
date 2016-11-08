@@ -1,0 +1,24 @@
+v 4
+file . "testbench_alu.vhd" "e7acc010570588e8a86fbc244397ac26a746a4cb" "20161104132158.135":
+  entity testbench_alu at 1( 0) + 0 on 114;
+  architecture behave of testbench_alu at 10( 160) + 0 on 115;
+file . "halfadder.vhd" "be75ba3780dfe21198707a956d2ce8721e672be8" "20161104132158.078":
+  entity halfadder at 1( 0) + 0 on 110;
+  architecture halfadder of halfadder at 12( 265) + 0 on 111;
+file . "equality.vhd" "3da5921f1a99598e88667380d90c6cd2230714f7" "20161104132158.021":
+  entity equality at 1( 0) + 0 on 106;
+  architecture behave of equality at 15( 337) + 0 on 107;
+file . "alu.vhd" "4db7d527b98a30ee4470c25dcfcffff27bbeaeb5" "20161104132157.918":
+  entity alu at 1( 0) + 0 on 102;
+  architecture behavioral of alu at 18( 490) + 0 on 103;
+file . "Components_project.vhd" "34224d73b2900f4c6f494e14271a3c3f9232193e" "20161104132157.884":
+  package components_project at 1( 0) + 0 on 101;
+file . "bit16adder.vhd" "34a89402535f76197828f4b14bdc59119723cd18" "20161104132157.983":
+  entity bit16adder at 1( 0) + 0 on 104;
+  architecture bit16adder of bit16adder at 15( 280) + 0 on 105;
+file . "fulladder.vhd" "15c8b611f28c9ae287e4359e4d51ede5cad23f6b" "20161104132158.048":
+  entity fulladder at 1( 0) + 0 on 108;
+  architecture fulladder of fulladder at 13( 261) + 0 on 109;
+file . "nand_16.vhd" "87852b6ba39ff46b84a60be30fe14807c9624fc1" "20161104132158.103":
+  entity nand_16 at 1( 0) + 0 on 112;
+  architecture behave of nand_16 at 13( 263) + 0 on 113;

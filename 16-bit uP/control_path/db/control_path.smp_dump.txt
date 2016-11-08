@@ -1,0 +1,18 @@
+
+State Machine - |control_path|state_signal
+Name state_signal.wb_1 state_signal.wb_0 state_signal.sm_0 state_signal.lm_1 state_signal.lm_0 state_signal.priority state_signal.breq_1 state_signal.sw_0 state_signal.lw_0 state_signal.breq_0 state_signal.nand_0 state_signal.add_0 state_signal.dec_0 state_signal.fetch state_signal.rst 
+state_signal.rst 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+state_signal.fetch 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 
+state_signal.dec_0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 1 
+state_signal.add_0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 1 
+state_signal.nand_0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 1 
+state_signal.breq_0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 1 
+state_signal.lw_0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 1 
+state_signal.sw_0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 1 
+state_signal.breq_1 0 0 0 0 0 0 1 0 0 0 0 0 0 0 1 
+state_signal.priority 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 
+state_signal.lm_0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 1 
+state_signal.lm_1 0 0 0 1 0 0 0 0 0 0 0 0 0 0 1 
+state_signal.sm_0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 1 
+state_signal.wb_0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 1 
+state_signal.wb_1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 

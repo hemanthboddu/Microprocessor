@@ -1,0 +1,930 @@
+Analysis & Synthesis report for data_path
+Fri Nov  4 17:10:50 2016
+Quartus Prime Version 16.0.0 Build 211 04/27/2016 SJ Lite Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Analysis & Synthesis Summary
+  3. Analysis & Synthesis Settings
+  4. Parallel Compilation
+  5. Analysis & Synthesis Source Files Read
+  6. Analysis & Synthesis Resource Usage Summary
+  7. Analysis & Synthesis Resource Utilization by Entity
+  8. User-Specified and Inferred Latches
+  9. Registers Removed During Synthesis
+ 10. Removed Registers Triggering Further Register Optimizations
+ 11. General Register Statistics
+ 12. Multiplexer Restructuring Statistics (Restructuring Performed)
+ 13. Port Connectivity Checks: "ir_reg:ir_reg_1"
+ 14. Port Connectivity Checks: "mux4_1:muxb_alu_b"
+ 15. Post-Synthesis Netlist Statistics for Top Partition
+ 16. Elapsed Time Per Partition
+ 17. Analysis & Synthesis Messages
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 1991-2016 Altera Corporation. All rights reserved.
+Your use of Altera Corporation's design tools, logic functions 
+and other software and tools, and its AMPP partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Altera Program License 
+Subscription Agreement, the Altera Quartus Prime License Agreement,
+the Altera MegaCore Function License Agreement, or other 
+applicable license agreement, including, without limitation, 
+that your use is for the sole purpose of programming logic 
+devices manufactured by Altera and sold by Altera or its 
+authorized distributors.  Please refer to the applicable 
+agreement for further details.
+
+
+
++----------------------------------------------------------------------------------+
+; Analysis & Synthesis Summary                                                     ;
++------------------------------------+---------------------------------------------+
+; Analysis & Synthesis Status        ; Successful - Fri Nov  4 17:10:50 2016       ;
+; Quartus Prime Version              ; 16.0.0 Build 211 04/27/2016 SJ Lite Edition ;
+; Revision Name                      ; data_path                                   ;
+; Top-level Entity Name              ; data_path                                   ;
+; Family                             ; Cyclone IV E                                ;
+; Total logic elements               ; 193                                         ;
+;     Total combinational functions  ; 191                                         ;
+;     Dedicated logic registers      ; 65                                          ;
+; Total registers                    ; 65                                          ;
+; Total pins                         ; 50                                          ;
+; Total virtual pins                 ; 0                                           ;
+; Total memory bits                  ; 0                                           ;
+; Embedded Multiplier 9-bit elements ; 0                                           ;
+; Total PLLs                         ; 0                                           ;
++------------------------------------+---------------------------------------------+
+
+
++----------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Settings                                                                                        ;
++----------------------------------------------------------------------------+--------------------+--------------------+
+; Option                                                                     ; Setting            ; Default Value      ;
++----------------------------------------------------------------------------+--------------------+--------------------+
+; Device                                                                     ; EP4CE22F17C6       ;                    ;
+; Top-level entity name                                                      ; data_path          ; data_path          ;
+; Family name                                                                ; Cyclone IV E       ; Cyclone V          ;
+; Use smart compilation                                                      ; Off                ; Off                ;
+; Enable parallel Assembler and TimeQuest Timing Analyzer during compilation ; On                 ; On                 ;
+; Enable compact report table                                                ; Off                ; Off                ;
+; Restructure Multiplexers                                                   ; Auto               ; Auto               ;
+; Create Debugging Nodes for IP Cores                                        ; Off                ; Off                ;
+; Preserve fewer node names                                                  ; On                 ; On                 ;
+; Disable OpenCore Plus hardware evaluation                                  ; Off                ; Off                ;
+; Verilog Version                                                            ; Verilog_2001       ; Verilog_2001       ;
+; VHDL Version                                                               ; VHDL_1993          ; VHDL_1993          ;
+; State Machine Processing                                                   ; Auto               ; Auto               ;
+; Safe State Machine                                                         ; Off                ; Off                ;
+; Extract Verilog State Machines                                             ; On                 ; On                 ;
+; Extract VHDL State Machines                                                ; On                 ; On                 ;
+; Ignore Verilog initial constructs                                          ; Off                ; Off                ;
+; Iteration limit for constant Verilog loops                                 ; 5000               ; 5000               ;
+; Iteration limit for non-constant Verilog loops                             ; 250                ; 250                ;
+; Add Pass-Through Logic to Inferred RAMs                                    ; On                 ; On                 ;
+; Infer RAMs from Raw Logic                                                  ; On                 ; On                 ;
+; Parallel Synthesis                                                         ; On                 ; On                 ;
+; DSP Block Balancing                                                        ; Auto               ; Auto               ;
+; NOT Gate Push-Back                                                         ; On                 ; On                 ;
+; Power-Up Don't Care                                                        ; On                 ; On                 ;
+; Remove Redundant Logic Cells                                               ; Off                ; Off                ;
+; Remove Duplicate Registers                                                 ; On                 ; On                 ;
+; Ignore CARRY Buffers                                                       ; Off                ; Off                ;
+; Ignore CASCADE Buffers                                                     ; Off                ; Off                ;
+; Ignore GLOBAL Buffers                                                      ; Off                ; Off                ;
+; Ignore ROW GLOBAL Buffers                                                  ; Off                ; Off                ;
+; Ignore LCELL Buffers                                                       ; Off                ; Off                ;
+; Ignore SOFT Buffers                                                        ; On                 ; On                 ;
+; Limit AHDL Integers to 32 Bits                                             ; Off                ; Off                ;
+; Optimization Technique                                                     ; Balanced           ; Balanced           ;
+; Carry Chain Length                                                         ; 70                 ; 70                 ;
+; Auto Carry Chains                                                          ; On                 ; On                 ;
+; Auto Open-Drain Pins                                                       ; On                 ; On                 ;
+; Perform WYSIWYG Primitive Resynthesis                                      ; Off                ; Off                ;
+; Auto ROM Replacement                                                       ; On                 ; On                 ;
+; Auto RAM Replacement                                                       ; On                 ; On                 ;
+; Auto DSP Block Replacement                                                 ; On                 ; On                 ;
+; Auto Shift Register Replacement                                            ; Auto               ; Auto               ;
+; Allow Shift Register Merging across Hierarchies                            ; Auto               ; Auto               ;
+; Auto Clock Enable Replacement                                              ; On                 ; On                 ;
+; Strict RAM Replacement                                                     ; Off                ; Off                ;
+; Allow Synchronous Control Signals                                          ; On                 ; On                 ;
+; Force Use of Synchronous Clear Signals                                     ; Off                ; Off                ;
+; Auto RAM Block Balancing                                                   ; On                 ; On                 ;
+; Auto RAM to Logic Cell Conversion                                          ; Off                ; Off                ;
+; Auto Resource Sharing                                                      ; Off                ; Off                ;
+; Allow Any RAM Size For Recognition                                         ; Off                ; Off                ;
+; Allow Any ROM Size For Recognition                                         ; Off                ; Off                ;
+; Allow Any Shift Register Size For Recognition                              ; Off                ; Off                ;
+; Use LogicLock Constraints during Resource Balancing                        ; On                 ; On                 ;
+; Ignore translate_off and synthesis_off directives                          ; Off                ; Off                ;
+; Timing-Driven Synthesis                                                    ; On                 ; On                 ;
+; Report Parameter Settings                                                  ; On                 ; On                 ;
+; Report Source Assignments                                                  ; On                 ; On                 ;
+; Report Connectivity Checks                                                 ; On                 ; On                 ;
+; Ignore Maximum Fan-Out Assignments                                         ; Off                ; Off                ;
+; Synchronization Register Chain Length                                      ; 2                  ; 2                  ;
+; PowerPlay Power Optimization During Synthesis                              ; Normal compilation ; Normal compilation ;
+; HDL message level                                                          ; Level2             ; Level2             ;
+; Suppress Register Optimization Related Messages                            ; Off                ; Off                ;
+; Number of Removed Registers Reported in Synthesis Report                   ; 5000               ; 5000               ;
+; Number of Swept Nodes Reported in Synthesis Report                         ; 5000               ; 5000               ;
+; Number of Inverted Registers Reported in Synthesis Report                  ; 100                ; 100                ;
+; Clock MUX Protection                                                       ; On                 ; On                 ;
+; Auto Gated Clock Conversion                                                ; Off                ; Off                ;
+; Block Design Naming                                                        ; Auto               ; Auto               ;
+; SDC constraint protection                                                  ; Off                ; Off                ;
+; Synthesis Effort                                                           ; Auto               ; Auto               ;
+; Shift Register Replacement - Allow Asynchronous Clear Signal               ; On                 ; On                 ;
+; Pre-Mapping Resynthesis Optimization                                       ; Off                ; Off                ;
+; Analysis & Synthesis Message Level                                         ; Medium             ; Medium             ;
+; Disable Register Merging Across Hierarchies                                ; Auto               ; Auto               ;
+; Resource Aware Inference For Block RAM                                     ; On                 ; On                 ;
+; Synthesis Seed                                                             ; 1                  ; 1                  ;
++----------------------------------------------------------------------------+--------------------+--------------------+
+
+
+Parallel compilation was disabled, but you have multiple processors available. Enable parallel compilation to reduce compilation time.
++-------------------------------------+
+; Parallel Compilation                ;
++----------------------------+--------+
+; Processors                 ; Number ;
++----------------------------+--------+
+; Number detected on machine ; 4      ;
+; Maximum allowed            ; 1      ;
++----------------------------+--------+
+
+
++-----------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Source Files Read                                                                                                                    ;
++----------------------------------+-----------------+-----------------+--------------------------------------------------------------------------+---------+
+; File Name with User-Entered Path ; Used in Netlist ; File Type       ; File Name with Absolute Path                                             ; Library ;
++----------------------------------+-----------------+-----------------+--------------------------------------------------------------------------+---------+
+; Components_project.vhd           ; yes             ; User VHDL File  ; /home/rafi/Dropbox/project_1/vhdl codes/data_path/Components_project.vhd ;         ;
+; bit16adder.vhd                   ; yes             ; User VHDL File  ; /home/rafi/Dropbox/project_1/vhdl codes/data_path/bit16adder.vhd         ;         ;
+; alu.vhd                          ; yes             ; User VHDL File  ; /home/rafi/Dropbox/project_1/vhdl codes/data_path/alu.vhd                ;         ;
+; zero_ex_16_9.vhd                 ; yes             ; User VHDL File  ; /home/rafi/Dropbox/project_1/vhdl codes/data_path/zero_ex_16_9.vhd       ;         ;
+; sign_ex_9_16.vhd                 ; yes             ; User VHDL File  ; /home/rafi/Dropbox/project_1/vhdl codes/data_path/sign_ex_9_16.vhd       ;         ;
+; sign_ex_6_16.vhd                 ; yes             ; User VHDL File  ; /home/rafi/Dropbox/project_1/vhdl codes/data_path/sign_ex_6_16.vhd       ;         ;
+; reg_file.vhd                     ; yes             ; User VHDL File  ; /home/rafi/Dropbox/project_1/vhdl codes/data_path/reg_file.vhd           ;         ;
+; reg_8.vhd                        ; yes             ; User VHDL File  ; /home/rafi/Dropbox/project_1/vhdl codes/data_path/reg_8.vhd              ;         ;
+; reg_3.vhd                        ; yes             ; User VHDL File  ; /home/rafi/Dropbox/project_1/vhdl codes/data_path/reg_3.vhd              ;         ;
+; reg_1.vhd                        ; yes             ; User VHDL File  ; /home/rafi/Dropbox/project_1/vhdl codes/data_path/reg_1.vhd              ;         ;
+; reg.vhd                          ; yes             ; User VHDL File  ; /home/rafi/Dropbox/project_1/vhdl codes/data_path/reg.vhd                ;         ;
+; PriorityEncoder.vhd              ; yes             ; User VHDL File  ; /home/rafi/Dropbox/project_1/vhdl codes/data_path/PriorityEncoder.vhd    ;         ;
+; nand_16.vhd                      ; yes             ; User VHDL File  ; /home/rafi/Dropbox/project_1/vhdl codes/data_path/nand_16.vhd            ;         ;
+; mux4_1.vhd                       ; yes             ; User VHDL File  ; /home/rafi/Dropbox/project_1/vhdl codes/data_path/mux4_1.vhd             ;         ;
+; mux3_1_1.vhd                     ; yes             ; User VHDL File  ; /home/rafi/Dropbox/project_1/vhdl codes/data_path/mux3_1_1.vhd           ;         ;
+; mux3_1.vhd                       ; yes             ; User VHDL File  ; /home/rafi/Dropbox/project_1/vhdl codes/data_path/mux3_1.vhd             ;         ;
+; mux2_1_2.vhd                     ; yes             ; User VHDL File  ; /home/rafi/Dropbox/project_1/vhdl codes/data_path/mux2_1_2.vhd           ;         ;
+; mux2_1_1.vhd                     ; yes             ; User VHDL File  ; /home/rafi/Dropbox/project_1/vhdl codes/data_path/mux2_1_1.vhd           ;         ;
+; mux2_1.vhd                       ; yes             ; User VHDL File  ; /home/rafi/Dropbox/project_1/vhdl codes/data_path/mux2_1.vhd             ;         ;
+; memory.vhd                       ; yes             ; User VHDL File  ; /home/rafi/Dropbox/project_1/vhdl codes/data_path/memory.vhd             ;         ;
+; ir_reg.vhd                       ; yes             ; User VHDL File  ; /home/rafi/Dropbox/project_1/vhdl codes/data_path/ir_reg.vhd             ;         ;
+; halfadder.vhd                    ; yes             ; User VHDL File  ; /home/rafi/Dropbox/project_1/vhdl codes/data_path/halfadder.vhd          ;         ;
+; fulladder.vhd                    ; yes             ; User VHDL File  ; /home/rafi/Dropbox/project_1/vhdl codes/data_path/fulladder.vhd          ;         ;
+; equality.vhd                     ; yes             ; User VHDL File  ; /home/rafi/Dropbox/project_1/vhdl codes/data_path/equality.vhd           ;         ;
+; data_path.vhd                    ; yes             ; User VHDL File  ; /home/rafi/Dropbox/project_1/vhdl codes/data_path/data_path.vhd          ;         ;
++----------------------------------+-----------------+-----------------+--------------------------------------------------------------------------+---------+
+
+
++-----------------------------------------------------------+
+; Analysis & Synthesis Resource Usage Summary               ;
++---------------------------------------------+-------------+
+; Resource                                    ; Usage       ;
++---------------------------------------------+-------------+
+; Estimated Total logic elements              ; 193         ;
+;                                             ;             ;
+; Total combinational functions               ; 191         ;
+; Logic element usage by number of LUT inputs ;             ;
+;     -- 4 input functions                    ; 75          ;
+;     -- 3 input functions                    ; 73          ;
+;     -- <=2 input functions                  ; 43          ;
+;                                             ;             ;
+; Logic elements by mode                      ;             ;
+;     -- normal mode                          ; 191         ;
+;     -- arithmetic mode                      ; 0           ;
+;                                             ;             ;
+; Total registers                             ; 65          ;
+;     -- Dedicated logic registers            ; 65          ;
+;     -- I/O registers                        ; 0           ;
+;                                             ;             ;
+; I/O pins                                    ; 50          ;
+;                                             ;             ;
+; Embedded Multiplier 9-bit elements          ; 0           ;
+;                                             ;             ;
+; Maximum fan-out node                        ; clock~input ;
+; Maximum fan-out                             ; 65          ;
+; Total fan-out                               ; 841         ;
+; Average fan-out                             ; 2.36        ;
++---------------------------------------------+-------------+
+
+
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Resource Utilization by Entity                                                                                                                                                                                    ;
++----------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+--------------------------------------------------------------+-----------------+--------------+
+; Compilation Hierarchy Node ; LC Combinationals ; LC Registers ; Memory Bits ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; Full Hierarchy Name                                          ; Entity Name     ; Library Name ;
++----------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+--------------------------------------------------------------+-----------------+--------------+
+; |data_path                 ; 191 (0)           ; 65 (0)       ; 0           ; 0            ; 0       ; 0         ; 50   ; 0            ; |data_path                                                   ; data_path       ; work         ;
+;    |ALU:alu1|              ; 77 (51)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |data_path|ALU:alu1                                          ; ALU             ; work         ;
+;       |bit16adder:i1|      ; 26 (0)            ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |data_path|ALU:alu1|bit16adder:i1                            ; bit16adder      ; work         ;
+;          |fulladder:G10|   ; 2 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |data_path|ALU:alu1|bit16adder:i1|fulladder:G10              ; fulladder       ; work         ;
+;             |halfadder:G2| ; 1 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |data_path|ALU:alu1|bit16adder:i1|fulladder:G10|halfadder:G2 ; halfadder       ; work         ;
+;          |fulladder:G11|   ; 1 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |data_path|ALU:alu1|bit16adder:i1|fulladder:G11              ; fulladder       ; work         ;
+;          |fulladder:G12|   ; 2 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |data_path|ALU:alu1|bit16adder:i1|fulladder:G12              ; fulladder       ; work         ;
+;             |halfadder:G2| ; 1 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |data_path|ALU:alu1|bit16adder:i1|fulladder:G12|halfadder:G2 ; halfadder       ; work         ;
+;          |fulladder:G13|   ; 2 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |data_path|ALU:alu1|bit16adder:i1|fulladder:G13              ; fulladder       ; work         ;
+;             |halfadder:G2| ; 1 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |data_path|ALU:alu1|bit16adder:i1|fulladder:G13|halfadder:G2 ; halfadder       ; work         ;
+;          |fulladder:G14|   ; 1 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |data_path|ALU:alu1|bit16adder:i1|fulladder:G14              ; fulladder       ; work         ;
+;          |fulladder:G15|   ; 1 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |data_path|ALU:alu1|bit16adder:i1|fulladder:G15              ; fulladder       ; work         ;
+;          |fulladder:G16|   ; 1 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |data_path|ALU:alu1|bit16adder:i1|fulladder:G16              ; fulladder       ; work         ;
+;          |fulladder:G2|    ; 2 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |data_path|ALU:alu1|bit16adder:i1|fulladder:G2               ; fulladder       ; work         ;
+;             |halfadder:G2| ; 1 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |data_path|ALU:alu1|bit16adder:i1|fulladder:G2|halfadder:G2  ; halfadder       ; work         ;
+;          |fulladder:G3|    ; 2 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |data_path|ALU:alu1|bit16adder:i1|fulladder:G3               ; fulladder       ; work         ;
+;             |halfadder:G2| ; 1 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |data_path|ALU:alu1|bit16adder:i1|fulladder:G3|halfadder:G2  ; halfadder       ; work         ;
+;          |fulladder:G4|    ; 2 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |data_path|ALU:alu1|bit16adder:i1|fulladder:G4               ; fulladder       ; work         ;
+;             |halfadder:G2| ; 1 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |data_path|ALU:alu1|bit16adder:i1|fulladder:G4|halfadder:G2  ; halfadder       ; work         ;
+;          |fulladder:G5|    ; 2 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |data_path|ALU:alu1|bit16adder:i1|fulladder:G5               ; fulladder       ; work         ;
+;             |halfadder:G2| ; 1 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |data_path|ALU:alu1|bit16adder:i1|fulladder:G5|halfadder:G2  ; halfadder       ; work         ;
+;          |fulladder:G6|    ; 2 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |data_path|ALU:alu1|bit16adder:i1|fulladder:G6               ; fulladder       ; work         ;
+;             |halfadder:G2| ; 1 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |data_path|ALU:alu1|bit16adder:i1|fulladder:G6|halfadder:G2  ; halfadder       ; work         ;
+;          |fulladder:G7|    ; 2 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |data_path|ALU:alu1|bit16adder:i1|fulladder:G7               ; fulladder       ; work         ;
+;             |halfadder:G2| ; 1 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |data_path|ALU:alu1|bit16adder:i1|fulladder:G7|halfadder:G2  ; halfadder       ; work         ;
+;          |fulladder:G8|    ; 2 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |data_path|ALU:alu1|bit16adder:i1|fulladder:G8               ; fulladder       ; work         ;
+;             |halfadder:G2| ; 1 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |data_path|ALU:alu1|bit16adder:i1|fulladder:G8|halfadder:G2  ; halfadder       ; work         ;
+;          |fulladder:G9|    ; 2 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |data_path|ALU:alu1|bit16adder:i1|fulladder:G9               ; fulladder       ; work         ;
+;             |halfadder:G2| ; 1 (1)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |data_path|ALU:alu1|bit16adder:i1|fulladder:G9|halfadder:G2  ; halfadder       ; work         ;
+;    |PriorityEncoder:PE|    ; 17 (17)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |data_path|PriorityEncoder:PE                                ; PriorityEncoder ; work         ;
+;    |ir_reg:ir_reg_1|       ; 0 (0)             ; 15 (15)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |data_path|ir_reg:ir_reg_1                                   ; ir_reg          ; work         ;
+;    |memory:memory_1|       ; 27 (27)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |data_path|memory:memory_1                                   ; memory          ; work         ;
+;    |mux2_1:muxa_alu_a|     ; 5 (5)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |data_path|mux2_1:muxa_alu_a                                 ; mux2_1          ; work         ;
+;    |mux2_1:muxd1_a|        ; 16 (16)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |data_path|mux2_1:muxd1_a                                    ; mux2_1          ; work         ;
+;    |mux2_1:muxmem_dw|      ; 13 (13)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |data_path|mux2_1:muxmem_dw                                  ; mux2_1          ; work         ;
+;    |mux2_1_2:muxpe|        ; 8 (8)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |data_path|mux2_1_2:muxpe                                    ; mux2_1_2        ; work         ;
+;    |mux4_1:muxb_alu_b|     ; 9 (9)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |data_path|mux4_1:muxb_alu_b                                 ; mux4_1          ; work         ;
+;    |reg:rega|              ; 0 (0)             ; 16 (16)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |data_path|reg:rega                                          ; reg             ; work         ;
+;    |reg:regc|              ; 1 (1)             ; 16 (16)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |data_path|reg:regc                                          ; reg             ; work         ;
+;    |reg_1:reg_Z|           ; 1 (1)             ; 1 (1)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |data_path|reg_1:reg_Z                                       ; reg_1           ; work         ;
+;    |reg_1:reg_carry|       ; 1 (1)             ; 1 (1)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |data_path|reg_1:reg_carry                                   ; reg_1           ; work         ;
+;    |reg_1:regpef|          ; 1 (1)             ; 1 (1)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |data_path|reg_1:regpef                                      ; reg_1           ; work         ;
+;    |reg_8:reg8_pein|       ; 0 (0)             ; 8 (8)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |data_path|reg_8:reg8_pein                                   ; reg_8           ; work         ;
+;    |reg_8:reg_8petmp|      ; 0 (0)             ; 7 (7)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |data_path|reg_8:reg_8petmp                                  ; reg_8           ; work         ;
+;    |sign_ex_6_16:signext6| ; 6 (6)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |data_path|sign_ex_6_16:signext6                             ; sign_ex_6_16    ; work         ;
+;    |sign_ex_9_16:signext9| ; 9 (9)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |data_path|sign_ex_9_16:signext9                             ; sign_ex_9_16    ; work         ;
++----------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+--------------------------------------------------------------+-----------------+--------------+
+Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
+
+
++-------------------------------------------------------------------------------------------------------------+
+; User-Specified and Inferred Latches                                                                         ;
++-----------------------------------------------------+------------------------------+------------------------+
+; Latch Name                                          ; Latch Enable Signal          ; Free of Timing Hazards ;
++-----------------------------------------------------+------------------------------+------------------------+
+; ALU:alu1|c                                          ; ALU:alu1|Mux21               ; yes                    ;
+; ALU:alu1|z                                          ; alu_op[1]                    ; yes                    ;
+; PriorityEncoder:PE|N                                ; enable_pe                    ; yes                    ;
+; memory:memory_1|data_out[12]                        ; memory:memory_1|data_out[15] ; yes                    ;
+; memory:memory_1|data_out[13]                        ; memory:memory_1|data_out[15] ; yes                    ;
+; memory:memory_1|data_out[14]                        ; memory:memory_1|data_out[15] ; yes                    ;
+; memory:memory_1|data_out[15]                        ; memory:memory_1|data_out[15] ; yes                    ;
+; memory:memory_1|data_out[0]                         ; memory:memory_1|data_out[15] ; yes                    ;
+; memory:memory_1|data_out[1]                         ; memory:memory_1|data_out[15] ; yes                    ;
+; sign_ex_6_16:signext6|alu_out[15]                   ; se_6_16                      ; yes                    ;
+; sign_ex_9_16:signext9|alu_out[15]                   ; se_9_16                      ; yes                    ;
+; sign_ex_6_16:signext6|alu_out[14]                   ; se_6_16                      ; yes                    ;
+; sign_ex_9_16:signext9|alu_out[14]                   ; se_9_16                      ; yes                    ;
+; sign_ex_6_16:signext6|alu_out[13]                   ; se_6_16                      ; yes                    ;
+; sign_ex_9_16:signext9|alu_out[13]                   ; se_9_16                      ; yes                    ;
+; sign_ex_6_16:signext6|alu_out[12]                   ; se_6_16                      ; yes                    ;
+; sign_ex_9_16:signext9|alu_out[12]                   ; se_9_16                      ; yes                    ;
+; sign_ex_6_16:signext6|alu_out[11]                   ; se_6_16                      ; yes                    ;
+; sign_ex_9_16:signext9|alu_out[11]                   ; se_9_16                      ; yes                    ;
+; sign_ex_6_16:signext6|alu_out[10]                   ; se_6_16                      ; yes                    ;
+; sign_ex_9_16:signext9|alu_out[10]                   ; se_9_16                      ; yes                    ;
+; sign_ex_6_16:signext6|alu_out[9]                    ; se_6_16                      ; yes                    ;
+; sign_ex_9_16:signext9|alu_out[9]                    ; se_9_16                      ; yes                    ;
+; sign_ex_6_16:signext6|alu_out[8]                    ; se_6_16                      ; yes                    ;
+; sign_ex_9_16:signext9|alu_out[8]                    ; se_9_16                      ; yes                    ;
+; sign_ex_6_16:signext6|alu_out[7]                    ; se_6_16                      ; yes                    ;
+; sign_ex_9_16:signext9|alu_out[7]                    ; se_9_16                      ; yes                    ;
+; sign_ex_6_16:signext6|alu_out[6]                    ; se_6_16                      ; yes                    ;
+; sign_ex_9_16:signext9|alu_out[6]                    ; se_9_16                      ; yes                    ;
+; sign_ex_6_16:signext6|alu_out[5]                    ; se_6_16                      ; yes                    ;
+; sign_ex_9_16:signext9|alu_out[5]                    ; se_9_16                      ; yes                    ;
+; sign_ex_6_16:signext6|alu_out[4]                    ; se_6_16                      ; yes                    ;
+; sign_ex_9_16:signext9|alu_out[4]                    ; se_9_16                      ; yes                    ;
+; sign_ex_6_16:signext6|alu_out[3]                    ; se_6_16                      ; yes                    ;
+; sign_ex_9_16:signext9|alu_out[3]                    ; se_9_16                      ; yes                    ;
+; sign_ex_6_16:signext6|alu_out[2]                    ; se_6_16                      ; yes                    ;
+; sign_ex_9_16:signext9|alu_out[2]                    ; se_9_16                      ; yes                    ;
+; sign_ex_6_16:signext6|alu_out[0]                    ; se_6_16                      ; yes                    ;
+; sign_ex_9_16:signext9|alu_out[0]                    ; se_9_16                      ; yes                    ;
+; sign_ex_6_16:signext6|alu_out[1]                    ; se_6_16                      ; yes                    ;
+; sign_ex_9_16:signext9|alu_out[1]                    ; se_9_16                      ; yes                    ;
+; memory:memory_1|memory_block~9                      ; memWrite                     ; yes                    ;
+; memory:memory_1|memory_block~10                     ; memWrite                     ; yes                    ;
+; memory:memory_1|memory_block~11                     ; memWrite                     ; yes                    ;
+; memory:memory_1|memory_block~12                     ; memWrite                     ; yes                    ;
+; memory:memory_1|memory_block~0                      ; memWrite                     ; yes                    ;
+; memory:memory_1|memory_block~1                      ; memWrite                     ; yes                    ;
+; memory:memory_1|data_out[5]                         ; memory:memory_1|data_out[15] ; yes                    ;
+; memory:memory_1|data_out[8]                         ; memory:memory_1|data_out[15] ; yes                    ;
+; memory:memory_1|data_out[7]                         ; memory:memory_1|data_out[15] ; yes                    ;
+; memory:memory_1|data_out[6]                         ; memory:memory_1|data_out[15] ; yes                    ;
+; memory:memory_1|data_out[4]                         ; memory:memory_1|data_out[15] ; yes                    ;
+; memory:memory_1|data_out[3]                         ; memory:memory_1|data_out[15] ; yes                    ;
+; memory:memory_1|data_out[2]                         ; memory:memory_1|data_out[15] ; yes                    ;
+; PriorityEncoder:PE|y[1]                             ; enable_pe                    ; yes                    ;
+; PriorityEncoder:PE|y[2]                             ; enable_pe                    ; yes                    ;
+; PriorityEncoder:PE|y[3]                             ; enable_pe                    ; yes                    ;
+; PriorityEncoder:PE|y[4]                             ; enable_pe                    ; yes                    ;
+; PriorityEncoder:PE|y[5]                             ; enable_pe                    ; yes                    ;
+; PriorityEncoder:PE|y[6]                             ; enable_pe                    ; yes                    ;
+; PriorityEncoder:PE|y[7]                             ; enable_pe                    ; yes                    ;
+; memory:memory_1|memory_block~5                      ; memWrite                     ; yes                    ;
+; memory:memory_1|memory_block~8                      ; memWrite                     ; yes                    ;
+; memory:memory_1|memory_block~7                      ; memWrite                     ; yes                    ;
+; memory:memory_1|memory_block~6                      ; memWrite                     ; yes                    ;
+; memory:memory_1|memory_block~4                      ; memWrite                     ; yes                    ;
+; memory:memory_1|memory_block~3                      ; memWrite                     ; yes                    ;
+; memory:memory_1|memory_block~2                      ; memWrite                     ; yes                    ;
+; Number of user-specified and inferred latches = 68  ;                              ;                        ;
++-----------------------------------------------------+------------------------------+------------------------+
+Note: All latches listed above may not be present at the end of synthesis due to various synthesis optimizations.
+
+
++------------------------------------------------------------------------------------+
+; Registers Removed During Synthesis                                                 ;
++-----------------------------------------+------------------------------------------+
+; Register name                           ; Reason for Removal                       ;
++-----------------------------------------+------------------------------------------+
+; reg_8:reg_8petmp|data_out[0]            ; Stuck at GND due to stuck port data_in   ;
+; ir_reg:ir_reg_1|im8[0]                  ; Merged with ir_reg:ir_reg_1|im6[0]       ;
+; ir_reg:ir_reg_1|im9[0]                  ; Merged with ir_reg:ir_reg_1|im6[0]       ;
+; ir_reg:ir_reg_1|im8[1]                  ; Merged with ir_reg:ir_reg_1|im6[1]       ;
+; ir_reg:ir_reg_1|im9[1]                  ; Merged with ir_reg:ir_reg_1|im6[1]       ;
+; ir_reg:ir_reg_1|im8[2]                  ; Merged with ir_reg:ir_reg_1|im6[2]       ;
+; ir_reg:ir_reg_1|im9[2]                  ; Merged with ir_reg:ir_reg_1|im6[2]       ;
+; ir_reg:ir_reg_1|im6[3]                  ; Merged with ir_reg:ir_reg_1|data_out3[0] ;
+; ir_reg:ir_reg_1|im8[3]                  ; Merged with ir_reg:ir_reg_1|data_out3[0] ;
+; ir_reg:ir_reg_1|im9[3]                  ; Merged with ir_reg:ir_reg_1|data_out3[0] ;
+; ir_reg:ir_reg_1|im6[4]                  ; Merged with ir_reg:ir_reg_1|data_out3[1] ;
+; ir_reg:ir_reg_1|im8[4]                  ; Merged with ir_reg:ir_reg_1|data_out3[1] ;
+; ir_reg:ir_reg_1|im9[4]                  ; Merged with ir_reg:ir_reg_1|data_out3[1] ;
+; ir_reg:ir_reg_1|im6[5]                  ; Merged with ir_reg:ir_reg_1|data_out3[2] ;
+; ir_reg:ir_reg_1|im8[5]                  ; Merged with ir_reg:ir_reg_1|data_out3[2] ;
+; ir_reg:ir_reg_1|im9[5]                  ; Merged with ir_reg:ir_reg_1|data_out3[2] ;
+; ir_reg:ir_reg_1|im9[6]                  ; Merged with ir_reg:ir_reg_1|im8[6]       ;
+; ir_reg:ir_reg_1|im9[7]                  ; Merged with ir_reg:ir_reg_1|im8[7]       ;
+; reg_file:reg_file_1|temp[0][0]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[0][1]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[0][2]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[0][3]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[0][4]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[0][5]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[0][6]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[0][7]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[0][8]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[0][9]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[0][10]         ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[0][11]         ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[0][12]         ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[0][13]         ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[0][14]         ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[0][15]         ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[1][0]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[1][1]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[1][2]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[1][3]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[1][4]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[1][5]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[1][6]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[1][7]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[1][8]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[1][9]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[1][10]         ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[1][11]         ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[1][12]         ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[1][13]         ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[1][14]         ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[1][15]         ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[2][0]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[2][1]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[2][2]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[2][3]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[2][4]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[2][5]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[2][6]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[2][7]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[2][8]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[2][9]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[2][10]         ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[2][11]         ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[2][12]         ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[2][13]         ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[2][14]         ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[2][15]         ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[3][0]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[3][1]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[3][2]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[3][3]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[3][4]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[3][5]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[3][6]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[3][7]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[3][8]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[3][9]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[3][10]         ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[3][11]         ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[3][12]         ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[3][13]         ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[3][14]         ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[3][15]         ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[4][0]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[4][1]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[4][2]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[4][3]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[4][4]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[4][5]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[4][6]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[4][7]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[4][8]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[4][9]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[4][10]         ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[4][11]         ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[4][12]         ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[4][13]         ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[4][14]         ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[4][15]         ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[5][0]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[5][1]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[5][2]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[5][3]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[5][4]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[5][5]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[5][6]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[5][7]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[5][8]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[5][9]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[5][10]         ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[5][11]         ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[5][12]         ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[5][13]         ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[5][14]         ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[5][15]         ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[6][0]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[6][1]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[6][2]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[6][3]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[6][4]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[6][5]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[6][6]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[6][7]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[6][8]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[6][9]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[6][10]         ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[6][11]         ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[6][12]         ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[6][13]         ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[6][14]         ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[6][15]         ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|data_out1[0..15]    ; Stuck at GND due to stuck port data_in   ;
+; reg_1:reg_eqf|data_out                  ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[7][0]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[7][1]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[7][2]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[7][3]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[7][4]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[7][5]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[7][6]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[7][7]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[7][8]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[7][9]          ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[7][10]         ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[7][11]         ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[7][12]         ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[7][13]         ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[7][14]         ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|temp[7][15]         ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|pc_out[0..15]       ; Stuck at GND due to stuck port data_in   ;
+; reg_file:reg_file_1|data_out2[0..15]    ; Stuck at GND due to stuck port data_in   ;
+; reg:regb|data_out[0..15]                ; Stuck at GND due to stuck port data_in   ;
+; Total Number of Removed Registers = 211 ;                                          ;
++-----------------------------------------+------------------------------------------+
+
+
++-------------------------------------------------------------------------------------------------------------------------------------+
+; Removed Registers Triggering Further Register Optimizations                                                                         ;
++---------------------------------+---------------------------+-----------------------------------------------------------------------+
+; Register name                   ; Reason for Removal        ; Registers Removed due to This Register                                ;
++---------------------------------+---------------------------+-----------------------------------------------------------------------+
+; reg_file:reg_file_1|temp[0][1]  ; Stuck at GND              ; reg_file:reg_file_1|data_out1[1], reg_file:reg_file_1|data_out2[1],   ;
+;                                 ; due to stuck port data_in ; reg:regb|data_out[1]                                                  ;
+; reg_file:reg_file_1|temp[0][0]  ; Stuck at GND              ; reg_file:reg_file_1|data_out1[0], reg_file:reg_file_1|data_out2[0],   ;
+;                                 ; due to stuck port data_in ; reg:regb|data_out[0]                                                  ;
+; reg_file:reg_file_1|temp[0][15] ; Stuck at GND              ; reg_file:reg_file_1|data_out1[15], reg_file:reg_file_1|data_out2[15], ;
+;                                 ; due to stuck port data_in ; reg:regb|data_out[15]                                                 ;
+; reg_file:reg_file_1|temp[0][14] ; Stuck at GND              ; reg_file:reg_file_1|data_out1[14], reg_file:reg_file_1|data_out2[14], ;
+;                                 ; due to stuck port data_in ; reg:regb|data_out[14]                                                 ;
+; reg_file:reg_file_1|temp[0][13] ; Stuck at GND              ; reg_file:reg_file_1|data_out1[13], reg_file:reg_file_1|data_out2[13], ;
+;                                 ; due to stuck port data_in ; reg:regb|data_out[13]                                                 ;
+; reg_file:reg_file_1|temp[0][12] ; Stuck at GND              ; reg_file:reg_file_1|data_out1[12], reg_file:reg_file_1|data_out2[12], ;
+;                                 ; due to stuck port data_in ; reg:regb|data_out[12]                                                 ;
+; reg_file:reg_file_1|temp[0][11] ; Stuck at GND              ; reg_file:reg_file_1|data_out1[11], reg_file:reg_file_1|data_out2[11], ;
+;                                 ; due to stuck port data_in ; reg:regb|data_out[11]                                                 ;
+; reg_file:reg_file_1|temp[0][10] ; Stuck at GND              ; reg_file:reg_file_1|data_out1[10], reg_file:reg_file_1|data_out2[10], ;
+;                                 ; due to stuck port data_in ; reg:regb|data_out[10]                                                 ;
+; reg_file:reg_file_1|temp[0][9]  ; Stuck at GND              ; reg_file:reg_file_1|data_out1[9], reg_file:reg_file_1|data_out2[9],   ;
+;                                 ; due to stuck port data_in ; reg:regb|data_out[9]                                                  ;
+; reg_file:reg_file_1|temp[0][8]  ; Stuck at GND              ; reg_file:reg_file_1|data_out1[8], reg_file:reg_file_1|data_out2[8],   ;
+;                                 ; due to stuck port data_in ; reg:regb|data_out[8]                                                  ;
+; reg_file:reg_file_1|temp[0][7]  ; Stuck at GND              ; reg_file:reg_file_1|data_out1[7], reg_file:reg_file_1|data_out2[7],   ;
+;                                 ; due to stuck port data_in ; reg:regb|data_out[7]                                                  ;
+; reg_file:reg_file_1|temp[0][6]  ; Stuck at GND              ; reg_file:reg_file_1|data_out1[6], reg_file:reg_file_1|data_out2[6],   ;
+;                                 ; due to stuck port data_in ; reg:regb|data_out[6]                                                  ;
+; reg_file:reg_file_1|temp[0][5]  ; Stuck at GND              ; reg_file:reg_file_1|data_out1[5], reg_file:reg_file_1|data_out2[5],   ;
+;                                 ; due to stuck port data_in ; reg:regb|data_out[5]                                                  ;
+; reg_file:reg_file_1|temp[0][4]  ; Stuck at GND              ; reg_file:reg_file_1|data_out1[4], reg_file:reg_file_1|data_out2[4],   ;
+;                                 ; due to stuck port data_in ; reg:regb|data_out[4]                                                  ;
+; reg_file:reg_file_1|temp[0][3]  ; Stuck at GND              ; reg_file:reg_file_1|data_out1[3], reg_file:reg_file_1|data_out2[3],   ;
+;                                 ; due to stuck port data_in ; reg:regb|data_out[3]                                                  ;
+; reg_file:reg_file_1|temp[0][2]  ; Stuck at GND              ; reg_file:reg_file_1|data_out1[2], reg_file:reg_file_1|data_out2[2],   ;
+;                                 ; due to stuck port data_in ; reg:regb|data_out[2]                                                  ;
+; reg_file:reg_file_1|temp[7][15] ; Stuck at GND              ; reg_file:reg_file_1|pc_out[15]                                        ;
+;                                 ; due to stuck port data_in ;                                                                       ;
+; reg_file:reg_file_1|temp[7][14] ; Stuck at GND              ; reg_file:reg_file_1|pc_out[14]                                        ;
+;                                 ; due to stuck port data_in ;                                                                       ;
+; reg_file:reg_file_1|temp[7][13] ; Stuck at GND              ; reg_file:reg_file_1|pc_out[13]                                        ;
+;                                 ; due to stuck port data_in ;                                                                       ;
+; reg_file:reg_file_1|temp[7][12] ; Stuck at GND              ; reg_file:reg_file_1|pc_out[12]                                        ;
+;                                 ; due to stuck port data_in ;                                                                       ;
+; reg_file:reg_file_1|temp[7][11] ; Stuck at GND              ; reg_file:reg_file_1|pc_out[11]                                        ;
+;                                 ; due to stuck port data_in ;                                                                       ;
+; reg_file:reg_file_1|temp[7][10] ; Stuck at GND              ; reg_file:reg_file_1|pc_out[10]                                        ;
+;                                 ; due to stuck port data_in ;                                                                       ;
+; reg_file:reg_file_1|temp[7][9]  ; Stuck at GND              ; reg_file:reg_file_1|pc_out[9]                                         ;
+;                                 ; due to stuck port data_in ;                                                                       ;
+; reg_file:reg_file_1|temp[7][8]  ; Stuck at GND              ; reg_file:reg_file_1|pc_out[8]                                         ;
+;                                 ; due to stuck port data_in ;                                                                       ;
+; reg_file:reg_file_1|temp[7][7]  ; Stuck at GND              ; reg_file:reg_file_1|pc_out[7]                                         ;
+;                                 ; due to stuck port data_in ;                                                                       ;
+; reg_file:reg_file_1|temp[7][6]  ; Stuck at GND              ; reg_file:reg_file_1|pc_out[6]                                         ;
+;                                 ; due to stuck port data_in ;                                                                       ;
+; reg_file:reg_file_1|temp[7][5]  ; Stuck at GND              ; reg_file:reg_file_1|pc_out[5]                                         ;
+;                                 ; due to stuck port data_in ;                                                                       ;
+; reg_file:reg_file_1|temp[7][4]  ; Stuck at GND              ; reg_file:reg_file_1|pc_out[4]                                         ;
+;                                 ; due to stuck port data_in ;                                                                       ;
+; reg_file:reg_file_1|temp[7][3]  ; Stuck at GND              ; reg_file:reg_file_1|pc_out[3]                                         ;
+;                                 ; due to stuck port data_in ;                                                                       ;
+; reg_file:reg_file_1|temp[7][2]  ; Stuck at GND              ; reg_file:reg_file_1|pc_out[2]                                         ;
+;                                 ; due to stuck port data_in ;                                                                       ;
+; reg_file:reg_file_1|temp[7][1]  ; Stuck at GND              ; reg_file:reg_file_1|pc_out[1]                                         ;
+;                                 ; due to stuck port data_in ;                                                                       ;
+; reg_file:reg_file_1|temp[7][0]  ; Stuck at GND              ; reg_file:reg_file_1|pc_out[0]                                         ;
+;                                 ; due to stuck port data_in ;                                                                       ;
++---------------------------------+---------------------------+-----------------------------------------------------------------------+
+
+
++------------------------------------------------------+
+; General Register Statistics                          ;
++----------------------------------------------+-------+
+; Statistic                                    ; Value ;
++----------------------------------------------+-------+
+; Total registers                              ; 65    ;
+; Number of registers using Synchronous Clear  ; 0     ;
+; Number of registers using Synchronous Load   ; 0     ;
+; Number of registers using Asynchronous Clear ; 0     ;
+; Number of registers using Asynchronous Load  ; 0     ;
+; Number of registers using Clock Enable       ; 47    ;
+; Number of registers using Preset             ; 0     ;
++----------------------------------------------+-------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------+
+; Multiplexer Restructuring Statistics (Restructuring Performed)                                                                                   ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+------------------------------------+
+; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output         ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+------------------------------------+
+; 5:1                ; 16 bits   ; 48 LEs        ; 32 LEs               ; 16 LEs                 ; Yes        ; |data_path|reg:regc|data_out[7]    ;
+; 4:1                ; 16 bits   ; 32 LEs        ; 32 LEs               ; 0 LEs                  ; No         ; |data_path|mux4_1:muxb_alu_b|c[14] ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+------------------------------------+
+
+
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "ir_reg:ir_reg_1"                                                                                                                             ;
++-------+-------+----------+----------------------------------------------------------------------------------------------------------------------------------------------+
+; Port  ; Type  ; Severity ; Details                                                                                                                                      ;
++-------+-------+----------+----------------------------------------------------------------------------------------------------------------------------------------------+
+; reset ; Input ; Warning  ; Declared by entity but not connected by instance. If a default value exists, it will be used.  Otherwise, the port will be connected to GND. ;
++-------+-------+----------+----------------------------------------------------------------------------------------------------------------------------------------------+
+
+
++-----------------------------------------------+
+; Port Connectivity Checks: "mux4_1:muxb_alu_b" ;
++-----------+-------+----------+----------------+
+; Port      ; Type  ; Severity ; Details        ;
++-----------+-------+----------+----------------+
+; a0[15..1] ; Input ; Info     ; Stuck at GND   ;
+; a0[0]     ; Input ; Info     ; Stuck at VCC   ;
++-----------+-------+----------+----------------+
+
+
++-----------------------------------------------------+
+; Post-Synthesis Netlist Statistics for Top Partition ;
++-----------------------+-----------------------------+
+; Type                  ; Count                       ;
++-----------------------+-----------------------------+
+; boundary_port         ; 50                          ;
+; cycloneiii_ff         ; 65                          ;
+;     ENA               ; 47                          ;
+;     plain             ; 18                          ;
+; cycloneiii_lcell_comb ; 192                         ;
+;     normal            ; 192                         ;
+;         0 data inputs ; 1                           ;
+;         2 data inputs ; 43                          ;
+;         3 data inputs ; 73                          ;
+;         4 data inputs ; 75                          ;
+;                       ;                             ;
+; Max LUT depth         ; 17.00                       ;
+; Average LUT depth     ; 5.28                        ;
++-----------------------+-----------------------------+
+
+
++-------------------------------+
+; Elapsed Time Per Partition    ;
++----------------+--------------+
+; Partition Name ; Elapsed Time ;
++----------------+--------------+
+; Top            ; 00:00:01     ;
++----------------+--------------+
+
+
++-------------------------------+
+; Analysis & Synthesis Messages ;
++-------------------------------+
+Info: *******************************************************************
+Info: Running Quartus Prime Analysis & Synthesis
+    Info: Version 16.0.0 Build 211 04/27/2016 SJ Lite Edition
+    Info: Processing started: Fri Nov  4 17:10:30 2016
+Info: Command: quartus_map --read_settings_files=on --write_settings_files=off data_path -c data_path
+Warning (20028): Parallel compilation is not licensed and has been disabled
+Info (12021): Found 1 design units, including 0 entities, in source file Components_project.vhd
+    Info (12022): Found design unit 1: Components_project File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/Components_project.vhd Line: 7
+Info (12021): Found 2 design units, including 1 entities, in source file bit16adder.vhd
+    Info (12022): Found design unit 1: bit16adder-bit16adder File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/bit16adder.vhd Line: 15
+    Info (12023): Found entity 1: bit16adder File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/bit16adder.vhd Line: 7
+Info (12021): Found 2 design units, including 1 entities, in source file alu.vhd
+    Info (12022): Found design unit 1: ALU-Behavioral File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/alu.vhd Line: 18
+    Info (12023): Found entity 1: ALU File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/alu.vhd Line: 7
+Info (12021): Found 2 design units, including 1 entities, in source file zero_ex_16_9.vhd
+    Info (12022): Found design unit 1: zero_ex_16_9-behave File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/zero_ex_16_9.vhd Line: 13
+    Info (12023): Found entity 1: zero_ex_16_9 File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/zero_ex_16_9.vhd Line: 6
+Info (12021): Found 2 design units, including 1 entities, in source file TopLevel.vhd
+    Info (12022): Found design unit 1: TopLevel-behave File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/TopLevel.vhd Line: 13
+    Info (12023): Found entity 1: TopLevel File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/TopLevel.vhd Line: 7
+Info (12021): Found 2 design units, including 1 entities, in source file sign_ex_9_16.vhd
+    Info (12022): Found design unit 1: sign_ex_9_16-behave File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/sign_ex_9_16.vhd Line: 13
+    Info (12023): Found entity 1: sign_ex_9_16 File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/sign_ex_9_16.vhd Line: 6
+Info (12021): Found 2 design units, including 1 entities, in source file sign_ex_6_16.vhd
+    Info (12022): Found design unit 1: sign_ex_6_16-behave File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/sign_ex_6_16.vhd Line: 13
+    Info (12023): Found entity 1: sign_ex_6_16 File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/sign_ex_6_16.vhd Line: 6
+Info (12021): Found 2 design units, including 1 entities, in source file reg_file.vhd
+    Info (12022): Found design unit 1: reg_file-main File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/reg_file.vhd Line: 19
+    Info (12023): Found entity 1: reg_file File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/reg_file.vhd Line: 7
+Info (12021): Found 2 design units, including 1 entities, in source file reg_8.vhd
+    Info (12022): Found design unit 1: reg_8-behave File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/reg_8.vhd Line: 17
+    Info (12023): Found entity 1: reg_8 File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/reg_8.vhd Line: 7
+Info (12021): Found 2 design units, including 1 entities, in source file reg_3.vhd
+    Info (12022): Found design unit 1: reg_3-behave File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/reg_3.vhd Line: 17
+    Info (12023): Found entity 1: reg_3 File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/reg_3.vhd Line: 7
+Info (12021): Found 2 design units, including 1 entities, in source file reg_1.vhd
+    Info (12022): Found design unit 1: reg_1-behave File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/reg_1.vhd Line: 17
+    Info (12023): Found entity 1: reg_1 File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/reg_1.vhd Line: 7
+Info (12021): Found 2 design units, including 1 entities, in source file reg.vhd
+    Info (12022): Found design unit 1: reg-behave File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/reg.vhd Line: 17
+    Info (12023): Found entity 1: reg File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/reg.vhd Line: 7
+Info (12021): Found 2 design units, including 1 entities, in source file PriorityEncoder.vhd
+    Info (12022): Found design unit 1: PriorityEncoder-behave File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/PriorityEncoder.vhd Line: 14
+    Info (12023): Found entity 1: PriorityEncoder File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/PriorityEncoder.vhd Line: 6
+Info (12021): Found 2 design units, including 1 entities, in source file nand_16.vhd
+    Info (12022): Found design unit 1: nand_16-behave File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/nand_16.vhd Line: 13
+    Info (12023): Found entity 1: nand_16 File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/nand_16.vhd Line: 6
+Info (12021): Found 2 design units, including 1 entities, in source file mux4_1.vhd
+    Info (12022): Found design unit 1: mux4_1-behave File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/mux4_1.vhd Line: 17
+    Info (12023): Found entity 1: mux4_1 File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/mux4_1.vhd Line: 6
+Info (12021): Found 2 design units, including 1 entities, in source file mux3_1_1.vhd
+    Info (12022): Found design unit 1: mux3_1_1-behave File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/mux3_1_1.vhd Line: 16
+    Info (12023): Found entity 1: mux3_1_1 File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/mux3_1_1.vhd Line: 6
+Info (12021): Found 2 design units, including 1 entities, in source file mux3_1.vhd
+    Info (12022): Found design unit 1: mux3_1-behave File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/mux3_1.vhd Line: 16
+    Info (12023): Found entity 1: mux3_1 File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/mux3_1.vhd Line: 6
+Info (12021): Found 2 design units, including 1 entities, in source file mux2_1_2.vhd
+    Info (12022): Found design unit 1: mux2_1_2-behave File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/mux2_1_2.vhd Line: 15
+    Info (12023): Found entity 1: mux2_1_2 File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/mux2_1_2.vhd Line: 6
+Info (12021): Found 2 design units, including 1 entities, in source file mux2_1_1.vhd
+    Info (12022): Found design unit 1: mux2_1_1-behave File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/mux2_1_1.vhd Line: 15
+    Info (12023): Found entity 1: mux2_1_1 File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/mux2_1_1.vhd Line: 6
+Info (12021): Found 2 design units, including 1 entities, in source file mux2_1.vhd
+    Info (12022): Found design unit 1: mux2_1-behave File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/mux2_1.vhd Line: 15
+    Info (12023): Found entity 1: mux2_1 File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/mux2_1.vhd Line: 6
+Info (12021): Found 2 design units, including 1 entities, in source file memory.vhd
+    Info (12022): Found design unit 1: memory-design File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/memory.vhd Line: 14
+    Info (12023): Found entity 1: memory File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/memory.vhd Line: 7
+Info (12021): Found 2 design units, including 1 entities, in source file ir_reg.vhd
+    Info (12022): Found design unit 1: ir_reg-behave File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/ir_reg.vhd Line: 22
+    Info (12023): Found entity 1: ir_reg File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/ir_reg.vhd Line: 7
+Info (12021): Found 2 design units, including 1 entities, in source file inverter.vhd
+    Info (12022): Found design unit 1: inverter-behave File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/inverter.vhd Line: 26
+    Info (12023): Found entity 1: inverter File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/inverter.vhd Line: 20
+Info (12021): Found 2 design units, including 1 entities, in source file halfadder.vhd
+    Info (12022): Found design unit 1: halfadder-halfadder File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/halfadder.vhd Line: 12
+    Info (12023): Found entity 1: halfadder File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/halfadder.vhd Line: 7
+Info (12021): Found 2 design units, including 1 entities, in source file fulladder.vhd
+    Info (12022): Found design unit 1: fulladder-fulladder File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/fulladder.vhd Line: 13
+    Info (12023): Found entity 1: fulladder File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/fulladder.vhd Line: 8
+Info (12021): Found 2 design units, including 1 entities, in source file equality.vhd
+    Info (12022): Found design unit 1: equality-behave File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/equality.vhd Line: 15
+    Info (12023): Found entity 1: equality File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/equality.vhd Line: 6
+Info (12021): Found 2 design units, including 1 entities, in source file data_path.vhd
+    Info (12022): Found design unit 1: data_path-behave File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/data_path.vhd Line: 42
+    Info (12023): Found entity 1: data_path File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/data_path.vhd Line: 7
+Info (12127): Elaborating entity "data_path" for the top level hierarchy
+Info (12128): Elaborating entity "mux3_1" for hierarchy "mux3_1:muxmdr_d3" File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/data_path.vhd Line: 59
+Warning (10631): VHDL Process Statement warning at mux3_1.vhd(20): inferring latch(es) for signal or variable "out1", which holds its previous value in one or more paths through the process File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/mux3_1.vhd Line: 20
+Info (12128): Elaborating entity "mux3_1_1" for hierarchy "mux3_1_1:muxir_a1" File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/data_path.vhd Line: 62
+Warning (10631): VHDL Process Statement warning at mux3_1_1.vhd(18): inferring latch(es) for signal or variable "out1", which holds its previous value in one or more paths through the process File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/mux3_1_1.vhd Line: 18
+Info (12128): Elaborating entity "mux4_1" for hierarchy "mux4_1:muxb_alu_b" File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/data_path.vhd Line: 64
+Info (12128): Elaborating entity "mux2_1" for hierarchy "mux2_1:muxmem_dw" File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/data_path.vhd Line: 66
+Info (12128): Elaborating entity "mux2_1_1" for hierarchy "mux2_1_1:muxir_a3" File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/data_path.vhd Line: 67
+Info (12128): Elaborating entity "mux2_1_2" for hierarchy "mux2_1_2:muxpe" File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/data_path.vhd Line: 71
+Info (12128): Elaborating entity "ALU" for hierarchy "ALU:alu1" File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/data_path.vhd Line: 73
+Warning (10631): VHDL Process Statement warning at alu.vhd(25): inferring latch(es) for signal or variable "c", which holds its previous value in one or more paths through the process File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/alu.vhd Line: 25
+Warning (10631): VHDL Process Statement warning at alu.vhd(25): inferring latch(es) for signal or variable "z", which holds its previous value in one or more paths through the process File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/alu.vhd Line: 25
+Warning (10631): VHDL Process Statement warning at alu.vhd(25): inferring latch(es) for signal or variable "eqflag", which holds its previous value in one or more paths through the process File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/alu.vhd Line: 25
+Info (10041): Inferred latch for "eqflag" at alu.vhd(25) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/alu.vhd Line: 25
+Info (10041): Inferred latch for "z" at alu.vhd(25) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/alu.vhd Line: 25
+Info (10041): Inferred latch for "c" at alu.vhd(25) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/alu.vhd Line: 25
+Info (12128): Elaborating entity "bit16adder" for hierarchy "ALU:alu1|bit16adder:i1" File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/alu.vhd Line: 58
+Info (12128): Elaborating entity "halfadder" for hierarchy "ALU:alu1|bit16adder:i1|halfadder:G1" File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/bit16adder.vhd Line: 19
+Info (12128): Elaborating entity "fulladder" for hierarchy "ALU:alu1|bit16adder:i1|fulladder:G2" File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/bit16adder.vhd Line: 20
+Info (12128): Elaborating entity "nand_16" for hierarchy "ALU:alu1|nand_16:i2" File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/alu.vhd Line: 64
+Info (12128): Elaborating entity "equality" for hierarchy "ALU:alu1|equality:i3" File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/alu.vhd Line: 69
+Warning (10631): VHDL Process Statement warning at equality.vhd(17): inferring latch(es) for signal or variable "z", which holds its previous value in one or more paths through the process File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/equality.vhd Line: 17
+Info (10041): Inferred latch for "z" at equality.vhd(17) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/equality.vhd Line: 17
+Info (12128): Elaborating entity "PriorityEncoder" for hierarchy "PriorityEncoder:PE" File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/data_path.vhd Line: 74
+Warning (10631): VHDL Process Statement warning at PriorityEncoder.vhd(16): inferring latch(es) for signal or variable "N", which holds its previous value in one or more paths through the process File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/PriorityEncoder.vhd Line: 16
+Warning (10631): VHDL Process Statement warning at PriorityEncoder.vhd(16): inferring latch(es) for signal or variable "y", which holds its previous value in one or more paths through the process File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/PriorityEncoder.vhd Line: 16
+Warning (10631): VHDL Process Statement warning at PriorityEncoder.vhd(16): inferring latch(es) for signal or variable "s", which holds its previous value in one or more paths through the process File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/PriorityEncoder.vhd Line: 16
+Info (10041): Inferred latch for "s[0]" at PriorityEncoder.vhd(16) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/PriorityEncoder.vhd Line: 16
+Info (10041): Inferred latch for "s[1]" at PriorityEncoder.vhd(16) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/PriorityEncoder.vhd Line: 16
+Info (10041): Inferred latch for "s[2]" at PriorityEncoder.vhd(16) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/PriorityEncoder.vhd Line: 16
+Info (10041): Inferred latch for "y[0]" at PriorityEncoder.vhd(16) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/PriorityEncoder.vhd Line: 16
+Info (10041): Inferred latch for "y[1]" at PriorityEncoder.vhd(16) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/PriorityEncoder.vhd Line: 16
+Info (10041): Inferred latch for "y[2]" at PriorityEncoder.vhd(16) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/PriorityEncoder.vhd Line: 16
+Info (10041): Inferred latch for "y[3]" at PriorityEncoder.vhd(16) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/PriorityEncoder.vhd Line: 16
+Info (10041): Inferred latch for "y[4]" at PriorityEncoder.vhd(16) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/PriorityEncoder.vhd Line: 16
+Info (10041): Inferred latch for "y[5]" at PriorityEncoder.vhd(16) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/PriorityEncoder.vhd Line: 16
+Info (10041): Inferred latch for "y[6]" at PriorityEncoder.vhd(16) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/PriorityEncoder.vhd Line: 16
+Info (10041): Inferred latch for "y[7]" at PriorityEncoder.vhd(16) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/PriorityEncoder.vhd Line: 16
+Info (10041): Inferred latch for "N" at PriorityEncoder.vhd(16) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/PriorityEncoder.vhd Line: 16
+Info (12128): Elaborating entity "reg_3" for hierarchy "reg_3:reg_peo" File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/data_path.vhd Line: 76
+Info (12128): Elaborating entity "reg_1" for hierarchy "reg_1:reg_carry" File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/data_path.vhd Line: 77
+Info (12128): Elaborating entity "reg_8" for hierarchy "reg_8:reg8_pein" File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/data_path.vhd Line: 80
+Info (12128): Elaborating entity "reg" for hierarchy "reg:rega" File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/data_path.vhd Line: 83
+Info (12128): Elaborating entity "ir_reg" for hierarchy "ir_reg:ir_reg_1" File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/data_path.vhd Line: 87
+Info (12128): Elaborating entity "reg_file" for hierarchy "reg_file:reg_file_1" File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/data_path.vhd Line: 88
+Info (12128): Elaborating entity "memory" for hierarchy "memory:memory_1" File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/data_path.vhd Line: 90
+Warning (10631): VHDL Process Statement warning at memory.vhd(23): inferring latch(es) for signal or variable "data_out", which holds its previous value in one or more paths through the process File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/memory.vhd Line: 23
+Info (10041): Inferred latch for "data_out[0]" at memory.vhd(23) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/memory.vhd Line: 23
+Info (10041): Inferred latch for "data_out[1]" at memory.vhd(23) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/memory.vhd Line: 23
+Info (10041): Inferred latch for "data_out[2]" at memory.vhd(23) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/memory.vhd Line: 23
+Info (10041): Inferred latch for "data_out[3]" at memory.vhd(23) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/memory.vhd Line: 23
+Info (10041): Inferred latch for "data_out[4]" at memory.vhd(23) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/memory.vhd Line: 23
+Info (10041): Inferred latch for "data_out[5]" at memory.vhd(23) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/memory.vhd Line: 23
+Info (10041): Inferred latch for "data_out[6]" at memory.vhd(23) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/memory.vhd Line: 23
+Info (10041): Inferred latch for "data_out[7]" at memory.vhd(23) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/memory.vhd Line: 23
+Info (10041): Inferred latch for "data_out[8]" at memory.vhd(23) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/memory.vhd Line: 23
+Info (10041): Inferred latch for "data_out[9]" at memory.vhd(23) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/memory.vhd Line: 23
+Info (10041): Inferred latch for "data_out[10]" at memory.vhd(23) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/memory.vhd Line: 23
+Info (10041): Inferred latch for "data_out[11]" at memory.vhd(23) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/memory.vhd Line: 23
+Info (10041): Inferred latch for "data_out[12]" at memory.vhd(23) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/memory.vhd Line: 23
+Info (10041): Inferred latch for "data_out[13]" at memory.vhd(23) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/memory.vhd Line: 23
+Info (10041): Inferred latch for "data_out[14]" at memory.vhd(23) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/memory.vhd Line: 23
+Info (10041): Inferred latch for "data_out[15]" at memory.vhd(23) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/memory.vhd Line: 23
+Info (12128): Elaborating entity "zero_ex_16_9" for hierarchy "zero_ex_16_9:zeroext" File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/data_path.vhd Line: 92
+Warning (10631): VHDL Process Statement warning at zero_ex_16_9.vhd(15): inferring latch(es) for signal or variable "alu_out", which holds its previous value in one or more paths through the process File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/zero_ex_16_9.vhd Line: 15
+Info (10041): Inferred latch for "alu_out[0]" at zero_ex_16_9.vhd(15) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/zero_ex_16_9.vhd Line: 15
+Info (10041): Inferred latch for "alu_out[1]" at zero_ex_16_9.vhd(15) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/zero_ex_16_9.vhd Line: 15
+Info (10041): Inferred latch for "alu_out[2]" at zero_ex_16_9.vhd(15) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/zero_ex_16_9.vhd Line: 15
+Info (10041): Inferred latch for "alu_out[3]" at zero_ex_16_9.vhd(15) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/zero_ex_16_9.vhd Line: 15
+Info (10041): Inferred latch for "alu_out[4]" at zero_ex_16_9.vhd(15) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/zero_ex_16_9.vhd Line: 15
+Info (10041): Inferred latch for "alu_out[5]" at zero_ex_16_9.vhd(15) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/zero_ex_16_9.vhd Line: 15
+Info (10041): Inferred latch for "alu_out[6]" at zero_ex_16_9.vhd(15) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/zero_ex_16_9.vhd Line: 15
+Info (10041): Inferred latch for "alu_out[7]" at zero_ex_16_9.vhd(15) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/zero_ex_16_9.vhd Line: 15
+Info (10041): Inferred latch for "alu_out[8]" at zero_ex_16_9.vhd(15) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/zero_ex_16_9.vhd Line: 15
+Info (10041): Inferred latch for "alu_out[9]" at zero_ex_16_9.vhd(15) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/zero_ex_16_9.vhd Line: 15
+Info (10041): Inferred latch for "alu_out[10]" at zero_ex_16_9.vhd(15) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/zero_ex_16_9.vhd Line: 15
+Info (10041): Inferred latch for "alu_out[11]" at zero_ex_16_9.vhd(15) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/zero_ex_16_9.vhd Line: 15
+Info (10041): Inferred latch for "alu_out[12]" at zero_ex_16_9.vhd(15) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/zero_ex_16_9.vhd Line: 15
+Info (10041): Inferred latch for "alu_out[13]" at zero_ex_16_9.vhd(15) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/zero_ex_16_9.vhd Line: 15
+Info (10041): Inferred latch for "alu_out[14]" at zero_ex_16_9.vhd(15) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/zero_ex_16_9.vhd Line: 15
+Info (10041): Inferred latch for "alu_out[15]" at zero_ex_16_9.vhd(15) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/zero_ex_16_9.vhd Line: 15
+Info (12128): Elaborating entity "sign_ex_9_16" for hierarchy "sign_ex_9_16:signext9" File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/data_path.vhd Line: 93
+Warning (10631): VHDL Process Statement warning at sign_ex_9_16.vhd(15): inferring latch(es) for signal or variable "alu_out", which holds its previous value in one or more paths through the process File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/sign_ex_9_16.vhd Line: 15
+Info (10041): Inferred latch for "alu_out[0]" at sign_ex_9_16.vhd(15) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/sign_ex_9_16.vhd Line: 15
+Info (10041): Inferred latch for "alu_out[1]" at sign_ex_9_16.vhd(15) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/sign_ex_9_16.vhd Line: 15
+Info (10041): Inferred latch for "alu_out[2]" at sign_ex_9_16.vhd(15) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/sign_ex_9_16.vhd Line: 15
+Info (10041): Inferred latch for "alu_out[3]" at sign_ex_9_16.vhd(15) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/sign_ex_9_16.vhd Line: 15
+Info (10041): Inferred latch for "alu_out[4]" at sign_ex_9_16.vhd(15) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/sign_ex_9_16.vhd Line: 15
+Info (10041): Inferred latch for "alu_out[5]" at sign_ex_9_16.vhd(15) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/sign_ex_9_16.vhd Line: 15
+Info (10041): Inferred latch for "alu_out[6]" at sign_ex_9_16.vhd(15) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/sign_ex_9_16.vhd Line: 15
+Info (10041): Inferred latch for "alu_out[7]" at sign_ex_9_16.vhd(15) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/sign_ex_9_16.vhd Line: 15
+Info (10041): Inferred latch for "alu_out[8]" at sign_ex_9_16.vhd(15) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/sign_ex_9_16.vhd Line: 15
+Info (10041): Inferred latch for "alu_out[9]" at sign_ex_9_16.vhd(15) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/sign_ex_9_16.vhd Line: 15
+Info (10041): Inferred latch for "alu_out[10]" at sign_ex_9_16.vhd(15) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/sign_ex_9_16.vhd Line: 15
+Info (10041): Inferred latch for "alu_out[11]" at sign_ex_9_16.vhd(15) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/sign_ex_9_16.vhd Line: 15
+Info (10041): Inferred latch for "alu_out[12]" at sign_ex_9_16.vhd(15) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/sign_ex_9_16.vhd Line: 15
+Info (10041): Inferred latch for "alu_out[13]" at sign_ex_9_16.vhd(15) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/sign_ex_9_16.vhd Line: 15
+Info (10041): Inferred latch for "alu_out[14]" at sign_ex_9_16.vhd(15) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/sign_ex_9_16.vhd Line: 15
+Info (10041): Inferred latch for "alu_out[15]" at sign_ex_9_16.vhd(15) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/sign_ex_9_16.vhd Line: 15
+Info (12128): Elaborating entity "sign_ex_6_16" for hierarchy "sign_ex_6_16:signext6" File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/data_path.vhd Line: 94
+Warning (10631): VHDL Process Statement warning at sign_ex_6_16.vhd(15): inferring latch(es) for signal or variable "alu_out", which holds its previous value in one or more paths through the process File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/sign_ex_6_16.vhd Line: 15
+Info (10041): Inferred latch for "alu_out[0]" at sign_ex_6_16.vhd(15) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/sign_ex_6_16.vhd Line: 15
+Info (10041): Inferred latch for "alu_out[1]" at sign_ex_6_16.vhd(15) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/sign_ex_6_16.vhd Line: 15
+Info (10041): Inferred latch for "alu_out[2]" at sign_ex_6_16.vhd(15) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/sign_ex_6_16.vhd Line: 15
+Info (10041): Inferred latch for "alu_out[3]" at sign_ex_6_16.vhd(15) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/sign_ex_6_16.vhd Line: 15
+Info (10041): Inferred latch for "alu_out[4]" at sign_ex_6_16.vhd(15) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/sign_ex_6_16.vhd Line: 15
+Info (10041): Inferred latch for "alu_out[5]" at sign_ex_6_16.vhd(15) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/sign_ex_6_16.vhd Line: 15
+Info (10041): Inferred latch for "alu_out[6]" at sign_ex_6_16.vhd(15) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/sign_ex_6_16.vhd Line: 15
+Info (10041): Inferred latch for "alu_out[7]" at sign_ex_6_16.vhd(15) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/sign_ex_6_16.vhd Line: 15
+Info (10041): Inferred latch for "alu_out[8]" at sign_ex_6_16.vhd(15) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/sign_ex_6_16.vhd Line: 15
+Info (10041): Inferred latch for "alu_out[9]" at sign_ex_6_16.vhd(15) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/sign_ex_6_16.vhd Line: 15
+Info (10041): Inferred latch for "alu_out[10]" at sign_ex_6_16.vhd(15) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/sign_ex_6_16.vhd Line: 15
+Info (10041): Inferred latch for "alu_out[11]" at sign_ex_6_16.vhd(15) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/sign_ex_6_16.vhd Line: 15
+Info (10041): Inferred latch for "alu_out[12]" at sign_ex_6_16.vhd(15) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/sign_ex_6_16.vhd Line: 15
+Info (10041): Inferred latch for "alu_out[13]" at sign_ex_6_16.vhd(15) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/sign_ex_6_16.vhd Line: 15
+Info (10041): Inferred latch for "alu_out[14]" at sign_ex_6_16.vhd(15) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/sign_ex_6_16.vhd Line: 15
+Info (10041): Inferred latch for "alu_out[15]" at sign_ex_6_16.vhd(15) File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/sign_ex_6_16.vhd Line: 15
+Warning (12241): 1 hierarchies have connectivity warnings - see the Connectivity Checks report folder
+Info (13025): Duplicate LATCH primitives merged into single LATCH primitive
+    Info (13026): Duplicate LATCH primitive "sign_ex_6_16:signext6|alu_out[5]" merged with LATCH primitive "sign_ex_6_16:signext6|alu_out[15]" File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/sign_ex_6_16.vhd Line: 15
+    Info (13026): Duplicate LATCH primitive "sign_ex_6_16:signext6|alu_out[6]" merged with LATCH primitive "sign_ex_6_16:signext6|alu_out[15]" File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/sign_ex_6_16.vhd Line: 15
+    Info (13026): Duplicate LATCH primitive "sign_ex_6_16:signext6|alu_out[7]" merged with LATCH primitive "sign_ex_6_16:signext6|alu_out[15]" File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/sign_ex_6_16.vhd Line: 15
+    Info (13026): Duplicate LATCH primitive "sign_ex_6_16:signext6|alu_out[8]" merged with LATCH primitive "sign_ex_6_16:signext6|alu_out[15]" File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/sign_ex_6_16.vhd Line: 15
+    Info (13026): Duplicate LATCH primitive "sign_ex_6_16:signext6|alu_out[9]" merged with LATCH primitive "sign_ex_6_16:signext6|alu_out[15]" File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/sign_ex_6_16.vhd Line: 15
+    Info (13026): Duplicate LATCH primitive "sign_ex_6_16:signext6|alu_out[10]" merged with LATCH primitive "sign_ex_6_16:signext6|alu_out[15]" File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/sign_ex_6_16.vhd Line: 15
+    Info (13026): Duplicate LATCH primitive "sign_ex_6_16:signext6|alu_out[11]" merged with LATCH primitive "sign_ex_6_16:signext6|alu_out[15]" File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/sign_ex_6_16.vhd Line: 15
+    Info (13026): Duplicate LATCH primitive "sign_ex_6_16:signext6|alu_out[12]" merged with LATCH primitive "sign_ex_6_16:signext6|alu_out[15]" File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/sign_ex_6_16.vhd Line: 15
+    Info (13026): Duplicate LATCH primitive "sign_ex_6_16:signext6|alu_out[13]" merged with LATCH primitive "sign_ex_6_16:signext6|alu_out[15]" File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/sign_ex_6_16.vhd Line: 15
+    Info (13026): Duplicate LATCH primitive "sign_ex_6_16:signext6|alu_out[14]" merged with LATCH primitive "sign_ex_6_16:signext6|alu_out[15]" File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/sign_ex_6_16.vhd Line: 15
+    Info (13026): Duplicate LATCH primitive "sign_ex_9_16:signext9|alu_out[8]" merged with LATCH primitive "sign_ex_9_16:signext9|alu_out[15]" File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/sign_ex_9_16.vhd Line: 15
+    Info (13026): Duplicate LATCH primitive "sign_ex_9_16:signext9|alu_out[9]" merged with LATCH primitive "sign_ex_9_16:signext9|alu_out[15]" File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/sign_ex_9_16.vhd Line: 15
+    Info (13026): Duplicate LATCH primitive "sign_ex_9_16:signext9|alu_out[10]" merged with LATCH primitive "sign_ex_9_16:signext9|alu_out[15]" File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/sign_ex_9_16.vhd Line: 15
+    Info (13026): Duplicate LATCH primitive "sign_ex_9_16:signext9|alu_out[11]" merged with LATCH primitive "sign_ex_9_16:signext9|alu_out[15]" File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/sign_ex_9_16.vhd Line: 15
+    Info (13026): Duplicate LATCH primitive "sign_ex_9_16:signext9|alu_out[12]" merged with LATCH primitive "sign_ex_9_16:signext9|alu_out[15]" File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/sign_ex_9_16.vhd Line: 15
+    Info (13026): Duplicate LATCH primitive "sign_ex_9_16:signext9|alu_out[13]" merged with LATCH primitive "sign_ex_9_16:signext9|alu_out[15]" File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/sign_ex_9_16.vhd Line: 15
+    Info (13026): Duplicate LATCH primitive "sign_ex_9_16:signext9|alu_out[14]" merged with LATCH primitive "sign_ex_9_16:signext9|alu_out[15]" File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/sign_ex_9_16.vhd Line: 15
+Warning (13024): Output pins are stuck at VCC or GND
+    Warning (13410): Pin "eqflag" is stuck at GND File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/data_path.vhd Line: 36
+Info (286030): Timing-Driven Synthesis is running
+Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
+    Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
+Warning (21074): Design contains 18 input pin(s) that do not drive logic
+    Warning (15610): No output dependent on input pin "pcWrite" File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/data_path.vhd Line: 12
+    Warning (15610): No output dependent on input pin "rfWrite" File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/data_path.vhd Line: 12
+    Warning (15610): No output dependent on input pin "irWrite" File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/data_path.vhd Line: 12
+    Warning (15610): No output dependent on input pin "mux_mem_addr[0]" File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/data_path.vhd Line: 17
+    Warning (15610): No output dependent on input pin "mux_mem_addr[1]" File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/data_path.vhd Line: 17
+    Warning (15610): No output dependent on input pin "mux_a3" File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/data_path.vhd Line: 18
+    Warning (15610): No output dependent on input pin "mux_a2" File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/data_path.vhd Line: 18
+    Warning (15610): No output dependent on input pin "mux_a1[0]" File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/data_path.vhd Line: 19
+    Warning (15610): No output dependent on input pin "mux_a1[1]" File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/data_path.vhd Line: 19
+    Warning (15610): No output dependent on input pin "mux_d3[0]" File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/data_path.vhd Line: 21
+    Warning (15610): No output dependent on input pin "mux_d3[1]" File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/data_path.vhd Line: 21
+    Warning (15610): No output dependent on input pin "mux_pc[0]" File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/data_path.vhd Line: 21
+    Warning (15610): No output dependent on input pin "mux_pc[1]" File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/data_path.vhd Line: 21
+    Warning (15610): No output dependent on input pin "enable_b" File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/data_path.vhd Line: 25
+    Warning (15610): No output dependent on input pin "enable_mdr" File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/data_path.vhd Line: 26
+    Warning (15610): No output dependent on input pin "enable_eqflag" File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/data_path.vhd Line: 28
+    Warning (15610): No output dependent on input pin "enable_pe_1_3" File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/data_path.vhd Line: 30
+    Warning (15610): No output dependent on input pin "ze_9_16" File: /home/rafi/Dropbox/project_1/vhdl codes/data_path/data_path.vhd Line: 31
+Info (21057): Implemented 263 device resources after synthesis - the final resource count might be different
+    Info (21058): Implemented 40 input pins
+    Info (21059): Implemented 10 output pins
+    Info (21061): Implemented 213 logic cells
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 36 warnings
+    Info: Peak virtual memory: 1244 megabytes
+    Info: Processing ended: Fri Nov  4 17:10:50 2016
+    Info: Elapsed time: 00:00:20
+    Info: Total CPU time (on all processors): 00:00:49
+
+

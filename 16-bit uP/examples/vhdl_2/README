@@ -1,0 +1,50 @@
+Contents of this directory
+
+	compile_ghdl.sh
+		script to compile VHDL files
+		type
+                  source compile_ghdl.sh
+		to produce executable named testbench
+
+		To simulate for 100 ns, 
+                 ./testbench --stop-time=100ns --vcd=run.vcd
+                This generates a waveform file run.vcd, and
+		reports success/failure of the tests.  An output
+		file OUTPUTS.txt to flag errors is also created.
+
+	FSM.vhd
+		VHDL description of FSM, and a testbench.
+
+	README
+		this file.
+	
+	TRACEFILE.txt
+		pattern-file used by the testbench.  This contains
+		input-waveform and expected output waveform.  The
+		input-symbols are coded with 2 bits as 
+			a <-> 00
+			b <-> 01
+		The output symbols are coded with 1 bit as
+			Q <-> 0
+			P <-> 1
+
+		The TRACEFILE specifies the signal values at
+		the input for each clock-event.
+
+		clk input-symbol    expected-output-symbol
+				     checked after input-application.
+		-----------------------------------------------------
+		0	10 		0 
+		1	10 		0  
+		0	00 		0	 
+		1	00 		0   
+		0	01 		0 
+		1	01 		0
+		0	00 		0
+		1	00 		0
+		0	01 		1
+		1	01 		1
+		0	00 		0
+		1	00 		0
+		------------------------------------------------------
+

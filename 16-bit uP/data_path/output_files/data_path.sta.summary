@@ -1,0 +1,257 @@
+------------------------------------------------------------
+TimeQuest Timing Analyzer Summary
+------------------------------------------------------------
+
+Type  : Slow 1200mV 85C Model Setup 'alu_op[1]'
+Slack : -7.995
+TNS   : -15.960
+
+Type  : Slow 1200mV 85C Model Setup 'clock'
+Slack : -6.352
+TNS   : -131.784
+
+Type  : Slow 1200mV 85C Model Setup 'enable_pe'
+Slack : -2.191
+TNS   : -14.331
+
+Type  : Slow 1200mV 85C Model Setup 'memWrite'
+Slack : -1.730
+TNS   : -21.561
+
+Type  : Slow 1200mV 85C Model Setup 'se_6_16'
+Slack : -1.044
+TNS   : -6.113
+
+Type  : Slow 1200mV 85C Model Setup 'se_9_16'
+Slack : -1.032
+TNS   : -7.868
+
+Type  : Slow 1200mV 85C Model Setup 'memRead'
+Slack : 2.570
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Hold 'memRead'
+Slack : -3.407
+TNS   : -43.921
+
+Type  : Slow 1200mV 85C Model Hold 'memWrite'
+Slack : -0.029
+TNS   : -0.157
+
+Type  : Slow 1200mV 85C Model Hold 'clock'
+Slack : 0.343
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Hold 'se_9_16'
+Slack : 0.582
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Hold 'se_6_16'
+Slack : 0.816
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Hold 'enable_pe'
+Slack : 1.077
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Hold 'alu_op[1]'
+Slack : 2.112
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'clock'
+Slack : -3.000
+TNS   : -68.000
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'alu_op[1]'
+Slack : -3.000
+TNS   : -3.000
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'enable_pe'
+Slack : -3.000
+TNS   : -3.000
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'memRead'
+Slack : -3.000
+TNS   : -3.000
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'memWrite'
+Slack : -3.000
+TNS   : -3.000
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'se_6_16'
+Slack : -3.000
+TNS   : -3.000
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'se_9_16'
+Slack : -3.000
+TNS   : -3.000
+
+Type  : Slow 1200mV 0C Model Setup 'alu_op[1]'
+Slack : -7.028
+TNS   : -14.033
+
+Type  : Slow 1200mV 0C Model Setup 'clock'
+Slack : -5.600
+TNS   : -111.361
+
+Type  : Slow 1200mV 0C Model Setup 'enable_pe'
+Slack : -1.928
+TNS   : -12.566
+
+Type  : Slow 1200mV 0C Model Setup 'memWrite'
+Slack : -1.522
+TNS   : -18.058
+
+Type  : Slow 1200mV 0C Model Setup 'se_9_16'
+Slack : -0.890
+TNS   : -6.756
+
+Type  : Slow 1200mV 0C Model Setup 'se_6_16'
+Slack : -0.885
+TNS   : -5.201
+
+Type  : Slow 1200mV 0C Model Setup 'memRead'
+Slack : 2.261
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Hold 'memRead'
+Slack : -2.909
+TNS   : -37.483
+
+Type  : Slow 1200mV 0C Model Hold 'memWrite'
+Slack : 0.032
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Hold 'clock'
+Slack : 0.300
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Hold 'se_9_16'
+Slack : 0.599
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Hold 'se_6_16'
+Slack : 0.807
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Hold 'enable_pe'
+Slack : 1.040
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Hold 'alu_op[1]'
+Slack : 1.891
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'clock'
+Slack : -3.000
+TNS   : -68.000
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'alu_op[1]'
+Slack : -3.000
+TNS   : -3.000
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'enable_pe'
+Slack : -3.000
+TNS   : -3.000
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'memRead'
+Slack : -3.000
+TNS   : -3.000
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'memWrite'
+Slack : -3.000
+TNS   : -3.000
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'se_6_16'
+Slack : -3.000
+TNS   : -3.000
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'se_9_16'
+Slack : -3.000
+TNS   : -3.000
+
+Type  : Fast 1200mV 0C Model Setup 'alu_op[1]'
+Slack : -4.621
+TNS   : -9.229
+
+Type  : Fast 1200mV 0C Model Setup 'clock'
+Slack : -3.645
+TNS   : -74.294
+
+Type  : Fast 1200mV 0C Model Setup 'enable_pe'
+Slack : -0.750
+TNS   : -4.041
+
+Type  : Fast 1200mV 0C Model Setup 'memWrite'
+Slack : -0.487
+TNS   : -6.530
+
+Type  : Fast 1200mV 0C Model Setup 'se_6_16'
+Slack : -0.082
+TNS   : -0.412
+
+Type  : Fast 1200mV 0C Model Setup 'se_9_16'
+Slack : -0.065
+TNS   : -0.180
+
+Type  : Fast 1200mV 0C Model Setup 'memRead'
+Slack : 1.936
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Hold 'memRead'
+Slack : -2.027
+TNS   : -26.105
+
+Type  : Fast 1200mV 0C Model Hold 'clock'
+Slack : 0.179
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Hold 'se_9_16'
+Slack : 0.211
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Hold 'se_6_16'
+Slack : 0.339
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Hold 'memWrite'
+Slack : 0.416
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Hold 'enable_pe'
+Slack : 0.477
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Hold 'alu_op[1]'
+Slack : 1.196
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'clock'
+Slack : -3.000
+TNS   : -71.702
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'memRead'
+Slack : -3.000
+TNS   : -5.964
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'alu_op[1]'
+Slack : -3.000
+TNS   : -3.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'enable_pe'
+Slack : -3.000
+TNS   : -3.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'memWrite'
+Slack : -3.000
+TNS   : -3.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'se_6_16'
+Slack : -3.000
+TNS   : -3.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'se_9_16'
+Slack : -3.000
+TNS   : -3.000
+
+------------------------------------------------------------

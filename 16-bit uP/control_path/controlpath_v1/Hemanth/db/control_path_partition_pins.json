@@ -1,0 +1,213 @@
+{
+	"partitions" : [
+		{
+			"name" : "Top",
+			"pins" : [
+				{
+					"name" : "pcWrite",
+					"strict" : false
+				},
+				{
+					"name" : "rfWrite",
+					"strict" : false
+				},
+				{
+					"name" : "irWrite",
+					"strict" : false
+				},
+				{
+					"name" : "memRead",
+					"strict" : false
+				},
+				{
+					"name" : "memWrite",
+					"strict" : false
+				},
+				{
+					"name" : "alu_op[0]",
+					"strict" : false
+				},
+				{
+					"name" : "alu_op[1]",
+					"strict" : false
+				},
+				{
+					"name" : "mux_mem_data",
+					"strict" : false
+				},
+				{
+					"name" : "mux_mem_addr[0]",
+					"strict" : false
+				},
+				{
+					"name" : "mux_mem_addr[1]",
+					"strict" : false
+				},
+				{
+					"name" : "mux_a3",
+					"strict" : false
+				},
+				{
+					"name" : "mux_a2",
+					"strict" : false
+				},
+				{
+					"name" : "mux_a1[0]",
+					"strict" : false
+				},
+				{
+					"name" : "mux_a1[1]",
+					"strict" : false
+				},
+				{
+					"name" : "mux_a",
+					"strict" : false
+				},
+				{
+					"name" : "mux_b[0]",
+					"strict" : false
+				},
+				{
+					"name" : "mux_b[1]",
+					"strict" : false
+				},
+				{
+					"name" : "mux_d3[0]",
+					"strict" : false
+				},
+				{
+					"name" : "mux_d3[1]",
+					"strict" : false
+				},
+				{
+					"name" : "mux_pc[0]",
+					"strict" : false
+				},
+				{
+					"name" : "mux_pc[1]",
+					"strict" : false
+				},
+				{
+					"name" : "mux_pe_tmp",
+					"strict" : false
+				},
+				{
+					"name" : "mux_before_a",
+					"strict" : false
+				},
+				{
+					"name" : "enable_alu",
+					"strict" : false
+				},
+				{
+					"name" : "enable_a",
+					"strict" : false
+				},
+				{
+					"name" : "enable_b",
+					"strict" : false
+				},
+				{
+					"name" : "enable_c",
+					"strict" : false
+				},
+				{
+					"name" : "enable_mdr",
+					"strict" : false
+				},
+				{
+					"name" : "enable_pe_tmp",
+					"strict" : false
+				},
+				{
+					"name" : "enable_pe_out",
+					"strict" : false
+				},
+				{
+					"name" : "enable_pe_flag",
+					"strict" : false
+				},
+				{
+					"name" : "enable_eqflag",
+					"strict" : false
+				},
+				{
+					"name" : "enable_carry_flag",
+					"strict" : false
+				},
+				{
+					"name" : "enable_Z_flag",
+					"strict" : false
+				},
+				{
+					"name" : "enable_pe",
+					"strict" : false
+				},
+				{
+					"name" : "enable_pe_1_3",
+					"strict" : false
+				},
+				{
+					"name" : "se_6_16",
+					"strict" : false
+				},
+				{
+					"name" : "se_9_16",
+					"strict" : false
+				},
+				{
+					"name" : "ze_9_16",
+					"strict" : false
+				},
+				{
+					"name" : "op_code[0]",
+					"strict" : false
+				},
+				{
+					"name" : "op_code[1]",
+					"strict" : false
+				},
+				{
+					"name" : "op_code[3]",
+					"strict" : false
+				},
+				{
+					"name" : "reset",
+					"strict" : false
+				},
+				{
+					"name" : "op_code[2]",
+					"strict" : false
+				},
+				{
+					"name" : "eqflag",
+					"strict" : false
+				},
+				{
+					"name" : "clock",
+					"strict" : false
+				},
+				{
+					"name" : "pe_flag",
+					"strict" : false
+				},
+				{
+					"name" : "CZ[1]",
+					"strict" : false
+				},
+				{
+					"name" : "CZ[0]",
+					"strict" : false
+				},
+				{
+					"name" : "carry",
+					"strict" : false
+				},
+				{
+					"name" : "Z",
+					"strict" : false
+				}
+			]
+		}
+	]
+}

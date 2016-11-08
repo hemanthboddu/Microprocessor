@@ -1,0 +1,19 @@
+Library MyLib is built using files
+	MyPackage.vhd
+	TwoBitAdder.vhd
+
+Library work contains stuff from
+	Testbench.vhd
+
+
+The shell script compile_ghdl.sh 
+first includes stuff that will be in library MyLib
+	ghdl -i --work=MyLib  MyPackage.vhd
+	ghdl -i --work=MyLib  TwoBitAdder.vhd
+
+then the library work:
+	ghdl -i --work=work Testbench.vhd
+
+finally makes the testbench from library work.
+	ghdl -m Testbench
+

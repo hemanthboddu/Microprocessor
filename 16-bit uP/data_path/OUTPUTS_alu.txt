@@ -1,0 +1,9 @@
+ERROR: in s0-out, line 00000000000000001
+ERROR: in s0-z, line 1
+ERROR: in s0-eq, line 1
+ERROR: in s0-out, line 00000000000000002
+ERROR: in s0-z, line 2
+ERROR: in s0-eq, line 2
+ERROR: in s0-c, line 3
+ERROR: in s0-z, line 3
+ERROR: in s0-eq, line 3

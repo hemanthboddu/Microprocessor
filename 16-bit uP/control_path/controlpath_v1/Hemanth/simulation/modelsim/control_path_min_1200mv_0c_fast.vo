@@ -1,0 +1,4362 @@
+// Copyright (C) 1991-2016 Altera Corporation. All rights reserved.
+// Your use of Altera Corporation's design tools, logic functions 
+// and other software and tools, and its AMPP partner logic 
+// functions, and any output files from any of the foregoing 
+// (including device programming or simulation files), and any 
+// associated documentation or information are expressly subject 
+// to the terms and conditions of the Altera Program License 
+// Subscription Agreement, the Altera Quartus Prime License Agreement,
+// the Altera MegaCore Function License Agreement, or other 
+// applicable license agreement, including, without limitation, 
+// that your use is for the sole purpose of programming logic 
+// devices manufactured by Altera and sold by Altera or its 
+// authorized distributors.  Please refer to the applicable 
+// agreement for further details.
+
+// VENDOR "Altera"
+// PROGRAM "Quartus Prime"
+// VERSION "Version 16.0.0 Build 211 04/27/2016 SJ Lite Edition"
+
+// DATE "11/07/2016 23:56:04"
+
+// 
+// Device: Altera EP4CE22F17C6 Package FBGA256
+// 
+
+// 
+// This Verilog file should be used for ModelSim-Altera (Verilog) only
+// 
+
+`timescale 1 ps/ 1 ps
+
+module control_path (
+	clock,
+	reset,
+	pcWrite,
+	rfWrite,
+	irWrite,
+	memRead,
+	memWrite,
+	alu_op,
+	mux_mem_data,
+	mux_mem_addr,
+	mux_a3,
+	mux_a2,
+	mux_a1,
+	mux_a,
+	mux_b,
+	mux_d3,
+	mux_pc,
+	mux_pe_tmp,
+	mux_before_a,
+	enable_alu,
+	enable_a,
+	enable_b,
+	enable_c,
+	enable_mdr,
+	enable_pe_tmp,
+	enable_pe_out,
+	enable_pe_flag,
+	enable_eqflag,
+	enable_carry_flag,
+	enable_Z_flag,
+	enable_pe,
+	enable_pe_1_3,
+	se_6_16,
+	se_9_16,
+	ze_9_16,
+	carry,
+	Z,
+	eqflag,
+	pe_flag,
+	op_code,
+	CZ);
+input 	clock;
+input 	reset;
+output 	pcWrite;
+output 	rfWrite;
+output 	irWrite;
+output 	memRead;
+output 	memWrite;
+output 	[1:0] alu_op;
+output 	mux_mem_data;
+output 	[1:0] mux_mem_addr;
+output 	mux_a3;
+output 	mux_a2;
+output 	[1:0] mux_a1;
+output 	mux_a;
+output 	[1:0] mux_b;
+output 	[1:0] mux_d3;
+output 	[1:0] mux_pc;
+output 	mux_pe_tmp;
+output 	mux_before_a;
+output 	enable_alu;
+output 	enable_a;
+output 	enable_b;
+output 	enable_c;
+output 	enable_mdr;
+output 	enable_pe_tmp;
+output 	enable_pe_out;
+output 	enable_pe_flag;
+output 	enable_eqflag;
+output 	enable_carry_flag;
+output 	enable_Z_flag;
+output 	enable_pe;
+output 	enable_pe_1_3;
+output 	se_6_16;
+output 	se_9_16;
+output 	ze_9_16;
+input 	carry;
+input 	Z;
+input 	eqflag;
+input 	pe_flag;
+input 	[3:0] op_code;
+input 	[1:0] CZ;
+
+// Design Ports Information
+// pcWrite	=>  Location: PIN_C8,	 I/O Standard: 2.5 V,	 Current Strength: Default
+// rfWrite	=>  Location: PIN_G1,	 I/O Standard: 2.5 V,	 Current Strength: Default
+// irWrite	=>  Location: PIN_E9,	 I/O Standard: 2.5 V,	 Current Strength: Default
+// memRead	=>  Location: PIN_C3,	 I/O Standard: 2.5 V,	 Current Strength: Default
+// memWrite	=>  Location: PIN_T4,	 I/O Standard: 2.5 V,	 Current Strength: Default
+// alu_op[0]	=>  Location: PIN_B6,	 I/O Standard: 2.5 V,	 Current Strength: Default
+// alu_op[1]	=>  Location: PIN_L1,	 I/O Standard: 2.5 V,	 Current Strength: Default
+// mux_mem_data	=>  Location: PIN_N5,	 I/O Standard: 2.5 V,	 Current Strength: Default
+// mux_mem_addr[0]	=>  Location: PIN_D8,	 I/O Standard: 2.5 V,	 Current Strength: Default
+// mux_mem_addr[1]	=>  Location: PIN_B1,	 I/O Standard: 2.5 V,	 Current Strength: Default
+// mux_a3	=>  Location: PIN_K2,	 I/O Standard: 2.5 V,	 Current Strength: Default
+// mux_a2	=>  Location: PIN_A2,	 I/O Standard: 2.5 V,	 Current Strength: Default
+// mux_a1[0]	=>  Location: PIN_G5,	 I/O Standard: 2.5 V,	 Current Strength: Default
+// mux_a1[1]	=>  Location: PIN_G2,	 I/O Standard: 2.5 V,	 Current Strength: Default
+// mux_a	=>  Location: PIN_F8,	 I/O Standard: 2.5 V,	 Current Strength: Default
+// mux_b[0]	=>  Location: PIN_E6,	 I/O Standard: 2.5 V,	 Current Strength: Default
+// mux_b[1]	=>  Location: PIN_B3,	 I/O Standard: 2.5 V,	 Current Strength: Default
+// mux_d3[0]	=>  Location: PIN_J1,	 I/O Standard: 2.5 V,	 Current Strength: Default
+// mux_d3[1]	=>  Location: PIN_R4,	 I/O Standard: 2.5 V,	 Current Strength: Default
+// mux_pc[0]	=>  Location: PIN_A5,	 I/O Standard: 2.5 V,	 Current Strength: Default
+// mux_pc[1]	=>  Location: PIN_A7,	 I/O Standard: 2.5 V,	 Current Strength: Default
+// mux_pe_tmp	=>  Location: PIN_K1,	 I/O Standard: 2.5 V,	 Current Strength: Default
+// mux_before_a	=>  Location: PIN_J2,	 I/O Standard: 2.5 V,	 Current Strength: Default
+// enable_alu	=>  Location: PIN_A3,	 I/O Standard: 2.5 V,	 Current Strength: Default
+// enable_a	=>  Location: PIN_F3,	 I/O Standard: 2.5 V,	 Current Strength: Default
+// enable_b	=>  Location: PIN_N2,	 I/O Standard: 2.5 V,	 Current Strength: Default
+// enable_c	=>  Location: PIN_C2,	 I/O Standard: 2.5 V,	 Current Strength: Default
+// enable_mdr	=>  Location: PIN_D5,	 I/O Standard: 2.5 V,	 Current Strength: Default
+// enable_pe_tmp	=>  Location: PIN_D3,	 I/O Standard: 2.5 V,	 Current Strength: Default
+// enable_pe_out	=>  Location: PIN_P2,	 I/O Standard: 2.5 V,	 Current Strength: Default
+// enable_pe_flag	=>  Location: PIN_R1,	 I/O Standard: 2.5 V,	 Current Strength: Default
+// enable_eqflag	=>  Location: PIN_L2,	 I/O Standard: 2.5 V,	 Current Strength: Default
+// enable_carry_flag	=>  Location: PIN_F1,	 I/O Standard: 2.5 V,	 Current Strength: Default
+// enable_Z_flag	=>  Location: PIN_B4,	 I/O Standard: 2.5 V,	 Current Strength: Default
+// enable_pe	=>  Location: PIN_L4,	 I/O Standard: 2.5 V,	 Current Strength: Default
+// enable_pe_1_3	=>  Location: PIN_P1,	 I/O Standard: 2.5 V,	 Current Strength: Default
+// se_6_16	=>  Location: PIN_E7,	 I/O Standard: 2.5 V,	 Current Strength: Default
+// se_9_16	=>  Location: PIN_C6,	 I/O Standard: 2.5 V,	 Current Strength: Default
+// ze_9_16	=>  Location: PIN_N6,	 I/O Standard: 2.5 V,	 Current Strength: Default
+// op_code[0]	=>  Location: PIN_M2,	 I/O Standard: 2.5 V,	 Current Strength: Default
+// op_code[1]	=>  Location: PIN_M1,	 I/O Standard: 2.5 V,	 Current Strength: Default
+// op_code[3]	=>  Location: PIN_D6,	 I/O Standard: 2.5 V,	 Current Strength: Default
+// reset	=>  Location: PIN_F2,	 I/O Standard: 2.5 V,	 Current Strength: Default
+// op_code[2]	=>  Location: PIN_D1,	 I/O Standard: 2.5 V,	 Current Strength: Default
+// eqflag	=>  Location: PIN_B5,	 I/O Standard: 2.5 V,	 Current Strength: Default
+// clock	=>  Location: PIN_E1,	 I/O Standard: 2.5 V,	 Current Strength: Default
+// pe_flag	=>  Location: PIN_L3,	 I/O Standard: 2.5 V,	 Current Strength: Default
+// CZ[1]	=>  Location: PIN_A6,	 I/O Standard: 2.5 V,	 Current Strength: Default
+// CZ[0]	=>  Location: PIN_E8,	 I/O Standard: 2.5 V,	 Current Strength: Default
+// carry	=>  Location: PIN_A4,	 I/O Standard: 2.5 V,	 Current Strength: Default
+// Z	=>  Location: PIN_B7,	 I/O Standard: 2.5 V,	 Current Strength: Default
+
+
+wire gnd;
+wire vcc;
+wire unknown;
+
+assign gnd = 1'b0;
+assign vcc = 1'b1;
+assign unknown = 1'bx;
+
+tri1 devclrn;
+tri1 devpor;
+tri1 devoe;
+// synopsys translate_off
+initial $sdf_annotate("control_path_min_1200mv_0c_v_fast.sdo");
+// synopsys translate_on
+
+wire pcWrite_aoutput_o;
+wire rfWrite_aoutput_o;
+wire irWrite_aoutput_o;
+wire memRead_aoutput_o;
+wire memWrite_aoutput_o;
+wire alu_op_a0_a_aoutput_o;
+wire alu_op_a1_a_aoutput_o;
+wire mux_mem_data_aoutput_o;
+wire mux_mem_addr_a0_a_aoutput_o;
+wire mux_mem_addr_a1_a_aoutput_o;
+wire mux_a3_aoutput_o;
+wire mux_a2_aoutput_o;
+wire mux_a1_a0_a_aoutput_o;
+wire mux_a1_a1_a_aoutput_o;
+wire mux_a_aoutput_o;
+wire mux_b_a0_a_aoutput_o;
+wire mux_b_a1_a_aoutput_o;
+wire mux_d3_a0_a_aoutput_o;
+wire mux_d3_a1_a_aoutput_o;
+wire mux_pc_a0_a_aoutput_o;
+wire mux_pc_a1_a_aoutput_o;
+wire mux_pe_tmp_aoutput_o;
+wire mux_before_a_aoutput_o;
+wire enable_alu_aoutput_o;
+wire enable_a_aoutput_o;
+wire enable_b_aoutput_o;
+wire enable_c_aoutput_o;
+wire enable_mdr_aoutput_o;
+wire enable_pe_tmp_aoutput_o;
+wire enable_pe_out_aoutput_o;
+wire enable_pe_flag_aoutput_o;
+wire enable_eqflag_aoutput_o;
+wire enable_carry_flag_aoutput_o;
+wire enable_Z_flag_aoutput_o;
+wire enable_pe_aoutput_o;
+wire enable_pe_1_3_aoutput_o;
+wire se_6_16_aoutput_o;
+wire se_9_16_aoutput_o;
+wire ze_9_16_aoutput_o;
+wire op_code_a0_a_ainput_o;
+wire op_code_a3_a_ainput_o;
+wire clock_ainput_o;
+wire clock_ainputclkctrl_outclk;
+wire reset_ainput_o;
+wire pe_flag_ainput_o;
+wire op_code_a1_a_ainput_o;
+wire op_code_a2_a_ainput_o;
+wire Selector0_a2_combout;
+wire Selector0_a1_combout;
+wire Equal0_a0_combout;
+wire a_anext_state_anext_state_var_alm_0_a2_combout;
+wire state_signal_alm_0_aq;
+wire Selector7_a0_combout;
+wire Equal0_a8_combout;
+wire a_anext_state_anext_state_var_asm_0_a2_combout;
+wire state_signal_asm_0_aq;
+wire Selector1_a0_combout;
+wire state_signal_apriority_aq;
+wire Selector0_a3_combout;
+wire CZ_a1_a_ainput_o;
+wire Z_ainput_o;
+wire carry_ainput_o;
+wire CZ_a0_a_ainput_o;
+wire Selector0_a4_combout;
+wire Selector0_a5_combout;
+wire Equal0_a1_combout;
+wire mux_a2_a0_combout;
+wire state_signal_abreq_0_aq;
+wire eqflag_ainput_o;
+wire Equal0_a2_combout;
+wire next_state_var_a4_combout;
+wire next_state_var_a5_combout;
+wire next_state_var_a6_combout;
+wire state_signal_aadd_0_aq;
+wire Selector3_a0_combout;
+wire state_signal_awb_1_aq;
+wire a_anext_state_anext_state_var_abreq_1_a0_combout;
+wire state_signal_abreq_1_aq;
+wire state_signal_arst_a0_combout;
+wire state_signal_arst_aq;
+wire next_state_var_a3_combout;
+wire Equal0_a3_combout;
+wire mux_b_a30_combout;
+wire state_signal_alw_0_aq;
+wire Equal0_a4_combout;
+wire mux_b_a31_combout;
+wire state_signal_asw_0_aq;
+wire Selector2_a1_combout;
+wire enable_carry_flag_a2_combout;
+wire Equal0_a7_combout;
+wire a_anext_state_anext_state_var_anand_0_a2_combout;
+wire state_signal_anand_0_aq;
+wire Selector2_a0_combout;
+wire Selector2_a2_combout;
+wire state_signal_awb_0_aq;
+wire Selector0_a0_combout;
+wire Selector0_a6_combout;
+wire state_signal_afetch_aq;
+wire irWrite_a0_combout;
+wire state_signal_adec_0_aq;
+wire pcWrite_a0_combout;
+wire pcWrite_a1_combout;
+wire rfWrite_a0_combout;
+wire memRead_a0_combout;
+wire memRead_a1_combout;
+wire memWrite_a0_combout;
+wire alu_op_a0_combout;
+wire alu_op_a1_combout;
+wire mux_mem_addr_a8_combout;
+wire mux_mem_addr_a9_combout;
+wire mux_a3_a0_combout;
+wire mux_a1_a1_combout;
+wire mux_a1_a0_combout;
+wire mux_a_a0_combout;
+wire enable_pe_out_a0_combout;
+wire mux_a_a1_combout;
+wire mux_b_a29_combout;
+wire mux_b_a32_combout;
+wire mux_b_a17_combout;
+wire mux_b_a33_combout;
+wire mux_d3_a3_combout;
+wire Equal0_a5_combout;
+wire mux_d3_a2_combout;
+wire mux_pc_a2_combout;
+wire mux_pc_a3_combout;
+wire Equal0_a6_combout;
+wire mux_pc_a4_combout;
+wire mux_before_a_a0_combout;
+wire enable_alu_a0_combout;
+wire enable_alu_a1_combout;
+wire next_state_var_a2_combout;
+wire enable_a_a3_combout;
+wire enable_a_a2_combout;
+wire enable_b_a2_combout;
+wire enable_b_a3_combout;
+wire enable_alu_a2_combout;
+wire enable_c_a0_combout;
+wire enable_pe_tmp_a0_combout;
+wire enable_carry_flag_a3_combout;
+wire enable_Z_flag_a8_combout;
+wire se_6_16_a2_combout;
+wire se_9_16_a2_combout;
+
+wire pcWrite_aoutput_I_driver;
+wire rfWrite_aoutput_I_driver;
+wire irWrite_aoutput_I_driver;
+wire memRead_aoutput_I_driver;
+wire memWrite_aoutput_I_driver;
+wire alu_op_a0_a_aoutput_I_driver;
+wire alu_op_a1_a_aoutput_I_driver;
+wire mux_mem_data_aoutput_I_driver;
+wire mux_mem_addr_a0_a_aoutput_I_driver;
+wire mux_mem_addr_a1_a_aoutput_I_driver;
+wire mux_a3_aoutput_I_driver;
+wire mux_a2_aoutput_I_driver;
+wire mux_a1_a0_a_aoutput_I_driver;
+wire mux_a1_a1_a_aoutput_I_driver;
+wire mux_a_aoutput_I_driver;
+wire mux_b_a0_a_aoutput_I_driver;
+wire mux_b_a1_a_aoutput_I_driver;
+wire mux_d3_a0_a_aoutput_I_driver;
+wire mux_d3_a1_a_aoutput_I_driver;
+wire mux_pc_a0_a_aoutput_I_driver;
+wire mux_pc_a1_a_aoutput_I_driver;
+wire mux_pe_tmp_aoutput_I_driver;
+wire mux_before_a_aoutput_I_driver;
+wire enable_alu_aoutput_I_driver;
+wire enable_a_aoutput_I_driver;
+wire enable_b_aoutput_I_driver;
+wire enable_c_aoutput_I_driver;
+wire enable_mdr_aoutput_I_driver;
+wire enable_pe_tmp_aoutput_I_driver;
+wire enable_pe_out_aoutput_I_driver;
+wire enable_pe_flag_aoutput_I_driver;
+wire enable_eqflag_aoutput_I_driver;
+wire enable_carry_flag_aoutput_I_driver;
+wire enable_Z_flag_aoutput_I_driver;
+wire enable_pe_aoutput_I_driver;
+wire enable_pe_1_3_aoutput_I_driver;
+wire se_6_16_aoutput_I_driver;
+wire se_9_16_aoutput_I_driver;
+wire ze_9_16_aoutput_I_driver;
+wire op_code_a0_a_ainput_I_driver;
+wire op_code_a3_a_ainput_I_driver;
+wire clock_ainput_I_driver;
+wire reset_ainput_I_driver;
+wire pe_flag_ainput_I_driver;
+wire op_code_a1_a_ainput_I_driver;
+wire op_code_a2_a_ainput_I_driver;
+wire Selector0_a2_DATAA_driver;
+wire Selector0_a2_DATAC_driver;
+wire Selector0_a2_DATAD_driver;
+wire Selector0_a1_DATAA_driver;
+wire Selector0_a1_DATAB_driver;
+wire Selector0_a1_DATAC_driver;
+wire Selector0_a1_DATAD_driver;
+wire Equal0_a0_DATAA_driver;
+wire Equal0_a0_DATAB_driver;
+wire Equal0_a0_DATAC_driver;
+wire Equal0_a0_DATAD_driver;
+wire a_anext_state_anext_state_var_alm_0_a2_DATAA_driver;
+wire a_anext_state_anext_state_var_alm_0_a2_DATAB_driver;
+wire a_anext_state_anext_state_var_alm_0_a2_DATAC_driver;
+wire a_anext_state_anext_state_var_alm_0_a2_DATAD_driver;
+wire state_signal_alm_0_CLK_driver;
+wire state_signal_alm_0_D_driver;
+wire Selector7_a0_DATAA_driver;
+wire Selector7_a0_DATAB_driver;
+wire Selector7_a0_DATAD_driver;
+wire Equal0_a8_DATAA_driver;
+wire Equal0_a8_DATAB_driver;
+wire Equal0_a8_DATAC_driver;
+wire Equal0_a8_DATAD_driver;
+wire a_anext_state_anext_state_var_asm_0_a2_DATAA_driver;
+wire a_anext_state_anext_state_var_asm_0_a2_DATAB_driver;
+wire a_anext_state_anext_state_var_asm_0_a2_DATAC_driver;
+wire a_anext_state_anext_state_var_asm_0_a2_DATAD_driver;
+wire state_signal_asm_0_CLK_driver;
+wire state_signal_asm_0_D_driver;
+wire Selector1_a0_DATAA_driver;
+wire Selector1_a0_DATAB_driver;
+wire Selector1_a0_DATAC_driver;
+wire Selector1_a0_DATAD_driver;
+wire state_signal_apriority_CLK_driver;
+wire state_signal_apriority_D_driver;
+wire state_signal_apriority_SCLR_driver;
+wire Selector0_a3_DATAA_driver;
+wire Selector0_a3_DATAB_driver;
+wire Selector0_a3_DATAC_driver;
+wire Selector0_a3_DATAD_driver;
+wire CZ_a1_a_ainput_I_driver;
+wire Z_ainput_I_driver;
+wire carry_ainput_I_driver;
+wire CZ_a0_a_ainput_I_driver;
+wire Selector0_a4_DATAA_driver;
+wire Selector0_a4_DATAB_driver;
+wire Selector0_a4_DATAC_driver;
+wire Selector0_a4_DATAD_driver;
+wire Selector0_a5_DATAA_driver;
+wire Selector0_a5_DATAB_driver;
+wire Selector0_a5_DATAC_driver;
+wire Selector0_a5_DATAD_driver;
+wire Equal0_a1_DATAA_driver;
+wire Equal0_a1_DATAB_driver;
+wire Equal0_a1_DATAC_driver;
+wire Equal0_a1_DATAD_driver;
+wire mux_a2_a0_DATAB_driver;
+wire mux_a2_a0_DATAC_driver;
+wire mux_a2_a0_DATAD_driver;
+wire state_signal_abreq_0_CLK_driver;
+wire state_signal_abreq_0_ASDATA_driver;
+wire eqflag_ainput_I_driver;
+wire Equal0_a2_DATAA_driver;
+wire Equal0_a2_DATAB_driver;
+wire Equal0_a2_DATAC_driver;
+wire Equal0_a2_DATAD_driver;
+wire next_state_var_a4_DATAA_driver;
+wire next_state_var_a4_DATAB_driver;
+wire next_state_var_a4_DATAC_driver;
+wire next_state_var_a4_DATAD_driver;
+wire next_state_var_a5_DATAA_driver;
+wire next_state_var_a5_DATAB_driver;
+wire next_state_var_a5_DATAC_driver;
+wire next_state_var_a5_DATAD_driver;
+wire next_state_var_a6_DATAA_driver;
+wire next_state_var_a6_DATAB_driver;
+wire next_state_var_a6_DATAC_driver;
+wire next_state_var_a6_DATAD_driver;
+wire state_signal_aadd_0_CLK_driver;
+wire state_signal_aadd_0_D_driver;
+wire Selector3_a0_DATAA_driver;
+wire Selector3_a0_DATAB_driver;
+wire Selector3_a0_DATAC_driver;
+wire Selector3_a0_DATAD_driver;
+wire state_signal_awb_1_CLK_driver;
+wire state_signal_awb_1_D_driver;
+wire state_signal_awb_1_SCLR_driver;
+wire a_anext_state_anext_state_var_abreq_1_a0_DATAB_driver;
+wire a_anext_state_anext_state_var_abreq_1_a0_DATAC_driver;
+wire a_anext_state_anext_state_var_abreq_1_a0_DATAD_driver;
+wire state_signal_abreq_1_CLK_driver;
+wire state_signal_abreq_1_D_driver;
+wire state_signal_arst_a0_DATAC_driver;
+wire state_signal_arst_CLK_driver;
+wire state_signal_arst_ASDATA_driver;
+wire next_state_var_a3_DATAA_driver;
+wire next_state_var_a3_DATAB_driver;
+wire next_state_var_a3_DATAC_driver;
+wire next_state_var_a3_DATAD_driver;
+wire Equal0_a3_DATAA_driver;
+wire Equal0_a3_DATAB_driver;
+wire Equal0_a3_DATAC_driver;
+wire Equal0_a3_DATAD_driver;
+wire mux_b_a30_DATAB_driver;
+wire mux_b_a30_DATAC_driver;
+wire mux_b_a30_DATAD_driver;
+wire state_signal_alw_0_CLK_driver;
+wire state_signal_alw_0_D_driver;
+wire Equal0_a4_DATAA_driver;
+wire Equal0_a4_DATAB_driver;
+wire Equal0_a4_DATAC_driver;
+wire Equal0_a4_DATAD_driver;
+wire mux_b_a31_DATAA_driver;
+wire mux_b_a31_DATAB_driver;
+wire mux_b_a31_DATAD_driver;
+wire state_signal_asw_0_CLK_driver;
+wire state_signal_asw_0_D_driver;
+wire Selector2_a1_DATAB_driver;
+wire Selector2_a1_DATAD_driver;
+wire enable_carry_flag_a2_DATAA_driver;
+wire enable_carry_flag_a2_DATAB_driver;
+wire enable_carry_flag_a2_DATAC_driver;
+wire enable_carry_flag_a2_DATAD_driver;
+wire Equal0_a7_DATAA_driver;
+wire Equal0_a7_DATAB_driver;
+wire Equal0_a7_DATAC_driver;
+wire Equal0_a7_DATAD_driver;
+wire a_anext_state_anext_state_var_anand_0_a2_DATAA_driver;
+wire a_anext_state_anext_state_var_anand_0_a2_DATAB_driver;
+wire a_anext_state_anext_state_var_anand_0_a2_DATAC_driver;
+wire a_anext_state_anext_state_var_anand_0_a2_DATAD_driver;
+wire state_signal_anand_0_CLK_driver;
+wire state_signal_anand_0_D_driver;
+wire Selector2_a0_DATAA_driver;
+wire Selector2_a0_DATAB_driver;
+wire Selector2_a0_DATAC_driver;
+wire Selector2_a0_DATAD_driver;
+wire Selector2_a2_DATAA_driver;
+wire Selector2_a2_DATAB_driver;
+wire Selector2_a2_DATAC_driver;
+wire Selector2_a2_DATAD_driver;
+wire state_signal_awb_0_CLK_driver;
+wire state_signal_awb_0_D_driver;
+wire state_signal_awb_0_SCLR_driver;
+wire Selector0_a0_DATAA_driver;
+wire Selector0_a0_DATAB_driver;
+wire Selector0_a0_DATAC_driver;
+wire Selector0_a0_DATAD_driver;
+wire Selector0_a6_DATAA_driver;
+wire Selector0_a6_DATAB_driver;
+wire Selector0_a6_DATAC_driver;
+wire Selector0_a6_DATAD_driver;
+wire state_signal_afetch_CLK_driver;
+wire state_signal_afetch_D_driver;
+wire state_signal_afetch_SCLR_driver;
+wire irWrite_a0_DATAA_driver;
+wire irWrite_a0_DATAD_driver;
+wire state_signal_adec_0_CLK_driver;
+wire state_signal_adec_0_D_driver;
+wire pcWrite_a0_DATAA_driver;
+wire pcWrite_a0_DATAB_driver;
+wire pcWrite_a0_DATAC_driver;
+wire pcWrite_a0_DATAD_driver;
+wire pcWrite_a1_DATAA_driver;
+wire pcWrite_a1_DATAB_driver;
+wire pcWrite_a1_DATAC_driver;
+wire pcWrite_a1_DATAD_driver;
+wire rfWrite_a0_DATAB_driver;
+wire rfWrite_a0_DATAC_driver;
+wire rfWrite_a0_DATAD_driver;
+wire memRead_a0_DATAA_driver;
+wire memRead_a0_DATAB_driver;
+wire memRead_a0_DATAC_driver;
+wire memRead_a0_DATAD_driver;
+wire memRead_a1_DATAA_driver;
+wire memRead_a1_DATAB_driver;
+wire memRead_a1_DATAD_driver;
+wire memWrite_a0_DATAB_driver;
+wire memWrite_a0_DATAC_driver;
+wire memWrite_a0_DATAD_driver;
+wire alu_op_a0_DATAC_driver;
+wire alu_op_a0_DATAD_driver;
+wire alu_op_a1_DATAB_driver;
+wire alu_op_a1_DATAC_driver;
+wire mux_mem_addr_a8_DATAA_driver;
+wire mux_mem_addr_a8_DATAB_driver;
+wire mux_mem_addr_a8_DATAD_driver;
+wire mux_mem_addr_a9_DATAA_driver;
+wire mux_mem_addr_a9_DATAB_driver;
+wire mux_mem_addr_a9_DATAC_driver;
+wire mux_mem_addr_a9_DATAD_driver;
+wire mux_a3_a0_DATAB_driver;
+wire mux_a3_a0_DATAD_driver;
+wire mux_a1_a1_DATAA_driver;
+wire mux_a1_a1_DATAB_driver;
+wire mux_a1_a1_DATAC_driver;
+wire mux_a1_a1_DATAD_driver;
+wire mux_a1_a0_DATAB_driver;
+wire mux_a1_a0_DATAD_driver;
+wire mux_a_a0_DATAC_driver;
+wire mux_a_a0_DATAD_driver;
+wire enable_pe_out_a0_DATAC_driver;
+wire enable_pe_out_a0_DATAD_driver;
+wire mux_a_a1_DATAA_driver;
+wire mux_a_a1_DATAB_driver;
+wire mux_a_a1_DATAC_driver;
+wire mux_a_a1_DATAD_driver;
+wire mux_b_a29_DATAA_driver;
+wire mux_b_a29_DATAB_driver;
+wire mux_b_a29_DATAC_driver;
+wire mux_b_a29_DATAD_driver;
+wire mux_b_a32_DATAA_driver;
+wire mux_b_a32_DATAB_driver;
+wire mux_b_a32_DATAC_driver;
+wire mux_b_a32_DATAD_driver;
+wire mux_b_a17_DATAA_driver;
+wire mux_b_a17_DATAB_driver;
+wire mux_b_a17_DATAC_driver;
+wire mux_b_a17_DATAD_driver;
+wire mux_b_a33_DATAA_driver;
+wire mux_b_a33_DATAB_driver;
+wire mux_b_a33_DATAC_driver;
+wire mux_b_a33_DATAD_driver;
+wire mux_d3_a3_DATAA_driver;
+wire mux_d3_a3_DATAB_driver;
+wire mux_d3_a3_DATAC_driver;
+wire mux_d3_a3_DATAD_driver;
+wire Equal0_a5_DATAA_driver;
+wire Equal0_a5_DATAB_driver;
+wire Equal0_a5_DATAC_driver;
+wire Equal0_a5_DATAD_driver;
+wire mux_d3_a2_DATAB_driver;
+wire mux_d3_a2_DATAC_driver;
+wire mux_d3_a2_DATAD_driver;
+wire mux_pc_a2_DATAA_driver;
+wire mux_pc_a2_DATAB_driver;
+wire mux_pc_a2_DATAC_driver;
+wire mux_pc_a2_DATAD_driver;
+wire mux_pc_a3_DATAA_driver;
+wire mux_pc_a3_DATAC_driver;
+wire mux_pc_a3_DATAD_driver;
+wire Equal0_a6_DATAA_driver;
+wire Equal0_a6_DATAB_driver;
+wire Equal0_a6_DATAC_driver;
+wire Equal0_a6_DATAD_driver;
+wire mux_pc_a4_DATAA_driver;
+wire mux_pc_a4_DATAB_driver;
+wire mux_pc_a4_DATAC_driver;
+wire mux_before_a_a0_DATAA_driver;
+wire mux_before_a_a0_DATAB_driver;
+wire mux_before_a_a0_DATAD_driver;
+wire enable_alu_a0_DATAA_driver;
+wire enable_alu_a0_DATAB_driver;
+wire enable_alu_a0_DATAC_driver;
+wire enable_alu_a0_DATAD_driver;
+wire enable_alu_a1_DATAA_driver;
+wire enable_alu_a1_DATAB_driver;
+wire enable_alu_a1_DATAC_driver;
+wire enable_alu_a1_DATAD_driver;
+wire next_state_var_a2_DATAC_driver;
+wire next_state_var_a2_DATAD_driver;
+wire enable_a_a3_DATAA_driver;
+wire enable_a_a3_DATAB_driver;
+wire enable_a_a3_DATAC_driver;
+wire enable_a_a3_DATAD_driver;
+wire enable_a_a2_DATAA_driver;
+wire enable_a_a2_DATAB_driver;
+wire enable_a_a2_DATAC_driver;
+wire enable_a_a2_DATAD_driver;
+wire enable_b_a2_DATAA_driver;
+wire enable_b_a2_DATAB_driver;
+wire enable_b_a2_DATAC_driver;
+wire enable_b_a2_DATAD_driver;
+wire enable_b_a3_DATAB_driver;
+wire enable_b_a3_DATAC_driver;
+wire enable_b_a3_DATAD_driver;
+wire enable_alu_a2_DATAB_driver;
+wire enable_alu_a2_DATAC_driver;
+wire enable_alu_a2_DATAD_driver;
+wire enable_c_a0_DATAA_driver;
+wire enable_c_a0_DATAC_driver;
+wire enable_c_a0_DATAD_driver;
+wire enable_pe_tmp_a0_DATAA_driver;
+wire enable_pe_tmp_a0_DATAB_driver;
+wire enable_pe_tmp_a0_DATAC_driver;
+wire enable_pe_tmp_a0_DATAD_driver;
+wire enable_carry_flag_a3_DATAA_driver;
+wire enable_carry_flag_a3_DATAB_driver;
+wire enable_carry_flag_a3_DATAC_driver;
+wire enable_carry_flag_a3_DATAD_driver;
+wire enable_Z_flag_a8_DATAA_driver;
+wire enable_Z_flag_a8_DATAB_driver;
+wire enable_Z_flag_a8_DATAC_driver;
+wire enable_Z_flag_a8_DATAD_driver;
+wire se_6_16_a2_DATAA_driver;
+wire se_6_16_a2_DATAB_driver;
+wire se_6_16_a2_DATAC_driver;
+wire se_6_16_a2_DATAD_driver;
+wire se_9_16_a2_DATAA_driver;
+wire se_9_16_a2_DATAC_driver;
+wire se_9_16_a2_DATAD_driver;
+wire [3:0] clock_ainputclkctrl_INCLK_bus;
+
+cycloneive_routing_wire pcWrite_aoutput_I_routing_wire_inst (
+	.datain(pcWrite_a1_combout),
+	.dataout(pcWrite_aoutput_I_driver));
+
+// Location: IOOBUF_X23_Y34_N16
+cycloneive_io_obuf pcWrite_aoutput(
+	.i(pcWrite_aoutput_I_driver),
+	.oe(vcc),
+	.seriesterminationcontrol(16'b0000000000000000),
+	.devoe(devoe),
+	.o(pcWrite_aoutput_o),
+	.obar());
+// synopsys translate_off
+defparam pcWrite_aoutput.bus_hold = "false";
+defparam pcWrite_aoutput.open_drain_output = "false";
+// synopsys translate_on
+
+cycloneive_routing_wire rfWrite_aoutput_I_routing_wire_inst (
+	.datain(rfWrite_a0_combout),
+	.dataout(rfWrite_aoutput_I_driver));
+
+// Location: IOOBUF_X0_Y23_N23
+cycloneive_io_obuf rfWrite_aoutput(
+	.i(rfWrite_aoutput_I_driver),
+	.oe(vcc),
+	.seriesterminationcontrol(16'b0000000000000000),
+	.devoe(devoe),
+	.o(rfWrite_aoutput_o),
+	.obar());
+// synopsys translate_off
+defparam rfWrite_aoutput.bus_hold = "false";
+defparam rfWrite_aoutput.open_drain_output = "false";
+// synopsys translate_on
+
+cycloneive_routing_wire irWrite_aoutput_I_routing_wire_inst (
+	.datain(irWrite_a0_combout),
+	.dataout(irWrite_aoutput_I_driver));
+
+// Location: IOOBUF_X29_Y34_N16
+cycloneive_io_obuf irWrite_aoutput(
+	.i(irWrite_aoutput_I_driver),
+	.oe(vcc),
+	.seriesterminationcontrol(16'b0000000000000000),
+	.devoe(devoe),
+	.o(irWrite_aoutput_o),
+	.obar());
+// synopsys translate_off
+defparam irWrite_aoutput.bus_hold = "false";
+defparam irWrite_aoutput.open_drain_output = "false";
+// synopsys translate_on
+
+cycloneive_routing_wire memRead_aoutput_I_routing_wire_inst (
+	.datain(memRead_a1_combout),
+	.dataout(memRead_aoutput_I_driver));
+
+// Location: IOOBUF_X1_Y34_N2
+cycloneive_io_obuf memRead_aoutput(
+	.i(memRead_aoutput_I_driver),
+	.oe(vcc),
+	.seriesterminationcontrol(16'b0000000000000000),
+	.devoe(devoe),
+	.o(memRead_aoutput_o),
+	.obar());
+// synopsys translate_off
+defparam memRead_aoutput.bus_hold = "false";
+defparam memRead_aoutput.open_drain_output = "false";
+// synopsys translate_on
+
+cycloneive_routing_wire memWrite_aoutput_I_routing_wire_inst (
+	.datain(memWrite_a0_combout),
+	.dataout(memWrite_aoutput_I_driver));
+
+// Location: IOOBUF_X5_Y0_N16
+cycloneive_io_obuf memWrite_aoutput(
+	.i(memWrite_aoutput_I_driver),
+	.oe(vcc),
+	.seriesterminationcontrol(16'b0000000000000000),
+	.devoe(devoe),
+	.o(memWrite_aoutput_o),
+	.obar());
+// synopsys translate_off
+defparam memWrite_aoutput.bus_hold = "false";
+defparam memWrite_aoutput.open_drain_output = "false";
+// synopsys translate_on
+
+cycloneive_routing_wire alu_op_a0_a_aoutput_I_routing_wire_inst (
+	.datain(alu_op_a0_combout),
+	.dataout(alu_op_a0_a_aoutput_I_driver));
+
+// Location: IOOBUF_X16_Y34_N9
+cycloneive_io_obuf alu_op_a0_a_aoutput(
+	.i(alu_op_a0_a_aoutput_I_driver),
+	.oe(vcc),
+	.seriesterminationcontrol(16'b0000000000000000),
+	.devoe(devoe),
+	.o(alu_op_a0_a_aoutput_o),
+	.obar());
+// synopsys translate_off
+defparam alu_op_a0_a_aoutput.bus_hold = "false";
+defparam alu_op_a0_a_aoutput.open_drain_output = "false";
+// synopsys translate_on
+
+cycloneive_routing_wire alu_op_a1_a_aoutput_I_routing_wire_inst (
+	.datain(alu_op_a1_combout),
+	.dataout(alu_op_a1_a_aoutput_I_driver));
+
+// Location: IOOBUF_X0_Y11_N9
+cycloneive_io_obuf alu_op_a1_a_aoutput(
+	.i(alu_op_a1_a_aoutput_I_driver),
+	.oe(vcc),
+	.seriesterminationcontrol(16'b0000000000000000),
+	.devoe(devoe),
+	.o(alu_op_a1_a_aoutput_o),
+	.obar());
+// synopsys translate_off
+defparam alu_op_a1_a_aoutput.bus_hold = "false";
+defparam alu_op_a1_a_aoutput.open_drain_output = "false";
+// synopsys translate_on
+
+cycloneive_routing_wire mux_mem_data_aoutput_I_routing_wire_inst (
+	.datain(memWrite_a0_combout),
+	.dataout(mux_mem_data_aoutput_I_driver));
+
+// Location: IOOBUF_X5_Y0_N9
+cycloneive_io_obuf mux_mem_data_aoutput(
+	.i(mux_mem_data_aoutput_I_driver),
+	.oe(vcc),
+	.seriesterminationcontrol(16'b0000000000000000),
+	.devoe(devoe),
+	.o(mux_mem_data_aoutput_o),
+	.obar());
+// synopsys translate_off
+defparam mux_mem_data_aoutput.bus_hold = "false";
+defparam mux_mem_data_aoutput.open_drain_output = "false";
+// synopsys translate_on
+
+cycloneive_routing_wire mux_mem_addr_a0_a_aoutput_I_routing_wire_inst (
+	.datain(mux_mem_addr_a8_combout),
+	.dataout(mux_mem_addr_a0_a_aoutput_I_driver));
+
+// Location: IOOBUF_X23_Y34_N23
+cycloneive_io_obuf mux_mem_addr_a0_a_aoutput(
+	.i(mux_mem_addr_a0_a_aoutput_I_driver),
+	.oe(vcc),
+	.seriesterminationcontrol(16'b0000000000000000),
+	.devoe(devoe),
+	.o(mux_mem_addr_a0_a_aoutput_o),
+	.obar());
+// synopsys translate_off
+defparam mux_mem_addr_a0_a_aoutput.bus_hold = "false";
+defparam mux_mem_addr_a0_a_aoutput.open_drain_output = "false";
+// synopsys translate_on
+
+cycloneive_routing_wire mux_mem_addr_a1_a_aoutput_I_routing_wire_inst (
+	.datain(mux_mem_addr_a9_combout),
+	.dataout(mux_mem_addr_a1_a_aoutput_I_driver));
+
+// Location: IOOBUF_X0_Y28_N9
+cycloneive_io_obuf mux_mem_addr_a1_a_aoutput(
+	.i(mux_mem_addr_a1_a_aoutput_I_driver),
+	.oe(vcc),
+	.seriesterminationcontrol(16'b0000000000000000),
+	.devoe(devoe),
+	.o(mux_mem_addr_a1_a_aoutput_o),
+	.obar());
+// synopsys translate_off
+defparam mux_mem_addr_a1_a_aoutput.bus_hold = "false";
+defparam mux_mem_addr_a1_a_aoutput.open_drain_output = "false";
+// synopsys translate_on
+
+cycloneive_routing_wire mux_a3_aoutput_I_routing_wire_inst (
+	.datain(mux_a3_a0_combout),
+	.dataout(mux_a3_aoutput_I_driver));
+
+// Location: IOOBUF_X0_Y12_N2
+cycloneive_io_obuf mux_a3_aoutput(
+	.i(mux_a3_aoutput_I_driver),
+	.oe(vcc),
+	.seriesterminationcontrol(16'b0000000000000000),
+	.devoe(devoe),
+	.o(mux_a3_aoutput_o),
+	.obar());
+// synopsys translate_off
+defparam mux_a3_aoutput.bus_hold = "false";
+defparam mux_a3_aoutput.open_drain_output = "false";
+// synopsys translate_on
+
+cycloneive_routing_wire mux_a2_aoutput_I_routing_wire_inst (
+	.datain(mux_a2_a0_combout),
+	.dataout(mux_a2_aoutput_I_driver));
+
+// Location: IOOBUF_X7_Y34_N9
+cycloneive_io_obuf mux_a2_aoutput(
+	.i(mux_a2_aoutput_I_driver),
+	.oe(vcc),
+	.seriesterminationcontrol(16'b0000000000000000),
+	.devoe(devoe),
+	.o(mux_a2_aoutput_o),
+	.obar());
+// synopsys translate_off
+defparam mux_a2_aoutput.bus_hold = "false";
+defparam mux_a2_aoutput.open_drain_output = "false";
+// synopsys translate_on
+
+cycloneive_routing_wire mux_a1_a0_a_aoutput_I_routing_wire_inst (
+	.datain(mux_a1_a1_combout),
+	.dataout(mux_a1_a0_a_aoutput_I_driver));
+
+// Location: IOOBUF_X0_Y24_N16
+cycloneive_io_obuf mux_a1_a0_a_aoutput(
+	.i(mux_a1_a0_a_aoutput_I_driver),
+	.oe(vcc),
+	.seriesterminationcontrol(16'b0000000000000000),
+	.devoe(devoe),
+	.o(mux_a1_a0_a_aoutput_o),
+	.obar());
+// synopsys translate_off
+defparam mux_a1_a0_a_aoutput.bus_hold = "false";
+defparam mux_a1_a0_a_aoutput.open_drain_output = "false";
+// synopsys translate_on
+
+cycloneive_routing_wire mux_a1_a1_a_aoutput_I_routing_wire_inst (
+	.datain(mux_a1_a0_combout),
+	.dataout(mux_a1_a1_a_aoutput_I_driver));
+
+// Location: IOOBUF_X0_Y23_N16
+cycloneive_io_obuf mux_a1_a1_a_aoutput(
+	.i(mux_a1_a1_a_aoutput_I_driver),
+	.oe(vcc),
+	.seriesterminationcontrol(16'b0000000000000000),
+	.devoe(devoe),
+	.o(mux_a1_a1_a_aoutput_o),
+	.obar());
+// synopsys translate_off
+defparam mux_a1_a1_a_aoutput.bus_hold = "false";
+defparam mux_a1_a1_a_aoutput.open_drain_output = "false";
+// synopsys translate_on
+
+cycloneive_routing_wire mux_a_aoutput_I_routing_wire_inst (
+	.datain(mux_a_a1_combout),
+	.dataout(mux_a_aoutput_I_driver));
+
+// Location: IOOBUF_X20_Y34_N16
+cycloneive_io_obuf mux_a_aoutput(
+	.i(mux_a_aoutput_I_driver),
+	.oe(vcc),
+	.seriesterminationcontrol(16'b0000000000000000),
+	.devoe(devoe),
+	.o(mux_a_aoutput_o),
+	.obar());
+// synopsys translate_off
+defparam mux_a_aoutput.bus_hold = "false";
+defparam mux_a_aoutput.open_drain_output = "false";
+// synopsys translate_on
+
+cycloneive_routing_wire mux_b_a0_a_aoutput_I_routing_wire_inst (
+	.datain(mux_b_a32_combout),
+	.dataout(mux_b_a0_a_aoutput_I_driver));
+
+// Location: IOOBUF_X14_Y34_N16
+cycloneive_io_obuf mux_b_a0_a_aoutput(
+	.i(mux_b_a0_a_aoutput_I_driver),
+	.oe(vcc),
+	.seriesterminationcontrol(16'b0000000000000000),
+	.devoe(devoe),
+	.o(mux_b_a0_a_aoutput_o),
+	.obar());
+// synopsys translate_off
+defparam mux_b_a0_a_aoutput.bus_hold = "false";
+defparam mux_b_a0_a_aoutput.open_drain_output = "false";
+// synopsys translate_on
+
+cycloneive_routing_wire mux_b_a1_a_aoutput_I_routing_wire_inst (
+	.datain(mux_b_a33_combout),
+	.dataout(mux_b_a1_a_aoutput_I_driver));
+
+// Location: IOOBUF_X3_Y34_N2
+cycloneive_io_obuf mux_b_a1_a_aoutput(
+	.i(mux_b_a1_a_aoutput_I_driver),
+	.oe(vcc),
+	.seriesterminationcontrol(16'b0000000000000000),
+	.devoe(devoe),
+	.o(mux_b_a1_a_aoutput_o),
+	.obar());
+// synopsys translate_off
+defparam mux_b_a1_a_aoutput.bus_hold = "false";
+defparam mux_b_a1_a_aoutput.open_drain_output = "false";
+// synopsys translate_on
+
+cycloneive_routing_wire mux_d3_a0_a_aoutput_I_routing_wire_inst (
+	.datain(mux_d3_a3_combout),
+	.dataout(mux_d3_a0_a_aoutput_I_driver));
+
+// Location: IOOBUF_X0_Y15_N9
+cycloneive_io_obuf mux_d3_a0_a_aoutput(
+	.i(mux_d3_a0_a_aoutput_I_driver),
+	.oe(vcc),
+	.seriesterminationcontrol(16'b0000000000000000),
+	.devoe(devoe),
+	.o(mux_d3_a0_a_aoutput_o),
+	.obar());
+// synopsys translate_off
+defparam mux_d3_a0_a_aoutput.bus_hold = "false";
+defparam mux_d3_a0_a_aoutput.open_drain_output = "false";
+// synopsys translate_on
+
+cycloneive_routing_wire mux_d3_a1_a_aoutput_I_routing_wire_inst (
+	.datain(mux_d3_a2_combout),
+	.dataout(mux_d3_a1_a_aoutput_I_driver));
+
+// Location: IOOBUF_X5_Y0_N23
+cycloneive_io_obuf mux_d3_a1_a_aoutput(
+	.i(mux_d3_a1_a_aoutput_I_driver),
+	.oe(vcc),
+	.seriesterminationcontrol(16'b0000000000000000),
+	.devoe(devoe),
+	.o(mux_d3_a1_a_aoutput_o),
+	.obar());
+// synopsys translate_off
+defparam mux_d3_a1_a_aoutput.bus_hold = "false";
+defparam mux_d3_a1_a_aoutput.open_drain_output = "false";
+// synopsys translate_on
+
+cycloneive_routing_wire mux_pc_a0_a_aoutput_I_routing_wire_inst (
+	.datain(mux_pc_a3_combout),
+	.dataout(mux_pc_a0_a_aoutput_I_driver));
+
+// Location: IOOBUF_X14_Y34_N23
+cycloneive_io_obuf mux_pc_a0_a_aoutput(
+	.i(mux_pc_a0_a_aoutput_I_driver),
+	.oe(vcc),
+	.seriesterminationcontrol(16'b0000000000000000),
+	.devoe(devoe),
+	.o(mux_pc_a0_a_aoutput_o),
+	.obar());
+// synopsys translate_off
+defparam mux_pc_a0_a_aoutput.bus_hold = "false";
+defparam mux_pc_a0_a_aoutput.open_drain_output = "false";
+// synopsys translate_on
+
+cycloneive_routing_wire mux_pc_a1_a_aoutput_I_routing_wire_inst (
+	.datain(mux_pc_a4_combout),
+	.dataout(mux_pc_a1_a_aoutput_I_driver));
+
+// Location: IOOBUF_X20_Y34_N23
+cycloneive_io_obuf mux_pc_a1_a_aoutput(
+	.i(mux_pc_a1_a_aoutput_I_driver),
+	.oe(vcc),
+	.seriesterminationcontrol(16'b0000000000000000),
+	.devoe(devoe),
+	.o(mux_pc_a1_a_aoutput_o),
+	.obar());
+// synopsys translate_off
+defparam mux_pc_a1_a_aoutput.bus_hold = "false";
+defparam mux_pc_a1_a_aoutput.open_drain_output = "false";
+// synopsys translate_on
+
+cycloneive_routing_wire mux_pe_tmp_aoutput_I_routing_wire_inst (
+	.datain(mux_a3_a0_combout),
+	.dataout(mux_pe_tmp_aoutput_I_driver));
+
+// Location: IOOBUF_X0_Y12_N9
+cycloneive_io_obuf mux_pe_tmp_aoutput(
+	.i(mux_pe_tmp_aoutput_I_driver),
+	.oe(vcc),
+	.seriesterminationcontrol(16'b0000000000000000),
+	.devoe(devoe),
+	.o(mux_pe_tmp_aoutput_o),
+	.obar());
+// synopsys translate_off
+defparam mux_pe_tmp_aoutput.bus_hold = "false";
+defparam mux_pe_tmp_aoutput.open_drain_output = "false";
+// synopsys translate_on
+
+cycloneive_routing_wire mux_before_a_aoutput_I_routing_wire_inst (
+	.datain(mux_before_a_a0_combout),
+	.dataout(mux_before_a_aoutput_I_driver));
+
+// Location: IOOBUF_X0_Y15_N2
+cycloneive_io_obuf mux_before_a_aoutput(
+	.i(mux_before_a_aoutput_I_driver),
+	.oe(vcc),
+	.seriesterminationcontrol(16'b0000000000000000),
+	.devoe(devoe),
+	.o(mux_before_a_aoutput_o),
+	.obar());
+// synopsys translate_off
+defparam mux_before_a_aoutput.bus_hold = "false";
+defparam mux_before_a_aoutput.open_drain_output = "false";
+// synopsys translate_on
+
+cycloneive_routing_wire enable_alu_aoutput_I_routing_wire_inst (
+	.datain(enable_alu_a1_combout),
+	.dataout(enable_alu_aoutput_I_driver));
+
+// Location: IOOBUF_X7_Y34_N16
+cycloneive_io_obuf enable_alu_aoutput(
+	.i(enable_alu_aoutput_I_driver),
+	.oe(vcc),
+	.seriesterminationcontrol(16'b0000000000000000),
+	.devoe(devoe),
+	.o(enable_alu_aoutput_o),
+	.obar());
+// synopsys translate_off
+defparam enable_alu_aoutput.bus_hold = "false";
+defparam enable_alu_aoutput.open_drain_output = "false";
+// synopsys translate_on
+
+cycloneive_routing_wire enable_a_aoutput_I_routing_wire_inst (
+	.datain(enable_a_a2_combout),
+	.dataout(enable_a_aoutput_I_driver));
+
+// Location: IOOBUF_X0_Y26_N16
+cycloneive_io_obuf enable_a_aoutput(
+	.i(enable_a_aoutput_I_driver),
+	.oe(vcc),
+	.seriesterminationcontrol(16'b0000000000000000),
+	.devoe(devoe),
+	.o(enable_a_aoutput_o),
+	.obar());
+// synopsys translate_off
+defparam enable_a_aoutput.bus_hold = "false";
+defparam enable_a_aoutput.open_drain_output = "false";
+// synopsys translate_on
+
+cycloneive_routing_wire enable_b_aoutput_I_routing_wire_inst (
+	.datain(enable_b_a3_combout),
+	.dataout(enable_b_aoutput_I_driver));
+
+// Location: IOOBUF_X0_Y8_N23
+cycloneive_io_obuf enable_b_aoutput(
+	.i(enable_b_aoutput_I_driver),
+	.oe(vcc),
+	.seriesterminationcontrol(16'b0000000000000000),
+	.devoe(devoe),
+	.o(enable_b_aoutput_o),
+	.obar());
+// synopsys translate_off
+defparam enable_b_aoutput.bus_hold = "false";
+defparam enable_b_aoutput.open_drain_output = "false";
+// synopsys translate_on
+
+cycloneive_routing_wire enable_c_aoutput_I_routing_wire_inst (
+	.datain(enable_c_a0_combout),
+	.dataout(enable_c_aoutput_I_driver));
+
+// Location: IOOBUF_X0_Y27_N2
+cycloneive_io_obuf enable_c_aoutput(
+	.i(enable_c_aoutput_I_driver),
+	.oe(vcc),
+	.seriesterminationcontrol(16'b0000000000000000),
+	.devoe(devoe),
+	.o(enable_c_aoutput_o),
+	.obar());
+// synopsys translate_off
+defparam enable_c_aoutput.bus_hold = "false";
+defparam enable_c_aoutput.open_drain_output = "false";
+// synopsys translate_on
+
+cycloneive_routing_wire enable_mdr_aoutput_I_routing_wire_inst (
+	.datain(!memRead_a0_combout),
+	.dataout(enable_mdr_aoutput_I_driver));
+
+// Location: IOOBUF_X5_Y34_N16
+cycloneive_io_obuf enable_mdr_aoutput(
+	.i(enable_mdr_aoutput_I_driver),
+	.oe(vcc),
+	.seriesterminationcontrol(16'b0000000000000000),
+	.devoe(devoe),
+	.o(enable_mdr_aoutput_o),
+	.obar());
+// synopsys translate_off
+defparam enable_mdr_aoutput.bus_hold = "false";
+defparam enable_mdr_aoutput.open_drain_output = "false";
+// synopsys translate_on
+
+cycloneive_routing_wire enable_pe_tmp_aoutput_I_routing_wire_inst (
+	.datain(enable_pe_tmp_a0_combout),
+	.dataout(enable_pe_tmp_aoutput_I_driver));
+
+// Location: IOOBUF_X1_Y34_N9
+cycloneive_io_obuf enable_pe_tmp_aoutput(
+	.i(enable_pe_tmp_aoutput_I_driver),
+	.oe(vcc),
+	.seriesterminationcontrol(16'b0000000000000000),
+	.devoe(devoe),
+	.o(enable_pe_tmp_aoutput_o),
+	.obar());
+// synopsys translate_off
+defparam enable_pe_tmp_aoutput.bus_hold = "false";
+defparam enable_pe_tmp_aoutput.open_drain_output = "false";
+// synopsys translate_on
+
+cycloneive_routing_wire enable_pe_out_aoutput_I_routing_wire_inst (
+	.datain(enable_pe_out_a0_combout),
+	.dataout(enable_pe_out_aoutput_I_driver));
+
+// Location: IOOBUF_X0_Y4_N16
+cycloneive_io_obuf enable_pe_out_aoutput(
+	.i(enable_pe_out_aoutput_I_driver),
+	.oe(vcc),
+	.seriesterminationcontrol(16'b0000000000000000),
+	.devoe(devoe),
+	.o(enable_pe_out_aoutput_o),
+	.obar());
+// synopsys translate_off
+defparam enable_pe_out_aoutput.bus_hold = "false";
+defparam enable_pe_out_aoutput.open_drain_output = "false";
+// synopsys translate_on
+
+cycloneive_routing_wire enable_pe_flag_aoutput_I_routing_wire_inst (
+	.datain(enable_pe_out_a0_combout),
+	.dataout(enable_pe_flag_aoutput_I_driver));
+
+// Location: IOOBUF_X0_Y5_N23
+cycloneive_io_obuf enable_pe_flag_aoutput(
+	.i(enable_pe_flag_aoutput_I_driver),
+	.oe(vcc),
+	.seriesterminationcontrol(16'b0000000000000000),
+	.devoe(devoe),
+	.o(enable_pe_flag_aoutput_o),
+	.obar());
+// synopsys translate_off
+defparam enable_pe_flag_aoutput.bus_hold = "false";
+defparam enable_pe_flag_aoutput.open_drain_output = "false";
+// synopsys translate_on
+
+cycloneive_routing_wire enable_eqflag_aoutput_I_routing_wire_inst (
+	.datain(alu_op_a1_combout),
+	.dataout(enable_eqflag_aoutput_I_driver));
+
+// Location: IOOBUF_X0_Y11_N2
+cycloneive_io_obuf enable_eqflag_aoutput(
+	.i(enable_eqflag_aoutput_I_driver),
+	.oe(vcc),
+	.seriesterminationcontrol(16'b0000000000000000),
+	.devoe(devoe),
+	.o(enable_eqflag_aoutput_o),
+	.obar());
+// synopsys translate_off
+defparam enable_eqflag_aoutput.bus_hold = "false";
+defparam enable_eqflag_aoutput.open_drain_output = "false";
+// synopsys translate_on
+
+cycloneive_routing_wire enable_carry_flag_aoutput_I_routing_wire_inst (
+	.datain(!enable_carry_flag_a3_combout),
+	.dataout(enable_carry_flag_aoutput_I_driver));
+
+// Location: IOOBUF_X0_Y23_N2
+cycloneive_io_obuf enable_carry_flag_aoutput(
+	.i(enable_carry_flag_aoutput_I_driver),
+	.oe(vcc),
+	.seriesterminationcontrol(16'b0000000000000000),
+	.devoe(devoe),
+	.o(enable_carry_flag_aoutput_o),
+	.obar());
+// synopsys translate_off
+defparam enable_carry_flag_aoutput.bus_hold = "false";
+defparam enable_carry_flag_aoutput.open_drain_output = "false";
+// synopsys translate_on
+
+cycloneive_routing_wire enable_Z_flag_aoutput_I_routing_wire_inst (
+	.datain(enable_Z_flag_a8_combout),
+	.dataout(enable_Z_flag_aoutput_I_driver));
+
+// Location: IOOBUF_X7_Y34_N2
+cycloneive_io_obuf enable_Z_flag_aoutput(
+	.i(enable_Z_flag_aoutput_I_driver),
+	.oe(vcc),
+	.seriesterminationcontrol(16'b0000000000000000),
+	.devoe(devoe),
+	.o(enable_Z_flag_aoutput_o),
+	.obar());
+// synopsys translate_off
+defparam enable_Z_flag_aoutput.bus_hold = "false";
+defparam enable_Z_flag_aoutput.open_drain_output = "false";
+// synopsys translate_on
+
+cycloneive_routing_wire enable_pe_aoutput_I_routing_wire_inst (
+	.datain(enable_pe_out_a0_combout),
+	.dataout(enable_pe_aoutput_I_driver));
+
+// Location: IOOBUF_X0_Y6_N16
+cycloneive_io_obuf enable_pe_aoutput(
+	.i(enable_pe_aoutput_I_driver),
+	.oe(vcc),
+	.seriesterminationcontrol(16'b0000000000000000),
+	.devoe(devoe),
+	.o(enable_pe_aoutput_o),
+	.obar());
+// synopsys translate_off
+defparam enable_pe_aoutput.bus_hold = "false";
+defparam enable_pe_aoutput.open_drain_output = "false";
+// synopsys translate_on
+
+cycloneive_routing_wire enable_pe_1_3_aoutput_I_routing_wire_inst (
+	.datain(enable_pe_out_a0_combout),
+	.dataout(enable_pe_1_3_aoutput_I_driver));
+
+// Location: IOOBUF_X0_Y4_N23
+cycloneive_io_obuf enable_pe_1_3_aoutput(
+	.i(enable_pe_1_3_aoutput_I_driver),
+	.oe(vcc),
+	.seriesterminationcontrol(16'b0000000000000000),
+	.devoe(devoe),
+	.o(enable_pe_1_3_aoutput_o),
+	.obar());
+// synopsys translate_off
+defparam enable_pe_1_3_aoutput.bus_hold = "false";
+defparam enable_pe_1_3_aoutput.open_drain_output = "false";
+// synopsys translate_on
+
+cycloneive_routing_wire se_6_16_aoutput_I_routing_wire_inst (
+	.datain(se_6_16_a2_combout),
+	.dataout(se_6_16_aoutput_I_driver));
+
+// Location: IOOBUF_X16_Y34_N16
+cycloneive_io_obuf se_6_16_aoutput(
+	.i(se_6_16_aoutput_I_driver),
+	.oe(vcc),
+	.seriesterminationcontrol(16'b0000000000000000),
+	.devoe(devoe),
+	.o(se_6_16_aoutput_o),
+	.obar());
+// synopsys translate_off
+defparam se_6_16_aoutput.bus_hold = "false";
+defparam se_6_16_aoutput.open_drain_output = "false";
+// synopsys translate_on
+
+cycloneive_routing_wire se_9_16_aoutput_I_routing_wire_inst (
+	.datain(se_9_16_a2_combout),
+	.dataout(se_9_16_aoutput_I_driver));
+
+// Location: IOOBUF_X18_Y34_N23
+cycloneive_io_obuf se_9_16_aoutput(
+	.i(se_9_16_aoutput_I_driver),
+	.oe(vcc),
+	.seriesterminationcontrol(16'b0000000000000000),
+	.devoe(devoe),
+	.o(se_9_16_aoutput_o),
+	.obar());
+// synopsys translate_off
+defparam se_9_16_aoutput.bus_hold = "false";
+defparam se_9_16_aoutput.open_drain_output = "false";
+// synopsys translate_on
+
+cycloneive_routing_wire ze_9_16_aoutput_I_routing_wire_inst (
+	.datain(mux_d3_a2_combout),
+	.dataout(ze_9_16_aoutput_I_driver));
+
+// Location: IOOBUF_X5_Y0_N2
+cycloneive_io_obuf ze_9_16_aoutput(
+	.i(ze_9_16_aoutput_I_driver),
+	.oe(vcc),
+	.seriesterminationcontrol(16'b0000000000000000),
+	.devoe(devoe),
+	.o(ze_9_16_aoutput_o),
+	.obar());
+// synopsys translate_off
+defparam ze_9_16_aoutput.bus_hold = "false";
+defparam ze_9_16_aoutput.open_drain_output = "false";
+// synopsys translate_on
+
+cycloneive_routing_wire op_code_a0_a_ainput_I_routing_wire_inst (
+	.datain(op_code[0]),
+	.dataout(op_code_a0_a_ainput_I_driver));
+
+// Location: IOIBUF_X0_Y16_N15
+cycloneive_io_ibuf op_code_a0_a_ainput(
+	.i(op_code_a0_a_ainput_I_driver),
+	.ibar(gnd),
+	.o(op_code_a0_a_ainput_o));
+// synopsys translate_off
+defparam op_code_a0_a_ainput.bus_hold = "false";
+defparam op_code_a0_a_ainput.simulate_z_as = "z";
+// synopsys translate_on
+
+cycloneive_routing_wire op_code_a3_a_ainput_I_routing_wire_inst (
+	.datain(op_code[3]),
+	.dataout(op_code_a3_a_ainput_I_driver));
+
+// Location: IOIBUF_X9_Y34_N8
+cycloneive_io_ibuf op_code_a3_a_ainput(
+	.i(op_code_a3_a_ainput_I_driver),
+	.ibar(gnd),
+	.o(op_code_a3_a_ainput_o));
+// synopsys translate_off
+defparam op_code_a3_a_ainput.bus_hold = "false";
+defparam op_code_a3_a_ainput.simulate_z_as = "z";
+// synopsys translate_on
+
+cycloneive_routing_wire clock_ainput_I_routing_wire_inst (
+	.datain(clock),
+	.dataout(clock_ainput_I_driver));
+
+// Location: IOIBUF_X0_Y16_N8
+cycloneive_io_ibuf clock_ainput(
+	.i(clock_ainput_I_driver),
+	.ibar(gnd),
+	.o(clock_ainput_o));
+// synopsys translate_off
+defparam clock_ainput.bus_hold = "false";
+defparam clock_ainput.simulate_z_as = "z";
+// synopsys translate_on
+
+cycloneive_routing_wire clock_ainputclkctrl_INCLK_a0_a_routing_wire_inst (
+	.datain(clock_ainput_o),
+	.dataout(clock_ainputclkctrl_INCLK_bus[0]));
+
+cycloneive_routing_wire clock_ainputclkctrl_INCLK_a1_a_routing_wire_inst (
+	.datain(vcc),
+	.dataout(clock_ainputclkctrl_INCLK_bus[1]));
+
+cycloneive_routing_wire clock_ainputclkctrl_INCLK_a2_a_routing_wire_inst (
+	.datain(vcc),
+	.dataout(clock_ainputclkctrl_INCLK_bus[2]));
+
+cycloneive_routing_wire clock_ainputclkctrl_INCLK_a3_a_routing_wire_inst (
+	.datain(vcc),
+	.dataout(clock_ainputclkctrl_INCLK_bus[3]));
+
+// Location: CLKCTRL_G2
+cycloneive_clkctrl clock_ainputclkctrl(
+	.ena(vcc),
+	.inclk(clock_ainputclkctrl_INCLK_bus),
+	.clkselect(2'b00),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.outclk(clock_ainputclkctrl_outclk));
+// synopsys translate_off
+defparam clock_ainputclkctrl.clock_type = "global clock";
+defparam clock_ainputclkctrl.ena_register_mode = "none";
+// synopsys translate_on
+
+cycloneive_routing_wire reset_ainput_I_routing_wire_inst (
+	.datain(reset),
+	.dataout(reset_ainput_I_driver));
+
+// Location: IOIBUF_X0_Y24_N22
+cycloneive_io_ibuf reset_ainput(
+	.i(reset_ainput_I_driver),
+	.ibar(gnd),
+	.o(reset_ainput_o));
+// synopsys translate_off
+defparam reset_ainput.bus_hold = "false";
+defparam reset_ainput.simulate_z_as = "z";
+// synopsys translate_on
+
+cycloneive_routing_wire pe_flag_ainput_I_routing_wire_inst (
+	.datain(pe_flag),
+	.dataout(pe_flag_ainput_I_driver));
+
+// Location: IOIBUF_X0_Y10_N22
+cycloneive_io_ibuf pe_flag_ainput(
+	.i(pe_flag_ainput_I_driver),
+	.ibar(gnd),
+	.o(pe_flag_ainput_o));
+// synopsys translate_off
+defparam pe_flag_ainput.bus_hold = "false";
+defparam pe_flag_ainput.simulate_z_as = "z";
+// synopsys translate_on
+
+cycloneive_routing_wire op_code_a1_a_ainput_I_routing_wire_inst (
+	.datain(op_code[1]),
+	.dataout(op_code_a1_a_ainput_I_driver));
+
+// Location: IOIBUF_X0_Y16_N22
+cycloneive_io_ibuf op_code_a1_a_ainput(
+	.i(op_code_a1_a_ainput_I_driver),
+	.ibar(gnd),
+	.o(op_code_a1_a_ainput_o));
+// synopsys translate_off
+defparam op_code_a1_a_ainput.bus_hold = "false";
+defparam op_code_a1_a_ainput.simulate_z_as = "z";
+// synopsys translate_on
+
+cycloneive_routing_wire op_code_a2_a_ainput_I_routing_wire_inst (
+	.datain(op_code[2]),
+	.dataout(op_code_a2_a_ainput_I_driver));
+
+// Location: IOIBUF_X0_Y25_N8
+cycloneive_io_ibuf op_code_a2_a_ainput(
+	.i(op_code_a2_a_ainput_I_driver),
+	.ibar(gnd),
+	.o(op_code_a2_a_ainput_o));
+// synopsys translate_off
+defparam op_code_a2_a_ainput.bus_hold = "false";
+defparam op_code_a2_a_ainput.simulate_z_as = "z";
+// synopsys translate_on
+
+cycloneive_routing_wire Selector0_a2_DATAA_routing_wire_inst (
+	.datain(pe_flag_ainput_o),
+	.dataout(Selector0_a2_DATAA_driver));
+
+cycloneive_routing_wire Selector0_a2_DATAC_routing_wire_inst (
+	.datain(op_code_a1_a_ainput_o),
+	.dataout(Selector0_a2_DATAC_driver));
+
+cycloneive_routing_wire Selector0_a2_DATAD_routing_wire_inst (
+	.datain(op_code_a2_a_ainput_o),
+	.dataout(Selector0_a2_DATAD_driver));
+
+// Location: LCCOMB_X6_Y30_N0
+cycloneive_lcell_comb Selector0_a2(
+// Equation(s):
+// Selector0_a2_combout = ((!op_code_a2_a_ainput_o) # (!op_code_a1_a_ainput_o)) # (!pe_flag_ainput_o)
+
+	.dataa(Selector0_a2_DATAA_driver),
+	.datab(gnd),
+	.datac(Selector0_a2_DATAC_driver),
+	.datad(Selector0_a2_DATAD_driver),
+	.cin(gnd),
+	.combout(Selector0_a2_combout),
+	.cout());
+// synopsys translate_off
+defparam Selector0_a2.lut_mask = 16'h5FFF;
+defparam Selector0_a2.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire Selector0_a1_DATAA_routing_wire_inst (
+	.datain(op_code_a2_a_ainput_o),
+	.dataout(Selector0_a1_DATAA_driver));
+
+cycloneive_routing_wire Selector0_a1_DATAB_routing_wire_inst (
+	.datain(op_code_a0_a_ainput_o),
+	.dataout(Selector0_a1_DATAB_driver));
+
+cycloneive_routing_wire Selector0_a1_DATAC_routing_wire_inst (
+	.datain(op_code_a1_a_ainput_o),
+	.dataout(Selector0_a1_DATAC_driver));
+
+cycloneive_routing_wire Selector0_a1_DATAD_routing_wire_inst (
+	.datain(op_code_a3_a_ainput_o),
+	.dataout(Selector0_a1_DATAD_driver));
+
+// Location: LCCOMB_X6_Y30_N26
+cycloneive_lcell_comb Selector0_a1(
+// Equation(s):
+// Selector0_a1_combout = (op_code_a3_a_ainput_o & ((op_code_a1_a_ainput_o) # ((op_code_a2_a_ainput_o & op_code_a0_a_ainput_o))))
+
+	.dataa(Selector0_a1_DATAA_driver),
+	.datab(Selector0_a1_DATAB_driver),
+	.datac(Selector0_a1_DATAC_driver),
+	.datad(Selector0_a1_DATAD_driver),
+	.cin(gnd),
+	.combout(Selector0_a1_combout),
+	.cout());
+// synopsys translate_off
+defparam Selector0_a1.lut_mask = 16'hF800;
+defparam Selector0_a1.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire Equal0_a0_DATAA_routing_wire_inst (
+	.datain(op_code_a2_a_ainput_o),
+	.dataout(Equal0_a0_DATAA_driver));
+
+cycloneive_routing_wire Equal0_a0_DATAB_routing_wire_inst (
+	.datain(op_code_a0_a_ainput_o),
+	.dataout(Equal0_a0_DATAB_driver));
+
+cycloneive_routing_wire Equal0_a0_DATAC_routing_wire_inst (
+	.datain(op_code_a1_a_ainput_o),
+	.dataout(Equal0_a0_DATAC_driver));
+
+cycloneive_routing_wire Equal0_a0_DATAD_routing_wire_inst (
+	.datain(op_code_a3_a_ainput_o),
+	.dataout(Equal0_a0_DATAD_driver));
+
+// Location: LCCOMB_X6_Y30_N28
+cycloneive_lcell_comb Equal0_a0(
+// Equation(s):
+// Equal0_a0_combout = (op_code_a2_a_ainput_o & (!op_code_a0_a_ainput_o & (op_code_a1_a_ainput_o & !op_code_a3_a_ainput_o)))
+
+	.dataa(Equal0_a0_DATAA_driver),
+	.datab(Equal0_a0_DATAB_driver),
+	.datac(Equal0_a0_DATAC_driver),
+	.datad(Equal0_a0_DATAD_driver),
+	.cin(gnd),
+	.combout(Equal0_a0_combout),
+	.cout());
+// synopsys translate_off
+defparam Equal0_a0.lut_mask = 16'h0020;
+defparam Equal0_a0.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire a_anext_state_anext_state_var_alm_0_a2_DATAA_routing_wire_inst (
+	.datain(reset_ainput_o),
+	.dataout(a_anext_state_anext_state_var_alm_0_a2_DATAA_driver));
+
+cycloneive_routing_wire a_anext_state_anext_state_var_alm_0_a2_DATAB_routing_wire_inst (
+	.datain(Equal0_a0_combout),
+	.dataout(a_anext_state_anext_state_var_alm_0_a2_DATAB_driver));
+
+cycloneive_routing_wire a_anext_state_anext_state_var_alm_0_a2_DATAC_routing_wire_inst (
+	.datain(pe_flag_ainput_o),
+	.dataout(a_anext_state_anext_state_var_alm_0_a2_DATAC_driver));
+
+cycloneive_routing_wire a_anext_state_anext_state_var_alm_0_a2_DATAD_routing_wire_inst (
+	.datain(state_signal_apriority_aq),
+	.dataout(a_anext_state_anext_state_var_alm_0_a2_DATAD_driver));
+
+// Location: LCCOMB_X6_Y30_N6
+cycloneive_lcell_comb a_anext_state_anext_state_var_alm_0_a2(
+// Equation(s):
+// a_anext_state_anext_state_var_alm_0_a2_combout = (!reset_ainput_o & (Equal0_a0_combout & (pe_flag_ainput_o & state_signal_apriority_aq)))
+
+	.dataa(a_anext_state_anext_state_var_alm_0_a2_DATAA_driver),
+	.datab(a_anext_state_anext_state_var_alm_0_a2_DATAB_driver),
+	.datac(a_anext_state_anext_state_var_alm_0_a2_DATAC_driver),
+	.datad(a_anext_state_anext_state_var_alm_0_a2_DATAD_driver),
+	.cin(gnd),
+	.combout(a_anext_state_anext_state_var_alm_0_a2_combout),
+	.cout());
+// synopsys translate_off
+defparam a_anext_state_anext_state_var_alm_0_a2.lut_mask = 16'h4000;
+defparam a_anext_state_anext_state_var_alm_0_a2.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire state_signal_alm_0_CLK_routing_wire_inst (
+	.datain(clock_ainputclkctrl_outclk),
+	.dataout(state_signal_alm_0_CLK_driver));
+
+cycloneive_routing_wire state_signal_alm_0_D_routing_wire_inst (
+	.datain(a_anext_state_anext_state_var_alm_0_a2_combout),
+	.dataout(state_signal_alm_0_D_driver));
+
+// Location: FF_X6_Y30_N7
+dffeas state_signal_alm_0(
+	.clk(state_signal_alm_0_CLK_driver),
+	.d(state_signal_alm_0_D_driver),
+	.asdata(vcc),
+	.clrn(vcc),
+	.aload(gnd),
+	.sclr(gnd),
+	.sload(gnd),
+	.ena(vcc),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.q(state_signal_alm_0_aq),
+	.prn(vcc));
+// synopsys translate_off
+defparam state_signal_alm_0.is_wysiwyg = "true";
+defparam state_signal_alm_0.power_up = "low";
+// synopsys translate_on
+
+cycloneive_routing_wire Selector7_a0_DATAA_routing_wire_inst (
+	.datain(op_code_a3_a_ainput_o),
+	.dataout(Selector7_a0_DATAA_driver));
+
+cycloneive_routing_wire Selector7_a0_DATAB_routing_wire_inst (
+	.datain(op_code_a2_a_ainput_o),
+	.dataout(Selector7_a0_DATAB_driver));
+
+cycloneive_routing_wire Selector7_a0_DATAD_routing_wire_inst (
+	.datain(op_code_a1_a_ainput_o),
+	.dataout(Selector7_a0_DATAD_driver));
+
+// Location: LCCOMB_X6_Y26_N20
+cycloneive_lcell_comb Selector7_a0(
+// Equation(s):
+// Selector7_a0_combout = (!op_code_a3_a_ainput_o & (op_code_a2_a_ainput_o & op_code_a1_a_ainput_o))
+
+	.dataa(Selector7_a0_DATAA_driver),
+	.datab(Selector7_a0_DATAB_driver),
+	.datac(gnd),
+	.datad(Selector7_a0_DATAD_driver),
+	.cin(gnd),
+	.combout(Selector7_a0_combout),
+	.cout());
+// synopsys translate_off
+defparam Selector7_a0.lut_mask = 16'h4400;
+defparam Selector7_a0.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire Equal0_a8_DATAA_routing_wire_inst (
+	.datain(op_code_a2_a_ainput_o),
+	.dataout(Equal0_a8_DATAA_driver));
+
+cycloneive_routing_wire Equal0_a8_DATAB_routing_wire_inst (
+	.datain(op_code_a0_a_ainput_o),
+	.dataout(Equal0_a8_DATAB_driver));
+
+cycloneive_routing_wire Equal0_a8_DATAC_routing_wire_inst (
+	.datain(op_code_a1_a_ainput_o),
+	.dataout(Equal0_a8_DATAC_driver));
+
+cycloneive_routing_wire Equal0_a8_DATAD_routing_wire_inst (
+	.datain(op_code_a3_a_ainput_o),
+	.dataout(Equal0_a8_DATAD_driver));
+
+// Location: LCCOMB_X6_Y30_N30
+cycloneive_lcell_comb Equal0_a8(
+// Equation(s):
+// Equal0_a8_combout = (op_code_a2_a_ainput_o & (op_code_a0_a_ainput_o & (op_code_a1_a_ainput_o & !op_code_a3_a_ainput_o)))
+
+	.dataa(Equal0_a8_DATAA_driver),
+	.datab(Equal0_a8_DATAB_driver),
+	.datac(Equal0_a8_DATAC_driver),
+	.datad(Equal0_a8_DATAD_driver),
+	.cin(gnd),
+	.combout(Equal0_a8_combout),
+	.cout());
+// synopsys translate_off
+defparam Equal0_a8.lut_mask = 16'h0080;
+defparam Equal0_a8.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire a_anext_state_anext_state_var_asm_0_a2_DATAA_routing_wire_inst (
+	.datain(pe_flag_ainput_o),
+	.dataout(a_anext_state_anext_state_var_asm_0_a2_DATAA_driver));
+
+cycloneive_routing_wire a_anext_state_anext_state_var_asm_0_a2_DATAB_routing_wire_inst (
+	.datain(state_signal_apriority_aq),
+	.dataout(a_anext_state_anext_state_var_asm_0_a2_DATAB_driver));
+
+cycloneive_routing_wire a_anext_state_anext_state_var_asm_0_a2_DATAC_routing_wire_inst (
+	.datain(Equal0_a8_combout),
+	.dataout(a_anext_state_anext_state_var_asm_0_a2_DATAC_driver));
+
+cycloneive_routing_wire a_anext_state_anext_state_var_asm_0_a2_DATAD_routing_wire_inst (
+	.datain(reset_ainput_o),
+	.dataout(a_anext_state_anext_state_var_asm_0_a2_DATAD_driver));
+
+// Location: LCCOMB_X6_Y30_N22
+cycloneive_lcell_comb a_anext_state_anext_state_var_asm_0_a2(
+// Equation(s):
+// a_anext_state_anext_state_var_asm_0_a2_combout = (pe_flag_ainput_o & (state_signal_apriority_aq & (Equal0_a8_combout & !reset_ainput_o)))
+
+	.dataa(a_anext_state_anext_state_var_asm_0_a2_DATAA_driver),
+	.datab(a_anext_state_anext_state_var_asm_0_a2_DATAB_driver),
+	.datac(a_anext_state_anext_state_var_asm_0_a2_DATAC_driver),
+	.datad(a_anext_state_anext_state_var_asm_0_a2_DATAD_driver),
+	.cin(gnd),
+	.combout(a_anext_state_anext_state_var_asm_0_a2_combout),
+	.cout());
+// synopsys translate_off
+defparam a_anext_state_anext_state_var_asm_0_a2.lut_mask = 16'h0080;
+defparam a_anext_state_anext_state_var_asm_0_a2.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire state_signal_asm_0_CLK_routing_wire_inst (
+	.datain(clock_ainputclkctrl_outclk),
+	.dataout(state_signal_asm_0_CLK_driver));
+
+cycloneive_routing_wire state_signal_asm_0_D_routing_wire_inst (
+	.datain(a_anext_state_anext_state_var_asm_0_a2_combout),
+	.dataout(state_signal_asm_0_D_driver));
+
+// Location: FF_X6_Y30_N23
+dffeas state_signal_asm_0(
+	.clk(state_signal_asm_0_CLK_driver),
+	.d(state_signal_asm_0_D_driver),
+	.asdata(vcc),
+	.clrn(vcc),
+	.aload(gnd),
+	.sclr(gnd),
+	.sload(gnd),
+	.ena(vcc),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.q(state_signal_asm_0_aq),
+	.prn(vcc));
+// synopsys translate_off
+defparam state_signal_asm_0.is_wysiwyg = "true";
+defparam state_signal_asm_0.power_up = "low";
+// synopsys translate_on
+
+cycloneive_routing_wire Selector1_a0_DATAA_routing_wire_inst (
+	.datain(state_signal_alm_0_aq),
+	.dataout(Selector1_a0_DATAA_driver));
+
+cycloneive_routing_wire Selector1_a0_DATAB_routing_wire_inst (
+	.datain(Selector7_a0_combout),
+	.dataout(Selector1_a0_DATAB_driver));
+
+cycloneive_routing_wire Selector1_a0_DATAC_routing_wire_inst (
+	.datain(state_signal_asm_0_aq),
+	.dataout(Selector1_a0_DATAC_driver));
+
+cycloneive_routing_wire Selector1_a0_DATAD_routing_wire_inst (
+	.datain(state_signal_adec_0_aq),
+	.dataout(Selector1_a0_DATAD_driver));
+
+// Location: LCCOMB_X6_Y30_N18
+cycloneive_lcell_comb Selector1_a0(
+// Equation(s):
+// Selector1_a0_combout = (state_signal_alm_0_aq) # ((state_signal_asm_0_aq) # ((Selector7_a0_combout & state_signal_adec_0_aq)))
+
+	.dataa(Selector1_a0_DATAA_driver),
+	.datab(Selector1_a0_DATAB_driver),
+	.datac(Selector1_a0_DATAC_driver),
+	.datad(Selector1_a0_DATAD_driver),
+	.cin(gnd),
+	.combout(Selector1_a0_combout),
+	.cout());
+// synopsys translate_off
+defparam Selector1_a0.lut_mask = 16'hFEFA;
+defparam Selector1_a0.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire state_signal_apriority_CLK_routing_wire_inst (
+	.datain(clock_ainputclkctrl_outclk),
+	.dataout(state_signal_apriority_CLK_driver));
+
+cycloneive_routing_wire state_signal_apriority_D_routing_wire_inst (
+	.datain(Selector1_a0_combout),
+	.dataout(state_signal_apriority_D_driver));
+
+cycloneive_routing_wire state_signal_apriority_SCLR_routing_wire_inst (
+	.datain(reset_ainput_o),
+	.dataout(state_signal_apriority_SCLR_driver));
+
+// Location: FF_X6_Y30_N19
+dffeas state_signal_apriority(
+	.clk(state_signal_apriority_CLK_driver),
+	.d(state_signal_apriority_D_driver),
+	.asdata(vcc),
+	.clrn(vcc),
+	.aload(gnd),
+	.sclr(state_signal_apriority_SCLR_driver),
+	.sload(gnd),
+	.ena(vcc),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.q(state_signal_apriority_aq),
+	.prn(vcc));
+// synopsys translate_off
+defparam state_signal_apriority.is_wysiwyg = "true";
+defparam state_signal_apriority.power_up = "low";
+// synopsys translate_on
+
+cycloneive_routing_wire Selector0_a3_DATAA_routing_wire_inst (
+	.datain(state_signal_adec_0_aq),
+	.dataout(Selector0_a3_DATAA_driver));
+
+cycloneive_routing_wire Selector0_a3_DATAB_routing_wire_inst (
+	.datain(Selector0_a2_combout),
+	.dataout(Selector0_a3_DATAB_driver));
+
+cycloneive_routing_wire Selector0_a3_DATAC_routing_wire_inst (
+	.datain(Selector0_a1_combout),
+	.dataout(Selector0_a3_DATAC_driver));
+
+cycloneive_routing_wire Selector0_a3_DATAD_routing_wire_inst (
+	.datain(state_signal_apriority_aq),
+	.dataout(Selector0_a3_DATAD_driver));
+
+// Location: LCCOMB_X6_Y30_N10
+cycloneive_lcell_comb Selector0_a3(
+// Equation(s):
+// Selector0_a3_combout = (Selector0_a1_combout & ((state_signal_adec_0_aq) # ((state_signal_apriority_aq)))) # (!Selector0_a1_combout & (((Selector0_a2_combout & state_signal_apriority_aq))))
+
+	.dataa(Selector0_a3_DATAA_driver),
+	.datab(Selector0_a3_DATAB_driver),
+	.datac(Selector0_a3_DATAC_driver),
+	.datad(Selector0_a3_DATAD_driver),
+	.cin(gnd),
+	.combout(Selector0_a3_combout),
+	.cout());
+// synopsys translate_off
+defparam Selector0_a3.lut_mask = 16'hFCA0;
+defparam Selector0_a3.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire CZ_a1_a_ainput_I_routing_wire_inst (
+	.datain(CZ[1]),
+	.dataout(CZ_a1_a_ainput_I_driver));
+
+// Location: IOIBUF_X16_Y34_N1
+cycloneive_io_ibuf CZ_a1_a_ainput(
+	.i(CZ_a1_a_ainput_I_driver),
+	.ibar(gnd),
+	.o(CZ_a1_a_ainput_o));
+// synopsys translate_off
+defparam CZ_a1_a_ainput.bus_hold = "false";
+defparam CZ_a1_a_ainput.simulate_z_as = "z";
+// synopsys translate_on
+
+cycloneive_routing_wire Z_ainput_I_routing_wire_inst (
+	.datain(Z),
+	.dataout(Z_ainput_I_driver));
+
+// Location: IOIBUF_X18_Y34_N1
+cycloneive_io_ibuf Z_ainput(
+	.i(Z_ainput_I_driver),
+	.ibar(gnd),
+	.o(Z_ainput_o));
+// synopsys translate_off
+defparam Z_ainput.bus_hold = "false";
+defparam Z_ainput.simulate_z_as = "z";
+// synopsys translate_on
+
+cycloneive_routing_wire carry_ainput_I_routing_wire_inst (
+	.datain(carry),
+	.dataout(carry_ainput_I_driver));
+
+// Location: IOIBUF_X9_Y34_N22
+cycloneive_io_ibuf carry_ainput(
+	.i(carry_ainput_I_driver),
+	.ibar(gnd),
+	.o(carry_ainput_o));
+// synopsys translate_off
+defparam carry_ainput.bus_hold = "false";
+defparam carry_ainput.simulate_z_as = "z";
+// synopsys translate_on
+
+cycloneive_routing_wire CZ_a0_a_ainput_I_routing_wire_inst (
+	.datain(CZ[0]),
+	.dataout(CZ_a0_a_ainput_I_driver));
+
+// Location: IOIBUF_X20_Y34_N8
+cycloneive_io_ibuf CZ_a0_a_ainput(
+	.i(CZ_a0_a_ainput_I_driver),
+	.ibar(gnd),
+	.o(CZ_a0_a_ainput_o));
+// synopsys translate_off
+defparam CZ_a0_a_ainput.bus_hold = "false";
+defparam CZ_a0_a_ainput.simulate_z_as = "z";
+// synopsys translate_on
+
+cycloneive_routing_wire Selector0_a4_DATAA_routing_wire_inst (
+	.datain(CZ_a1_a_ainput_o),
+	.dataout(Selector0_a4_DATAA_driver));
+
+cycloneive_routing_wire Selector0_a4_DATAB_routing_wire_inst (
+	.datain(Z_ainput_o),
+	.dataout(Selector0_a4_DATAB_driver));
+
+cycloneive_routing_wire Selector0_a4_DATAC_routing_wire_inst (
+	.datain(carry_ainput_o),
+	.dataout(Selector0_a4_DATAC_driver));
+
+cycloneive_routing_wire Selector0_a4_DATAD_routing_wire_inst (
+	.datain(CZ_a0_a_ainput_o),
+	.dataout(Selector0_a4_DATAD_driver));
+
+// Location: LCCOMB_X9_Y30_N10
+cycloneive_lcell_comb Selector0_a4(
+// Equation(s):
+// Selector0_a4_combout = (CZ_a1_a_ainput_o & (((CZ_a0_a_ainput_o) # (!carry_ainput_o)))) # (!CZ_a1_a_ainput_o & (!Z_ainput_o & ((CZ_a0_a_ainput_o))))
+
+	.dataa(Selector0_a4_DATAA_driver),
+	.datab(Selector0_a4_DATAB_driver),
+	.datac(Selector0_a4_DATAC_driver),
+	.datad(Selector0_a4_DATAD_driver),
+	.cin(gnd),
+	.combout(Selector0_a4_combout),
+	.cout());
+// synopsys translate_off
+defparam Selector0_a4.lut_mask = 16'hBB0A;
+defparam Selector0_a4.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire Selector0_a5_DATAA_routing_wire_inst (
+	.datain(op_code_a3_a_ainput_o),
+	.dataout(Selector0_a5_DATAA_driver));
+
+cycloneive_routing_wire Selector0_a5_DATAB_routing_wire_inst (
+	.datain(op_code_a0_a_ainput_o),
+	.dataout(Selector0_a5_DATAB_driver));
+
+cycloneive_routing_wire Selector0_a5_DATAC_routing_wire_inst (
+	.datain(op_code_a2_a_ainput_o),
+	.dataout(Selector0_a5_DATAC_driver));
+
+cycloneive_routing_wire Selector0_a5_DATAD_routing_wire_inst (
+	.datain(state_signal_adec_0_aq),
+	.dataout(Selector0_a5_DATAD_driver));
+
+// Location: LCCOMB_X6_Y30_N4
+cycloneive_lcell_comb Selector0_a5(
+// Equation(s):
+// Selector0_a5_combout = (!op_code_a3_a_ainput_o & (!op_code_a0_a_ainput_o & (!op_code_a2_a_ainput_o & state_signal_adec_0_aq)))
+
+	.dataa(Selector0_a5_DATAA_driver),
+	.datab(Selector0_a5_DATAB_driver),
+	.datac(Selector0_a5_DATAC_driver),
+	.datad(Selector0_a5_DATAD_driver),
+	.cin(gnd),
+	.combout(Selector0_a5_combout),
+	.cout());
+// synopsys translate_off
+defparam Selector0_a5.lut_mask = 16'h0100;
+defparam Selector0_a5.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire Equal0_a1_DATAA_routing_wire_inst (
+	.datain(op_code_a2_a_ainput_o),
+	.dataout(Equal0_a1_DATAA_driver));
+
+cycloneive_routing_wire Equal0_a1_DATAB_routing_wire_inst (
+	.datain(op_code_a1_a_ainput_o),
+	.dataout(Equal0_a1_DATAB_driver));
+
+cycloneive_routing_wire Equal0_a1_DATAC_routing_wire_inst (
+	.datain(op_code_a0_a_ainput_o),
+	.dataout(Equal0_a1_DATAC_driver));
+
+cycloneive_routing_wire Equal0_a1_DATAD_routing_wire_inst (
+	.datain(op_code_a3_a_ainput_o),
+	.dataout(Equal0_a1_DATAD_driver));
+
+// Location: LCCOMB_X7_Y30_N4
+cycloneive_lcell_comb Equal0_a1(
+// Equation(s):
+// Equal0_a1_combout = (op_code_a2_a_ainput_o & (!op_code_a1_a_ainput_o & (!op_code_a0_a_ainput_o & op_code_a3_a_ainput_o)))
+
+	.dataa(Equal0_a1_DATAA_driver),
+	.datab(Equal0_a1_DATAB_driver),
+	.datac(Equal0_a1_DATAC_driver),
+	.datad(Equal0_a1_DATAD_driver),
+	.cin(gnd),
+	.combout(Equal0_a1_combout),
+	.cout());
+// synopsys translate_off
+defparam Equal0_a1.lut_mask = 16'h0200;
+defparam Equal0_a1.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire mux_a2_a0_DATAB_routing_wire_inst (
+	.datain(Equal0_a1_combout),
+	.dataout(mux_a2_a0_DATAB_driver));
+
+cycloneive_routing_wire mux_a2_a0_DATAC_routing_wire_inst (
+	.datain(reset_ainput_o),
+	.dataout(mux_a2_a0_DATAC_driver));
+
+cycloneive_routing_wire mux_a2_a0_DATAD_routing_wire_inst (
+	.datain(state_signal_adec_0_aq),
+	.dataout(mux_a2_a0_DATAD_driver));
+
+// Location: LCCOMB_X7_Y30_N30
+cycloneive_lcell_comb mux_a2_a0(
+// Equation(s):
+// mux_a2_a0_combout = (Equal0_a1_combout & (!reset_ainput_o & state_signal_adec_0_aq))
+
+	.dataa(gnd),
+	.datab(mux_a2_a0_DATAB_driver),
+	.datac(mux_a2_a0_DATAC_driver),
+	.datad(mux_a2_a0_DATAD_driver),
+	.cin(gnd),
+	.combout(mux_a2_a0_combout),
+	.cout());
+// synopsys translate_off
+defparam mux_a2_a0.lut_mask = 16'h0C00;
+defparam mux_a2_a0.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire state_signal_abreq_0_CLK_routing_wire_inst (
+	.datain(clock_ainputclkctrl_outclk),
+	.dataout(state_signal_abreq_0_CLK_driver));
+
+cycloneive_routing_wire state_signal_abreq_0_ASDATA_routing_wire_inst (
+	.datain(mux_a2_a0_combout),
+	.dataout(state_signal_abreq_0_ASDATA_driver));
+
+// Location: FF_X7_Y30_N15
+dffeas state_signal_abreq_0(
+	.clk(state_signal_abreq_0_CLK_driver),
+	.d(gnd),
+	.asdata(state_signal_abreq_0_ASDATA_driver),
+	.clrn(vcc),
+	.aload(gnd),
+	.sclr(gnd),
+	.sload(vcc),
+	.ena(vcc),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.q(state_signal_abreq_0_aq),
+	.prn(vcc));
+// synopsys translate_off
+defparam state_signal_abreq_0.is_wysiwyg = "true";
+defparam state_signal_abreq_0.power_up = "low";
+// synopsys translate_on
+
+cycloneive_routing_wire eqflag_ainput_I_routing_wire_inst (
+	.datain(eqflag),
+	.dataout(eqflag_ainput_I_driver));
+
+// Location: IOIBUF_X11_Y34_N1
+cycloneive_io_ibuf eqflag_ainput(
+	.i(eqflag_ainput_I_driver),
+	.ibar(gnd),
+	.o(eqflag_ainput_o));
+// synopsys translate_off
+defparam eqflag_ainput.bus_hold = "false";
+defparam eqflag_ainput.simulate_z_as = "z";
+// synopsys translate_on
+
+cycloneive_routing_wire Equal0_a2_DATAA_routing_wire_inst (
+	.datain(op_code_a0_a_ainput_o),
+	.dataout(Equal0_a2_DATAA_driver));
+
+cycloneive_routing_wire Equal0_a2_DATAB_routing_wire_inst (
+	.datain(op_code_a2_a_ainput_o),
+	.dataout(Equal0_a2_DATAB_driver));
+
+cycloneive_routing_wire Equal0_a2_DATAC_routing_wire_inst (
+	.datain(op_code_a1_a_ainput_o),
+	.dataout(Equal0_a2_DATAC_driver));
+
+cycloneive_routing_wire Equal0_a2_DATAD_routing_wire_inst (
+	.datain(op_code_a3_a_ainput_o),
+	.dataout(Equal0_a2_DATAD_driver));
+
+// Location: LCCOMB_X9_Y30_N30
+cycloneive_lcell_comb Equal0_a2(
+// Equation(s):
+// Equal0_a2_combout = (!op_code_a0_a_ainput_o & (!op_code_a2_a_ainput_o & (!op_code_a1_a_ainput_o & op_code_a3_a_ainput_o)))
+
+	.dataa(Equal0_a2_DATAA_driver),
+	.datab(Equal0_a2_DATAB_driver),
+	.datac(Equal0_a2_DATAC_driver),
+	.datad(Equal0_a2_DATAD_driver),
+	.cin(gnd),
+	.combout(Equal0_a2_combout),
+	.cout());
+// synopsys translate_off
+defparam Equal0_a2.lut_mask = 16'h0100;
+defparam Equal0_a2.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire next_state_var_a4_DATAA_routing_wire_inst (
+	.datain(CZ_a1_a_ainput_o),
+	.dataout(next_state_var_a4_DATAA_driver));
+
+cycloneive_routing_wire next_state_var_a4_DATAB_routing_wire_inst (
+	.datain(Z_ainput_o),
+	.dataout(next_state_var_a4_DATAB_driver));
+
+cycloneive_routing_wire next_state_var_a4_DATAC_routing_wire_inst (
+	.datain(carry_ainput_o),
+	.dataout(next_state_var_a4_DATAC_driver));
+
+cycloneive_routing_wire next_state_var_a4_DATAD_routing_wire_inst (
+	.datain(CZ_a0_a_ainput_o),
+	.dataout(next_state_var_a4_DATAD_driver));
+
+// Location: LCCOMB_X9_Y30_N8
+cycloneive_lcell_comb next_state_var_a4(
+// Equation(s):
+// next_state_var_a4_combout = (CZ_a1_a_ainput_o & (((CZ_a0_a_ainput_o) # (!carry_ainput_o)))) # (!CZ_a1_a_ainput_o & (!Z_ainput_o & ((CZ_a0_a_ainput_o))))
+
+	.dataa(next_state_var_a4_DATAA_driver),
+	.datab(next_state_var_a4_DATAB_driver),
+	.datac(next_state_var_a4_DATAC_driver),
+	.datad(next_state_var_a4_DATAD_driver),
+	.cin(gnd),
+	.combout(next_state_var_a4_combout),
+	.cout());
+// synopsys translate_off
+defparam next_state_var_a4.lut_mask = 16'hBB0A;
+defparam next_state_var_a4.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire next_state_var_a5_DATAA_routing_wire_inst (
+	.datain(op_code_a3_a_ainput_o),
+	.dataout(next_state_var_a5_DATAA_driver));
+
+cycloneive_routing_wire next_state_var_a5_DATAB_routing_wire_inst (
+	.datain(op_code_a2_a_ainput_o),
+	.dataout(next_state_var_a5_DATAB_driver));
+
+cycloneive_routing_wire next_state_var_a5_DATAC_routing_wire_inst (
+	.datain(op_code_a0_a_ainput_o),
+	.dataout(next_state_var_a5_DATAC_driver));
+
+cycloneive_routing_wire next_state_var_a5_DATAD_routing_wire_inst (
+	.datain(next_state_var_a4_combout),
+	.dataout(next_state_var_a5_DATAD_driver));
+
+// Location: LCCOMB_X9_Y30_N18
+cycloneive_lcell_comb next_state_var_a5(
+// Equation(s):
+// next_state_var_a5_combout = (op_code_a3_a_ainput_o & ((op_code_a2_a_ainput_o) # ((op_code_a0_a_ainput_o)))) # (!op_code_a3_a_ainput_o & (!op_code_a2_a_ainput_o & (!op_code_a0_a_ainput_o & next_state_var_a4_combout)))
+
+	.dataa(next_state_var_a5_DATAA_driver),
+	.datab(next_state_var_a5_DATAB_driver),
+	.datac(next_state_var_a5_DATAC_driver),
+	.datad(next_state_var_a5_DATAD_driver),
+	.cin(gnd),
+	.combout(next_state_var_a5_combout),
+	.cout());
+// synopsys translate_off
+defparam next_state_var_a5.lut_mask = 16'hA9A8;
+defparam next_state_var_a5.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire next_state_var_a6_DATAA_routing_wire_inst (
+	.datain(reset_ainput_o),
+	.dataout(next_state_var_a6_DATAA_driver));
+
+cycloneive_routing_wire next_state_var_a6_DATAB_routing_wire_inst (
+	.datain(op_code_a1_a_ainput_o),
+	.dataout(next_state_var_a6_DATAB_driver));
+
+cycloneive_routing_wire next_state_var_a6_DATAC_routing_wire_inst (
+	.datain(state_signal_adec_0_aq),
+	.dataout(next_state_var_a6_DATAC_driver));
+
+cycloneive_routing_wire next_state_var_a6_DATAD_routing_wire_inst (
+	.datain(next_state_var_a5_combout),
+	.dataout(next_state_var_a6_DATAD_driver));
+
+// Location: LCCOMB_X9_Y30_N6
+cycloneive_lcell_comb next_state_var_a6(
+// Equation(s):
+// next_state_var_a6_combout = (!reset_ainput_o & (!op_code_a1_a_ainput_o & (state_signal_adec_0_aq & !next_state_var_a5_combout)))
+
+	.dataa(next_state_var_a6_DATAA_driver),
+	.datab(next_state_var_a6_DATAB_driver),
+	.datac(next_state_var_a6_DATAC_driver),
+	.datad(next_state_var_a6_DATAD_driver),
+	.cin(gnd),
+	.combout(next_state_var_a6_combout),
+	.cout());
+// synopsys translate_off
+defparam next_state_var_a6.lut_mask = 16'h0010;
+defparam next_state_var_a6.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire state_signal_aadd_0_CLK_routing_wire_inst (
+	.datain(clock_ainputclkctrl_outclk),
+	.dataout(state_signal_aadd_0_CLK_driver));
+
+cycloneive_routing_wire state_signal_aadd_0_D_routing_wire_inst (
+	.datain(next_state_var_a6_combout),
+	.dataout(state_signal_aadd_0_D_driver));
+
+// Location: FF_X9_Y30_N7
+dffeas state_signal_aadd_0(
+	.clk(state_signal_aadd_0_CLK_driver),
+	.d(state_signal_aadd_0_D_driver),
+	.asdata(vcc),
+	.clrn(vcc),
+	.aload(gnd),
+	.sclr(gnd),
+	.sload(gnd),
+	.ena(vcc),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.q(state_signal_aadd_0_aq),
+	.prn(vcc));
+// synopsys translate_off
+defparam state_signal_aadd_0.is_wysiwyg = "true";
+defparam state_signal_aadd_0.power_up = "low";
+// synopsys translate_on
+
+cycloneive_routing_wire Selector3_a0_DATAA_routing_wire_inst (
+	.datain(state_signal_abreq_0_aq),
+	.dataout(Selector3_a0_DATAA_driver));
+
+cycloneive_routing_wire Selector3_a0_DATAB_routing_wire_inst (
+	.datain(eqflag_ainput_o),
+	.dataout(Selector3_a0_DATAB_driver));
+
+cycloneive_routing_wire Selector3_a0_DATAC_routing_wire_inst (
+	.datain(Equal0_a2_combout),
+	.dataout(Selector3_a0_DATAC_driver));
+
+cycloneive_routing_wire Selector3_a0_DATAD_routing_wire_inst (
+	.datain(state_signal_aadd_0_aq),
+	.dataout(Selector3_a0_DATAD_driver));
+
+// Location: LCCOMB_X8_Y30_N4
+cycloneive_lcell_comb Selector3_a0(
+// Equation(s):
+// Selector3_a0_combout = (state_signal_abreq_0_aq & (((Equal0_a2_combout & state_signal_aadd_0_aq)) # (!eqflag_ainput_o))) # (!state_signal_abreq_0_aq & (((Equal0_a2_combout & state_signal_aadd_0_aq))))
+
+	.dataa(Selector3_a0_DATAA_driver),
+	.datab(Selector3_a0_DATAB_driver),
+	.datac(Selector3_a0_DATAC_driver),
+	.datad(Selector3_a0_DATAD_driver),
+	.cin(gnd),
+	.combout(Selector3_a0_combout),
+	.cout());
+// synopsys translate_off
+defparam Selector3_a0.lut_mask = 16'hF222;
+defparam Selector3_a0.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire state_signal_awb_1_CLK_routing_wire_inst (
+	.datain(clock_ainputclkctrl_outclk),
+	.dataout(state_signal_awb_1_CLK_driver));
+
+cycloneive_routing_wire state_signal_awb_1_D_routing_wire_inst (
+	.datain(Selector3_a0_combout),
+	.dataout(state_signal_awb_1_D_driver));
+
+cycloneive_routing_wire state_signal_awb_1_SCLR_routing_wire_inst (
+	.datain(reset_ainput_o),
+	.dataout(state_signal_awb_1_SCLR_driver));
+
+// Location: FF_X8_Y30_N5
+dffeas state_signal_awb_1(
+	.clk(state_signal_awb_1_CLK_driver),
+	.d(state_signal_awb_1_D_driver),
+	.asdata(vcc),
+	.clrn(vcc),
+	.aload(gnd),
+	.sclr(state_signal_awb_1_SCLR_driver),
+	.sload(gnd),
+	.ena(vcc),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.q(state_signal_awb_1_aq),
+	.prn(vcc));
+// synopsys translate_off
+defparam state_signal_awb_1.is_wysiwyg = "true";
+defparam state_signal_awb_1.power_up = "low";
+// synopsys translate_on
+
+cycloneive_routing_wire a_anext_state_anext_state_var_abreq_1_a0_DATAB_routing_wire_inst (
+	.datain(state_signal_abreq_0_aq),
+	.dataout(a_anext_state_anext_state_var_abreq_1_a0_DATAB_driver));
+
+cycloneive_routing_wire a_anext_state_anext_state_var_abreq_1_a0_DATAC_routing_wire_inst (
+	.datain(reset_ainput_o),
+	.dataout(a_anext_state_anext_state_var_abreq_1_a0_DATAC_driver));
+
+cycloneive_routing_wire a_anext_state_anext_state_var_abreq_1_a0_DATAD_routing_wire_inst (
+	.datain(eqflag_ainput_o),
+	.dataout(a_anext_state_anext_state_var_abreq_1_a0_DATAD_driver));
+
+// Location: LCCOMB_X7_Y30_N24
+cycloneive_lcell_comb a_anext_state_anext_state_var_abreq_1_a0(
+// Equation(s):
+// a_anext_state_anext_state_var_abreq_1_a0_combout = (state_signal_abreq_0_aq & (!reset_ainput_o & eqflag_ainput_o))
+
+	.dataa(gnd),
+	.datab(a_anext_state_anext_state_var_abreq_1_a0_DATAB_driver),
+	.datac(a_anext_state_anext_state_var_abreq_1_a0_DATAC_driver),
+	.datad(a_anext_state_anext_state_var_abreq_1_a0_DATAD_driver),
+	.cin(gnd),
+	.combout(a_anext_state_anext_state_var_abreq_1_a0_combout),
+	.cout());
+// synopsys translate_off
+defparam a_anext_state_anext_state_var_abreq_1_a0.lut_mask = 16'h0C00;
+defparam a_anext_state_anext_state_var_abreq_1_a0.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire state_signal_abreq_1_CLK_routing_wire_inst (
+	.datain(clock_ainputclkctrl_outclk),
+	.dataout(state_signal_abreq_1_CLK_driver));
+
+cycloneive_routing_wire state_signal_abreq_1_D_routing_wire_inst (
+	.datain(a_anext_state_anext_state_var_abreq_1_a0_combout),
+	.dataout(state_signal_abreq_1_D_driver));
+
+// Location: FF_X7_Y30_N25
+dffeas state_signal_abreq_1(
+	.clk(state_signal_abreq_1_CLK_driver),
+	.d(state_signal_abreq_1_D_driver),
+	.asdata(vcc),
+	.clrn(vcc),
+	.aload(gnd),
+	.sclr(gnd),
+	.sload(gnd),
+	.ena(vcc),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.q(state_signal_abreq_1_aq),
+	.prn(vcc));
+// synopsys translate_off
+defparam state_signal_abreq_1.is_wysiwyg = "true";
+defparam state_signal_abreq_1.power_up = "low";
+// synopsys translate_on
+
+cycloneive_routing_wire state_signal_arst_a0_DATAC_routing_wire_inst (
+	.datain(reset_ainput_o),
+	.dataout(state_signal_arst_a0_DATAC_driver));
+
+// Location: LCCOMB_X7_Y30_N22
+cycloneive_lcell_comb state_signal_arst_a0(
+// Equation(s):
+// state_signal_arst_a0_combout = !reset_ainput_o
+
+	.dataa(gnd),
+	.datab(gnd),
+	.datac(state_signal_arst_a0_DATAC_driver),
+	.datad(gnd),
+	.cin(gnd),
+	.combout(state_signal_arst_a0_combout),
+	.cout());
+// synopsys translate_off
+defparam state_signal_arst_a0.lut_mask = 16'h0F0F;
+defparam state_signal_arst_a0.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire state_signal_arst_CLK_routing_wire_inst (
+	.datain(clock_ainputclkctrl_outclk),
+	.dataout(state_signal_arst_CLK_driver));
+
+cycloneive_routing_wire state_signal_arst_ASDATA_routing_wire_inst (
+	.datain(state_signal_arst_a0_combout),
+	.dataout(state_signal_arst_ASDATA_driver));
+
+// Location: FF_X7_Y30_N29
+dffeas state_signal_arst(
+	.clk(state_signal_arst_CLK_driver),
+	.d(gnd),
+	.asdata(state_signal_arst_ASDATA_driver),
+	.clrn(vcc),
+	.aload(gnd),
+	.sclr(gnd),
+	.sload(vcc),
+	.ena(vcc),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.q(state_signal_arst_aq),
+	.prn(vcc));
+// synopsys translate_off
+defparam state_signal_arst.is_wysiwyg = "true";
+defparam state_signal_arst.power_up = "low";
+// synopsys translate_on
+
+cycloneive_routing_wire next_state_var_a3_DATAA_routing_wire_inst (
+	.datain(op_code_a0_a_ainput_o),
+	.dataout(next_state_var_a3_DATAA_driver));
+
+cycloneive_routing_wire next_state_var_a3_DATAB_routing_wire_inst (
+	.datain(op_code_a2_a_ainput_o),
+	.dataout(next_state_var_a3_DATAB_driver));
+
+cycloneive_routing_wire next_state_var_a3_DATAC_routing_wire_inst (
+	.datain(op_code_a3_a_ainput_o),
+	.dataout(next_state_var_a3_DATAC_driver));
+
+cycloneive_routing_wire next_state_var_a3_DATAD_routing_wire_inst (
+	.datain(op_code_a1_a_ainput_o),
+	.dataout(next_state_var_a3_DATAD_driver));
+
+// Location: LCCOMB_X8_Y30_N18
+cycloneive_lcell_comb next_state_var_a3(
+// Equation(s):
+// next_state_var_a3_combout = (op_code_a0_a_ainput_o & (!op_code_a2_a_ainput_o & (op_code_a3_a_ainput_o $ (op_code_a1_a_ainput_o))))
+
+	.dataa(next_state_var_a3_DATAA_driver),
+	.datab(next_state_var_a3_DATAB_driver),
+	.datac(next_state_var_a3_DATAC_driver),
+	.datad(next_state_var_a3_DATAD_driver),
+	.cin(gnd),
+	.combout(next_state_var_a3_combout),
+	.cout());
+// synopsys translate_off
+defparam next_state_var_a3.lut_mask = 16'h0220;
+defparam next_state_var_a3.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire Equal0_a3_DATAA_routing_wire_inst (
+	.datain(op_code_a0_a_ainput_o),
+	.dataout(Equal0_a3_DATAA_driver));
+
+cycloneive_routing_wire Equal0_a3_DATAB_routing_wire_inst (
+	.datain(op_code_a2_a_ainput_o),
+	.dataout(Equal0_a3_DATAB_driver));
+
+cycloneive_routing_wire Equal0_a3_DATAC_routing_wire_inst (
+	.datain(op_code_a3_a_ainput_o),
+	.dataout(Equal0_a3_DATAC_driver));
+
+cycloneive_routing_wire Equal0_a3_DATAD_routing_wire_inst (
+	.datain(op_code_a1_a_ainput_o),
+	.dataout(Equal0_a3_DATAD_driver));
+
+// Location: LCCOMB_X8_Y30_N30
+cycloneive_lcell_comb Equal0_a3(
+// Equation(s):
+// Equal0_a3_combout = (!op_code_a0_a_ainput_o & (op_code_a2_a_ainput_o & (!op_code_a3_a_ainput_o & !op_code_a1_a_ainput_o)))
+
+	.dataa(Equal0_a3_DATAA_driver),
+	.datab(Equal0_a3_DATAB_driver),
+	.datac(Equal0_a3_DATAC_driver),
+	.datad(Equal0_a3_DATAD_driver),
+	.cin(gnd),
+	.combout(Equal0_a3_combout),
+	.cout());
+// synopsys translate_off
+defparam Equal0_a3.lut_mask = 16'h0004;
+defparam Equal0_a3.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire mux_b_a30_DATAB_routing_wire_inst (
+	.datain(reset_ainput_o),
+	.dataout(mux_b_a30_DATAB_driver));
+
+cycloneive_routing_wire mux_b_a30_DATAC_routing_wire_inst (
+	.datain(Equal0_a3_combout),
+	.dataout(mux_b_a30_DATAC_driver));
+
+cycloneive_routing_wire mux_b_a30_DATAD_routing_wire_inst (
+	.datain(state_signal_aadd_0_aq),
+	.dataout(mux_b_a30_DATAD_driver));
+
+// Location: LCCOMB_X8_Y30_N16
+cycloneive_lcell_comb mux_b_a30(
+// Equation(s):
+// mux_b_a30_combout = (!reset_ainput_o & (Equal0_a3_combout & state_signal_aadd_0_aq))
+
+	.dataa(gnd),
+	.datab(mux_b_a30_DATAB_driver),
+	.datac(mux_b_a30_DATAC_driver),
+	.datad(mux_b_a30_DATAD_driver),
+	.cin(gnd),
+	.combout(mux_b_a30_combout),
+	.cout());
+// synopsys translate_off
+defparam mux_b_a30.lut_mask = 16'h3000;
+defparam mux_b_a30.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire state_signal_alw_0_CLK_routing_wire_inst (
+	.datain(clock_ainputclkctrl_outclk),
+	.dataout(state_signal_alw_0_CLK_driver));
+
+cycloneive_routing_wire state_signal_alw_0_D_routing_wire_inst (
+	.datain(mux_b_a30_combout),
+	.dataout(state_signal_alw_0_D_driver));
+
+// Location: FF_X8_Y30_N17
+dffeas state_signal_alw_0(
+	.clk(state_signal_alw_0_CLK_driver),
+	.d(state_signal_alw_0_D_driver),
+	.asdata(vcc),
+	.clrn(vcc),
+	.aload(gnd),
+	.sclr(gnd),
+	.sload(gnd),
+	.ena(vcc),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.q(state_signal_alw_0_aq),
+	.prn(vcc));
+// synopsys translate_off
+defparam state_signal_alw_0.is_wysiwyg = "true";
+defparam state_signal_alw_0.power_up = "low";
+// synopsys translate_on
+
+cycloneive_routing_wire Equal0_a4_DATAA_routing_wire_inst (
+	.datain(op_code_a0_a_ainput_o),
+	.dataout(Equal0_a4_DATAA_driver));
+
+cycloneive_routing_wire Equal0_a4_DATAB_routing_wire_inst (
+	.datain(op_code_a2_a_ainput_o),
+	.dataout(Equal0_a4_DATAB_driver));
+
+cycloneive_routing_wire Equal0_a4_DATAC_routing_wire_inst (
+	.datain(op_code_a3_a_ainput_o),
+	.dataout(Equal0_a4_DATAC_driver));
+
+cycloneive_routing_wire Equal0_a4_DATAD_routing_wire_inst (
+	.datain(op_code_a1_a_ainput_o),
+	.dataout(Equal0_a4_DATAD_driver));
+
+// Location: LCCOMB_X8_Y30_N20
+cycloneive_lcell_comb Equal0_a4(
+// Equation(s):
+// Equal0_a4_combout = (op_code_a0_a_ainput_o & (op_code_a2_a_ainput_o & (!op_code_a3_a_ainput_o & !op_code_a1_a_ainput_o)))
+
+	.dataa(Equal0_a4_DATAA_driver),
+	.datab(Equal0_a4_DATAB_driver),
+	.datac(Equal0_a4_DATAC_driver),
+	.datad(Equal0_a4_DATAD_driver),
+	.cin(gnd),
+	.combout(Equal0_a4_combout),
+	.cout());
+// synopsys translate_off
+defparam Equal0_a4.lut_mask = 16'h0008;
+defparam Equal0_a4.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire mux_b_a31_DATAA_routing_wire_inst (
+	.datain(state_signal_aadd_0_aq),
+	.dataout(mux_b_a31_DATAA_driver));
+
+cycloneive_routing_wire mux_b_a31_DATAB_routing_wire_inst (
+	.datain(Equal0_a4_combout),
+	.dataout(mux_b_a31_DATAB_driver));
+
+cycloneive_routing_wire mux_b_a31_DATAD_routing_wire_inst (
+	.datain(reset_ainput_o),
+	.dataout(mux_b_a31_DATAD_driver));
+
+// Location: LCCOMB_X8_Y30_N6
+cycloneive_lcell_comb mux_b_a31(
+// Equation(s):
+// mux_b_a31_combout = (state_signal_aadd_0_aq & (Equal0_a4_combout & !reset_ainput_o))
+
+	.dataa(mux_b_a31_DATAA_driver),
+	.datab(mux_b_a31_DATAB_driver),
+	.datac(gnd),
+	.datad(mux_b_a31_DATAD_driver),
+	.cin(gnd),
+	.combout(mux_b_a31_combout),
+	.cout());
+// synopsys translate_off
+defparam mux_b_a31.lut_mask = 16'h0088;
+defparam mux_b_a31.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire state_signal_asw_0_CLK_routing_wire_inst (
+	.datain(clock_ainputclkctrl_outclk),
+	.dataout(state_signal_asw_0_CLK_driver));
+
+cycloneive_routing_wire state_signal_asw_0_D_routing_wire_inst (
+	.datain(mux_b_a31_combout),
+	.dataout(state_signal_asw_0_D_driver));
+
+// Location: FF_X8_Y30_N7
+dffeas state_signal_asw_0(
+	.clk(state_signal_asw_0_CLK_driver),
+	.d(state_signal_asw_0_D_driver),
+	.asdata(vcc),
+	.clrn(vcc),
+	.aload(gnd),
+	.sclr(gnd),
+	.sload(gnd),
+	.ena(vcc),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.q(state_signal_asw_0_aq),
+	.prn(vcc));
+// synopsys translate_off
+defparam state_signal_asw_0.is_wysiwyg = "true";
+defparam state_signal_asw_0.power_up = "low";
+// synopsys translate_on
+
+cycloneive_routing_wire Selector2_a1_DATAB_routing_wire_inst (
+	.datain(state_signal_alw_0_aq),
+	.dataout(Selector2_a1_DATAB_driver));
+
+cycloneive_routing_wire Selector2_a1_DATAD_routing_wire_inst (
+	.datain(state_signal_asw_0_aq),
+	.dataout(Selector2_a1_DATAD_driver));
+
+// Location: LCCOMB_X8_Y30_N8
+cycloneive_lcell_comb Selector2_a1(
+// Equation(s):
+// Selector2_a1_combout = (!state_signal_alw_0_aq & !state_signal_asw_0_aq)
+
+	.dataa(gnd),
+	.datab(Selector2_a1_DATAB_driver),
+	.datac(gnd),
+	.datad(Selector2_a1_DATAD_driver),
+	.cin(gnd),
+	.combout(Selector2_a1_combout),
+	.cout());
+// synopsys translate_off
+defparam Selector2_a1.lut_mask = 16'h0033;
+defparam Selector2_a1.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire enable_carry_flag_a2_DATAA_routing_wire_inst (
+	.datain(op_code_a0_a_ainput_o),
+	.dataout(enable_carry_flag_a2_DATAA_driver));
+
+cycloneive_routing_wire enable_carry_flag_a2_DATAB_routing_wire_inst (
+	.datain(op_code_a2_a_ainput_o),
+	.dataout(enable_carry_flag_a2_DATAB_driver));
+
+cycloneive_routing_wire enable_carry_flag_a2_DATAC_routing_wire_inst (
+	.datain(op_code_a3_a_ainput_o),
+	.dataout(enable_carry_flag_a2_DATAC_driver));
+
+cycloneive_routing_wire enable_carry_flag_a2_DATAD_routing_wire_inst (
+	.datain(op_code_a1_a_ainput_o),
+	.dataout(enable_carry_flag_a2_DATAD_driver));
+
+// Location: LCCOMB_X8_Y30_N26
+cycloneive_lcell_comb enable_carry_flag_a2(
+// Equation(s):
+// enable_carry_flag_a2_combout = (!op_code_a1_a_ainput_o & ((op_code_a0_a_ainput_o & (op_code_a2_a_ainput_o & !op_code_a3_a_ainput_o)) # (!op_code_a0_a_ainput_o & (!op_code_a2_a_ainput_o & op_code_a3_a_ainput_o))))
+
+	.dataa(enable_carry_flag_a2_DATAA_driver),
+	.datab(enable_carry_flag_a2_DATAB_driver),
+	.datac(enable_carry_flag_a2_DATAC_driver),
+	.datad(enable_carry_flag_a2_DATAD_driver),
+	.cin(gnd),
+	.combout(enable_carry_flag_a2_combout),
+	.cout());
+// synopsys translate_off
+defparam enable_carry_flag_a2.lut_mask = 16'h0018;
+defparam enable_carry_flag_a2.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire Equal0_a7_DATAA_routing_wire_inst (
+	.datain(op_code_a0_a_ainput_o),
+	.dataout(Equal0_a7_DATAA_driver));
+
+cycloneive_routing_wire Equal0_a7_DATAB_routing_wire_inst (
+	.datain(op_code_a2_a_ainput_o),
+	.dataout(Equal0_a7_DATAB_driver));
+
+cycloneive_routing_wire Equal0_a7_DATAC_routing_wire_inst (
+	.datain(op_code_a1_a_ainput_o),
+	.dataout(Equal0_a7_DATAC_driver));
+
+cycloneive_routing_wire Equal0_a7_DATAD_routing_wire_inst (
+	.datain(op_code_a3_a_ainput_o),
+	.dataout(Equal0_a7_DATAD_driver));
+
+// Location: LCCOMB_X9_Y30_N24
+cycloneive_lcell_comb Equal0_a7(
+// Equation(s):
+// Equal0_a7_combout = (!op_code_a0_a_ainput_o & (!op_code_a2_a_ainput_o & (op_code_a1_a_ainput_o & !op_code_a3_a_ainput_o)))
+
+	.dataa(Equal0_a7_DATAA_driver),
+	.datab(Equal0_a7_DATAB_driver),
+	.datac(Equal0_a7_DATAC_driver),
+	.datad(Equal0_a7_DATAD_driver),
+	.cin(gnd),
+	.combout(Equal0_a7_combout),
+	.cout());
+// synopsys translate_off
+defparam Equal0_a7.lut_mask = 16'h0010;
+defparam Equal0_a7.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire a_anext_state_anext_state_var_anand_0_a2_DATAA_routing_wire_inst (
+	.datain(reset_ainput_o),
+	.dataout(a_anext_state_anext_state_var_anand_0_a2_DATAA_driver));
+
+cycloneive_routing_wire a_anext_state_anext_state_var_anand_0_a2_DATAB_routing_wire_inst (
+	.datain(Equal0_a7_combout),
+	.dataout(a_anext_state_anext_state_var_anand_0_a2_DATAB_driver));
+
+cycloneive_routing_wire a_anext_state_anext_state_var_anand_0_a2_DATAC_routing_wire_inst (
+	.datain(state_signal_adec_0_aq),
+	.dataout(a_anext_state_anext_state_var_anand_0_a2_DATAC_driver));
+
+cycloneive_routing_wire a_anext_state_anext_state_var_anand_0_a2_DATAD_routing_wire_inst (
+	.datain(Selector0_a4_combout),
+	.dataout(a_anext_state_anext_state_var_anand_0_a2_DATAD_driver));
+
+// Location: LCCOMB_X9_Y30_N20
+cycloneive_lcell_comb a_anext_state_anext_state_var_anand_0_a2(
+// Equation(s):
+// a_anext_state_anext_state_var_anand_0_a2_combout = (!reset_ainput_o & (Equal0_a7_combout & (state_signal_adec_0_aq & !Selector0_a4_combout)))
+
+	.dataa(a_anext_state_anext_state_var_anand_0_a2_DATAA_driver),
+	.datab(a_anext_state_anext_state_var_anand_0_a2_DATAB_driver),
+	.datac(a_anext_state_anext_state_var_anand_0_a2_DATAC_driver),
+	.datad(a_anext_state_anext_state_var_anand_0_a2_DATAD_driver),
+	.cin(gnd),
+	.combout(a_anext_state_anext_state_var_anand_0_a2_combout),
+	.cout());
+// synopsys translate_off
+defparam a_anext_state_anext_state_var_anand_0_a2.lut_mask = 16'h0040;
+defparam a_anext_state_anext_state_var_anand_0_a2.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire state_signal_anand_0_CLK_routing_wire_inst (
+	.datain(clock_ainputclkctrl_outclk),
+	.dataout(state_signal_anand_0_CLK_driver));
+
+cycloneive_routing_wire state_signal_anand_0_D_routing_wire_inst (
+	.datain(a_anext_state_anext_state_var_anand_0_a2_combout),
+	.dataout(state_signal_anand_0_D_driver));
+
+// Location: FF_X9_Y30_N21
+dffeas state_signal_anand_0(
+	.clk(state_signal_anand_0_CLK_driver),
+	.d(state_signal_anand_0_D_driver),
+	.asdata(vcc),
+	.clrn(vcc),
+	.aload(gnd),
+	.sclr(gnd),
+	.sload(gnd),
+	.ena(vcc),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.q(state_signal_anand_0_aq),
+	.prn(vcc));
+// synopsys translate_off
+defparam state_signal_anand_0.is_wysiwyg = "true";
+defparam state_signal_anand_0.power_up = "low";
+// synopsys translate_on
+
+cycloneive_routing_wire Selector2_a0_DATAA_routing_wire_inst (
+	.datain(Equal0_a3_combout),
+	.dataout(Selector2_a0_DATAA_driver));
+
+cycloneive_routing_wire Selector2_a0_DATAB_routing_wire_inst (
+	.datain(enable_carry_flag_a2_combout),
+	.dataout(Selector2_a0_DATAB_driver));
+
+cycloneive_routing_wire Selector2_a0_DATAC_routing_wire_inst (
+	.datain(state_signal_anand_0_aq),
+	.dataout(Selector2_a0_DATAC_driver));
+
+cycloneive_routing_wire Selector2_a0_DATAD_routing_wire_inst (
+	.datain(state_signal_aadd_0_aq),
+	.dataout(Selector2_a0_DATAD_driver));
+
+// Location: LCCOMB_X8_Y30_N0
+cycloneive_lcell_comb Selector2_a0(
+// Equation(s):
+// Selector2_a0_combout = (state_signal_anand_0_aq) # ((!Equal0_a3_combout & (!enable_carry_flag_a2_combout & state_signal_aadd_0_aq)))
+
+	.dataa(Selector2_a0_DATAA_driver),
+	.datab(Selector2_a0_DATAB_driver),
+	.datac(Selector2_a0_DATAC_driver),
+	.datad(Selector2_a0_DATAD_driver),
+	.cin(gnd),
+	.combout(Selector2_a0_combout),
+	.cout());
+// synopsys translate_off
+defparam Selector2_a0.lut_mask = 16'hF1F0;
+defparam Selector2_a0.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire Selector2_a2_DATAA_routing_wire_inst (
+	.datain(state_signal_adec_0_aq),
+	.dataout(Selector2_a2_DATAA_driver));
+
+cycloneive_routing_wire Selector2_a2_DATAB_routing_wire_inst (
+	.datain(next_state_var_a3_combout),
+	.dataout(Selector2_a2_DATAB_driver));
+
+cycloneive_routing_wire Selector2_a2_DATAC_routing_wire_inst (
+	.datain(Selector2_a1_combout),
+	.dataout(Selector2_a2_DATAC_driver));
+
+cycloneive_routing_wire Selector2_a2_DATAD_routing_wire_inst (
+	.datain(Selector2_a0_combout),
+	.dataout(Selector2_a2_DATAD_driver));
+
+// Location: LCCOMB_X8_Y30_N22
+cycloneive_lcell_comb Selector2_a2(
+// Equation(s):
+// Selector2_a2_combout = ((Selector2_a0_combout) # ((state_signal_adec_0_aq & next_state_var_a3_combout))) # (!Selector2_a1_combout)
+
+	.dataa(Selector2_a2_DATAA_driver),
+	.datab(Selector2_a2_DATAB_driver),
+	.datac(Selector2_a2_DATAC_driver),
+	.datad(Selector2_a2_DATAD_driver),
+	.cin(gnd),
+	.combout(Selector2_a2_combout),
+	.cout());
+// synopsys translate_off
+defparam Selector2_a2.lut_mask = 16'hFF8F;
+defparam Selector2_a2.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire state_signal_awb_0_CLK_routing_wire_inst (
+	.datain(clock_ainputclkctrl_outclk),
+	.dataout(state_signal_awb_0_CLK_driver));
+
+cycloneive_routing_wire state_signal_awb_0_D_routing_wire_inst (
+	.datain(Selector2_a2_combout),
+	.dataout(state_signal_awb_0_D_driver));
+
+cycloneive_routing_wire state_signal_awb_0_SCLR_routing_wire_inst (
+	.datain(reset_ainput_o),
+	.dataout(state_signal_awb_0_SCLR_driver));
+
+// Location: FF_X8_Y30_N23
+dffeas state_signal_awb_0(
+	.clk(state_signal_awb_0_CLK_driver),
+	.d(state_signal_awb_0_D_driver),
+	.asdata(vcc),
+	.clrn(vcc),
+	.aload(gnd),
+	.sclr(state_signal_awb_0_SCLR_driver),
+	.sload(gnd),
+	.ena(vcc),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.q(state_signal_awb_0_aq),
+	.prn(vcc));
+// synopsys translate_off
+defparam state_signal_awb_0.is_wysiwyg = "true";
+defparam state_signal_awb_0.power_up = "low";
+// synopsys translate_on
+
+cycloneive_routing_wire Selector0_a0_DATAA_routing_wire_inst (
+	.datain(state_signal_awb_1_aq),
+	.dataout(Selector0_a0_DATAA_driver));
+
+cycloneive_routing_wire Selector0_a0_DATAB_routing_wire_inst (
+	.datain(state_signal_abreq_1_aq),
+	.dataout(Selector0_a0_DATAB_driver));
+
+cycloneive_routing_wire Selector0_a0_DATAC_routing_wire_inst (
+	.datain(state_signal_arst_aq),
+	.dataout(Selector0_a0_DATAC_driver));
+
+cycloneive_routing_wire Selector0_a0_DATAD_routing_wire_inst (
+	.datain(state_signal_awb_0_aq),
+	.dataout(Selector0_a0_DATAD_driver));
+
+// Location: LCCOMB_X7_Y30_N28
+cycloneive_lcell_comb Selector0_a0(
+// Equation(s):
+// Selector0_a0_combout = (state_signal_awb_1_aq) # ((state_signal_abreq_1_aq) # ((state_signal_awb_0_aq) # (!state_signal_arst_aq)))
+
+	.dataa(Selector0_a0_DATAA_driver),
+	.datab(Selector0_a0_DATAB_driver),
+	.datac(Selector0_a0_DATAC_driver),
+	.datad(Selector0_a0_DATAD_driver),
+	.cin(gnd),
+	.combout(Selector0_a0_combout),
+	.cout());
+// synopsys translate_off
+defparam Selector0_a0.lut_mask = 16'hFFEF;
+defparam Selector0_a0.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire Selector0_a6_DATAA_routing_wire_inst (
+	.datain(Selector0_a3_combout),
+	.dataout(Selector0_a6_DATAA_driver));
+
+cycloneive_routing_wire Selector0_a6_DATAB_routing_wire_inst (
+	.datain(Selector0_a4_combout),
+	.dataout(Selector0_a6_DATAB_driver));
+
+cycloneive_routing_wire Selector0_a6_DATAC_routing_wire_inst (
+	.datain(Selector0_a5_combout),
+	.dataout(Selector0_a6_DATAC_driver));
+
+cycloneive_routing_wire Selector0_a6_DATAD_routing_wire_inst (
+	.datain(Selector0_a0_combout),
+	.dataout(Selector0_a6_DATAD_driver));
+
+// Location: LCCOMB_X6_Y30_N24
+cycloneive_lcell_comb Selector0_a6(
+// Equation(s):
+// Selector0_a6_combout = (Selector0_a3_combout) # ((Selector0_a0_combout) # ((Selector0_a4_combout & Selector0_a5_combout)))
+
+	.dataa(Selector0_a6_DATAA_driver),
+	.datab(Selector0_a6_DATAB_driver),
+	.datac(Selector0_a6_DATAC_driver),
+	.datad(Selector0_a6_DATAD_driver),
+	.cin(gnd),
+	.combout(Selector0_a6_combout),
+	.cout());
+// synopsys translate_off
+defparam Selector0_a6.lut_mask = 16'hFFEA;
+defparam Selector0_a6.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire state_signal_afetch_CLK_routing_wire_inst (
+	.datain(clock_ainputclkctrl_outclk),
+	.dataout(state_signal_afetch_CLK_driver));
+
+cycloneive_routing_wire state_signal_afetch_D_routing_wire_inst (
+	.datain(Selector0_a6_combout),
+	.dataout(state_signal_afetch_D_driver));
+
+cycloneive_routing_wire state_signal_afetch_SCLR_routing_wire_inst (
+	.datain(reset_ainput_o),
+	.dataout(state_signal_afetch_SCLR_driver));
+
+// Location: FF_X6_Y30_N25
+dffeas state_signal_afetch(
+	.clk(state_signal_afetch_CLK_driver),
+	.d(state_signal_afetch_D_driver),
+	.asdata(vcc),
+	.clrn(vcc),
+	.aload(gnd),
+	.sclr(state_signal_afetch_SCLR_driver),
+	.sload(gnd),
+	.ena(vcc),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.q(state_signal_afetch_aq),
+	.prn(vcc));
+// synopsys translate_off
+defparam state_signal_afetch.is_wysiwyg = "true";
+defparam state_signal_afetch.power_up = "low";
+// synopsys translate_on
+
+cycloneive_routing_wire irWrite_a0_DATAA_routing_wire_inst (
+	.datain(reset_ainput_o),
+	.dataout(irWrite_a0_DATAA_driver));
+
+cycloneive_routing_wire irWrite_a0_DATAD_routing_wire_inst (
+	.datain(state_signal_afetch_aq),
+	.dataout(irWrite_a0_DATAD_driver));
+
+// Location: LCCOMB_X6_Y30_N12
+cycloneive_lcell_comb irWrite_a0(
+// Equation(s):
+// irWrite_a0_combout = (!reset_ainput_o & state_signal_afetch_aq)
+
+	.dataa(irWrite_a0_DATAA_driver),
+	.datab(gnd),
+	.datac(gnd),
+	.datad(irWrite_a0_DATAD_driver),
+	.cin(gnd),
+	.combout(irWrite_a0_combout),
+	.cout());
+// synopsys translate_off
+defparam irWrite_a0.lut_mask = 16'h5500;
+defparam irWrite_a0.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire state_signal_adec_0_CLK_routing_wire_inst (
+	.datain(clock_ainputclkctrl_outclk),
+	.dataout(state_signal_adec_0_CLK_driver));
+
+cycloneive_routing_wire state_signal_adec_0_D_routing_wire_inst (
+	.datain(irWrite_a0_combout),
+	.dataout(state_signal_adec_0_D_driver));
+
+// Location: FF_X6_Y30_N13
+dffeas state_signal_adec_0(
+	.clk(state_signal_adec_0_CLK_driver),
+	.d(state_signal_adec_0_D_driver),
+	.asdata(vcc),
+	.clrn(vcc),
+	.aload(gnd),
+	.sclr(gnd),
+	.sload(gnd),
+	.ena(vcc),
+	.devclrn(devclrn),
+	.devpor(devpor),
+	.q(state_signal_adec_0_aq),
+	.prn(vcc));
+// synopsys translate_off
+defparam state_signal_adec_0.is_wysiwyg = "true";
+defparam state_signal_adec_0.power_up = "low";
+// synopsys translate_on
+
+cycloneive_routing_wire pcWrite_a0_DATAA_routing_wire_inst (
+	.datain(op_code_a0_a_ainput_o),
+	.dataout(pcWrite_a0_DATAA_driver));
+
+cycloneive_routing_wire pcWrite_a0_DATAB_routing_wire_inst (
+	.datain(op_code_a3_a_ainput_o),
+	.dataout(pcWrite_a0_DATAB_driver));
+
+cycloneive_routing_wire pcWrite_a0_DATAC_routing_wire_inst (
+	.datain(state_signal_adec_0_aq),
+	.dataout(pcWrite_a0_DATAC_driver));
+
+cycloneive_routing_wire pcWrite_a0_DATAD_routing_wire_inst (
+	.datain(op_code_a1_a_ainput_o),
+	.dataout(pcWrite_a0_DATAD_driver));
+
+// Location: LCCOMB_X8_Y30_N12
+cycloneive_lcell_comb pcWrite_a0(
+// Equation(s):
+// pcWrite_a0_combout = (state_signal_adec_0_aq & ((op_code_a0_a_ainput_o) # ((op_code_a1_a_ainput_o) # (!op_code_a3_a_ainput_o))))
+
+	.dataa(pcWrite_a0_DATAA_driver),
+	.datab(pcWrite_a0_DATAB_driver),
+	.datac(pcWrite_a0_DATAC_driver),
+	.datad(pcWrite_a0_DATAD_driver),
+	.cin(gnd),
+	.combout(pcWrite_a0_combout),
+	.cout());
+// synopsys translate_off
+defparam pcWrite_a0.lut_mask = 16'hF0B0;
+defparam pcWrite_a0.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire pcWrite_a1_DATAA_routing_wire_inst (
+	.datain(pcWrite_a0_combout),
+	.dataout(pcWrite_a1_DATAA_driver));
+
+cycloneive_routing_wire pcWrite_a1_DATAB_routing_wire_inst (
+	.datain(reset_ainput_o),
+	.dataout(pcWrite_a1_DATAB_driver));
+
+cycloneive_routing_wire pcWrite_a1_DATAC_routing_wire_inst (
+	.datain(state_signal_awb_1_aq),
+	.dataout(pcWrite_a1_DATAC_driver));
+
+cycloneive_routing_wire pcWrite_a1_DATAD_routing_wire_inst (
+	.datain(state_signal_abreq_1_aq),
+	.dataout(pcWrite_a1_DATAD_driver));
+
+// Location: LCCOMB_X8_Y30_N2
+cycloneive_lcell_comb pcWrite_a1(
+// Equation(s):
+// pcWrite_a1_combout = (!reset_ainput_o & ((pcWrite_a0_combout) # ((state_signal_awb_1_aq) # (state_signal_abreq_1_aq))))
+
+	.dataa(pcWrite_a1_DATAA_driver),
+	.datab(pcWrite_a1_DATAB_driver),
+	.datac(pcWrite_a1_DATAC_driver),
+	.datad(pcWrite_a1_DATAD_driver),
+	.cin(gnd),
+	.combout(pcWrite_a1_combout),
+	.cout());
+// synopsys translate_off
+defparam pcWrite_a1.lut_mask = 16'h3332;
+defparam pcWrite_a1.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire rfWrite_a0_DATAB_routing_wire_inst (
+	.datain(reset_ainput_o),
+	.dataout(rfWrite_a0_DATAB_driver));
+
+cycloneive_routing_wire rfWrite_a0_DATAC_routing_wire_inst (
+	.datain(state_signal_awb_0_aq),
+	.dataout(rfWrite_a0_DATAC_driver));
+
+cycloneive_routing_wire rfWrite_a0_DATAD_routing_wire_inst (
+	.datain(state_signal_alm_0_aq),
+	.dataout(rfWrite_a0_DATAD_driver));
+
+// Location: LCCOMB_X6_Y26_N28
+cycloneive_lcell_comb rfWrite_a0(
+// Equation(s):
+// rfWrite_a0_combout = (!reset_ainput_o & ((state_signal_awb_0_aq) # (state_signal_alm_0_aq)))
+
+	.dataa(gnd),
+	.datab(rfWrite_a0_DATAB_driver),
+	.datac(rfWrite_a0_DATAC_driver),
+	.datad(rfWrite_a0_DATAD_driver),
+	.cin(gnd),
+	.combout(rfWrite_a0_combout),
+	.cout());
+// synopsys translate_off
+defparam rfWrite_a0.lut_mask = 16'h3330;
+defparam rfWrite_a0.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire memRead_a0_DATAA_routing_wire_inst (
+	.datain(reset_ainput_o),
+	.dataout(memRead_a0_DATAA_driver));
+
+cycloneive_routing_wire memRead_a0_DATAB_routing_wire_inst (
+	.datain(state_signal_apriority_aq),
+	.dataout(memRead_a0_DATAB_driver));
+
+cycloneive_routing_wire memRead_a0_DATAC_routing_wire_inst (
+	.datain(state_signal_alw_0_aq),
+	.dataout(memRead_a0_DATAC_driver));
+
+cycloneive_routing_wire memRead_a0_DATAD_routing_wire_inst (
+	.datain(Equal0_a0_combout),
+	.dataout(memRead_a0_DATAD_driver));
+
+// Location: LCCOMB_X6_Y30_N2
+cycloneive_lcell_comb memRead_a0(
+// Equation(s):
+// memRead_a0_combout = (reset_ainput_o) # ((!state_signal_alw_0_aq & ((!Equal0_a0_combout) # (!state_signal_apriority_aq))))
+
+	.dataa(memRead_a0_DATAA_driver),
+	.datab(memRead_a0_DATAB_driver),
+	.datac(memRead_a0_DATAC_driver),
+	.datad(memRead_a0_DATAD_driver),
+	.cin(gnd),
+	.combout(memRead_a0_combout),
+	.cout());
+// synopsys translate_off
+defparam memRead_a0.lut_mask = 16'hABAF;
+defparam memRead_a0.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire memRead_a1_DATAA_routing_wire_inst (
+	.datain(reset_ainput_o),
+	.dataout(memRead_a1_DATAA_driver));
+
+cycloneive_routing_wire memRead_a1_DATAB_routing_wire_inst (
+	.datain(state_signal_afetch_aq),
+	.dataout(memRead_a1_DATAB_driver));
+
+cycloneive_routing_wire memRead_a1_DATAD_routing_wire_inst (
+	.datain(memRead_a0_combout),
+	.dataout(memRead_a1_DATAD_driver));
+
+// Location: LCCOMB_X6_Y30_N8
+cycloneive_lcell_comb memRead_a1(
+// Equation(s):
+// memRead_a1_combout = ((!reset_ainput_o & state_signal_afetch_aq)) # (!memRead_a0_combout)
+
+	.dataa(memRead_a1_DATAA_driver),
+	.datab(memRead_a1_DATAB_driver),
+	.datac(gnd),
+	.datad(memRead_a1_DATAD_driver),
+	.cin(gnd),
+	.combout(memRead_a1_combout),
+	.cout());
+// synopsys translate_off
+defparam memRead_a1.lut_mask = 16'h44FF;
+defparam memRead_a1.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire memWrite_a0_DATAB_routing_wire_inst (
+	.datain(reset_ainput_o),
+	.dataout(memWrite_a0_DATAB_driver));
+
+cycloneive_routing_wire memWrite_a0_DATAC_routing_wire_inst (
+	.datain(state_signal_asw_0_aq),
+	.dataout(memWrite_a0_DATAC_driver));
+
+cycloneive_routing_wire memWrite_a0_DATAD_routing_wire_inst (
+	.datain(state_signal_asm_0_aq),
+	.dataout(memWrite_a0_DATAD_driver));
+
+// Location: LCCOMB_X6_Y26_N22
+cycloneive_lcell_comb memWrite_a0(
+// Equation(s):
+// memWrite_a0_combout = (!reset_ainput_o & ((state_signal_asw_0_aq) # (state_signal_asm_0_aq)))
+
+	.dataa(gnd),
+	.datab(memWrite_a0_DATAB_driver),
+	.datac(memWrite_a0_DATAC_driver),
+	.datad(memWrite_a0_DATAD_driver),
+	.cin(gnd),
+	.combout(memWrite_a0_combout),
+	.cout());
+// synopsys translate_off
+defparam memWrite_a0.lut_mask = 16'h3330;
+defparam memWrite_a0.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire alu_op_a0_DATAC_routing_wire_inst (
+	.datain(reset_ainput_o),
+	.dataout(alu_op_a0_DATAC_driver));
+
+cycloneive_routing_wire alu_op_a0_DATAD_routing_wire_inst (
+	.datain(state_signal_anand_0_aq),
+	.dataout(alu_op_a0_DATAD_driver));
+
+// Location: LCCOMB_X9_Y30_N26
+cycloneive_lcell_comb alu_op_a0(
+// Equation(s):
+// alu_op_a0_combout = (!reset_ainput_o & state_signal_anand_0_aq)
+
+	.dataa(gnd),
+	.datab(gnd),
+	.datac(alu_op_a0_DATAC_driver),
+	.datad(alu_op_a0_DATAD_driver),
+	.cin(gnd),
+	.combout(alu_op_a0_combout),
+	.cout());
+// synopsys translate_off
+defparam alu_op_a0.lut_mask = 16'h0F00;
+defparam alu_op_a0.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire alu_op_a1_DATAB_routing_wire_inst (
+	.datain(reset_ainput_o),
+	.dataout(alu_op_a1_DATAB_driver));
+
+cycloneive_routing_wire alu_op_a1_DATAC_routing_wire_inst (
+	.datain(state_signal_abreq_0_aq),
+	.dataout(alu_op_a1_DATAC_driver));
+
+// Location: LCCOMB_X7_Y30_N14
+cycloneive_lcell_comb alu_op_a1(
+// Equation(s):
+// alu_op_a1_combout = (!reset_ainput_o & state_signal_abreq_0_aq)
+
+	.dataa(gnd),
+	.datab(alu_op_a1_DATAB_driver),
+	.datac(alu_op_a1_DATAC_driver),
+	.datad(gnd),
+	.cin(gnd),
+	.combout(alu_op_a1_combout),
+	.cout());
+// synopsys translate_off
+defparam alu_op_a1.lut_mask = 16'h3030;
+defparam alu_op_a1.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire mux_mem_addr_a8_DATAA_routing_wire_inst (
+	.datain(state_signal_asw_0_aq),
+	.dataout(mux_mem_addr_a8_DATAA_driver));
+
+cycloneive_routing_wire mux_mem_addr_a8_DATAB_routing_wire_inst (
+	.datain(state_signal_alw_0_aq),
+	.dataout(mux_mem_addr_a8_DATAB_driver));
+
+cycloneive_routing_wire mux_mem_addr_a8_DATAD_routing_wire_inst (
+	.datain(reset_ainput_o),
+	.dataout(mux_mem_addr_a8_DATAD_driver));
+
+// Location: LCCOMB_X8_Y30_N24
+cycloneive_lcell_comb mux_mem_addr_a8(
+// Equation(s):
+// mux_mem_addr_a8_combout = (!reset_ainput_o & ((state_signal_asw_0_aq) # (state_signal_alw_0_aq)))
+
+	.dataa(mux_mem_addr_a8_DATAA_driver),
+	.datab(mux_mem_addr_a8_DATAB_driver),
+	.datac(gnd),
+	.datad(mux_mem_addr_a8_DATAD_driver),
+	.cin(gnd),
+	.combout(mux_mem_addr_a8_combout),
+	.cout());
+// synopsys translate_off
+defparam mux_mem_addr_a8.lut_mask = 16'h00EE;
+defparam mux_mem_addr_a8.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire mux_mem_addr_a9_DATAA_routing_wire_inst (
+	.datain(reset_ainput_o),
+	.dataout(mux_mem_addr_a9_DATAA_driver));
+
+cycloneive_routing_wire mux_mem_addr_a9_DATAB_routing_wire_inst (
+	.datain(Equal0_a0_combout),
+	.dataout(mux_mem_addr_a9_DATAB_driver));
+
+cycloneive_routing_wire mux_mem_addr_a9_DATAC_routing_wire_inst (
+	.datain(state_signal_asm_0_aq),
+	.dataout(mux_mem_addr_a9_DATAC_driver));
+
+cycloneive_routing_wire mux_mem_addr_a9_DATAD_routing_wire_inst (
+	.datain(state_signal_apriority_aq),
+	.dataout(mux_mem_addr_a9_DATAD_driver));
+
+// Location: LCCOMB_X6_Y30_N20
+cycloneive_lcell_comb mux_mem_addr_a9(
+// Equation(s):
+// mux_mem_addr_a9_combout = (!reset_ainput_o & ((state_signal_asm_0_aq) # ((Equal0_a0_combout & state_signal_apriority_aq))))
+
+	.dataa(mux_mem_addr_a9_DATAA_driver),
+	.datab(mux_mem_addr_a9_DATAB_driver),
+	.datac(mux_mem_addr_a9_DATAC_driver),
+	.datad(mux_mem_addr_a9_DATAD_driver),
+	.cin(gnd),
+	.combout(mux_mem_addr_a9_combout),
+	.cout());
+// synopsys translate_off
+defparam mux_mem_addr_a9.lut_mask = 16'h5450;
+defparam mux_mem_addr_a9.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire mux_a3_a0_DATAB_routing_wire_inst (
+	.datain(reset_ainput_o),
+	.dataout(mux_a3_a0_DATAB_driver));
+
+cycloneive_routing_wire mux_a3_a0_DATAD_routing_wire_inst (
+	.datain(state_signal_alm_0_aq),
+	.dataout(mux_a3_a0_DATAD_driver));
+
+// Location: LCCOMB_X6_Y26_N10
+cycloneive_lcell_comb mux_a3_a0(
+// Equation(s):
+// mux_a3_a0_combout = (!reset_ainput_o & state_signal_alm_0_aq)
+
+	.dataa(gnd),
+	.datab(mux_a3_a0_DATAB_driver),
+	.datac(gnd),
+	.datad(mux_a3_a0_DATAD_driver),
+	.cin(gnd),
+	.combout(mux_a3_a0_combout),
+	.cout());
+// synopsys translate_off
+defparam mux_a3_a0.lut_mask = 16'h3300;
+defparam mux_a3_a0.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire mux_a1_a1_DATAA_routing_wire_inst (
+	.datain(state_signal_adec_0_aq),
+	.dataout(mux_a1_a1_DATAA_driver));
+
+cycloneive_routing_wire mux_a1_a1_DATAB_routing_wire_inst (
+	.datain(reset_ainput_o),
+	.dataout(mux_a1_a1_DATAB_driver));
+
+cycloneive_routing_wire mux_a1_a1_DATAC_routing_wire_inst (
+	.datain(state_signal_asw_0_aq),
+	.dataout(mux_a1_a1_DATAC_driver));
+
+cycloneive_routing_wire mux_a1_a1_DATAD_routing_wire_inst (
+	.datain(Selector7_a0_combout),
+	.dataout(mux_a1_a1_DATAD_driver));
+
+// Location: LCCOMB_X6_Y26_N30
+cycloneive_lcell_comb mux_a1_a1(
+// Equation(s):
+// mux_a1_a1_combout = (!reset_ainput_o & ((state_signal_asw_0_aq) # ((state_signal_adec_0_aq & Selector7_a0_combout))))
+
+	.dataa(mux_a1_a1_DATAA_driver),
+	.datab(mux_a1_a1_DATAB_driver),
+	.datac(mux_a1_a1_DATAC_driver),
+	.datad(mux_a1_a1_DATAD_driver),
+	.cin(gnd),
+	.combout(mux_a1_a1_combout),
+	.cout());
+// synopsys translate_off
+defparam mux_a1_a1.lut_mask = 16'h3230;
+defparam mux_a1_a1.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire mux_a1_a0_DATAB_routing_wire_inst (
+	.datain(reset_ainput_o),
+	.dataout(mux_a1_a0_DATAB_driver));
+
+cycloneive_routing_wire mux_a1_a0_DATAD_routing_wire_inst (
+	.datain(state_signal_asm_0_aq),
+	.dataout(mux_a1_a0_DATAD_driver));
+
+// Location: LCCOMB_X6_Y26_N0
+cycloneive_lcell_comb mux_a1_a0(
+// Equation(s):
+// mux_a1_a0_combout = (!reset_ainput_o & state_signal_asm_0_aq)
+
+	.dataa(gnd),
+	.datab(mux_a1_a0_DATAB_driver),
+	.datac(gnd),
+	.datad(mux_a1_a0_DATAD_driver),
+	.cin(gnd),
+	.combout(mux_a1_a0_combout),
+	.cout());
+// synopsys translate_off
+defparam mux_a1_a0.lut_mask = 16'h3300;
+defparam mux_a1_a0.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire mux_a_a0_DATAC_routing_wire_inst (
+	.datain(reset_ainput_o),
+	.dataout(mux_a_a0_DATAC_driver));
+
+cycloneive_routing_wire mux_a_a0_DATAD_routing_wire_inst (
+	.datain(state_signal_aadd_0_aq),
+	.dataout(mux_a_a0_DATAD_driver));
+
+// Location: LCCOMB_X9_Y30_N4
+cycloneive_lcell_comb mux_a_a0(
+// Equation(s):
+// mux_a_a0_combout = (!reset_ainput_o & state_signal_aadd_0_aq)
+
+	.dataa(gnd),
+	.datab(gnd),
+	.datac(mux_a_a0_DATAC_driver),
+	.datad(mux_a_a0_DATAD_driver),
+	.cin(gnd),
+	.combout(mux_a_a0_combout),
+	.cout());
+// synopsys translate_off
+defparam mux_a_a0.lut_mask = 16'h0F00;
+defparam mux_a_a0.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire enable_pe_out_a0_DATAC_routing_wire_inst (
+	.datain(reset_ainput_o),
+	.dataout(enable_pe_out_a0_DATAC_driver));
+
+cycloneive_routing_wire enable_pe_out_a0_DATAD_routing_wire_inst (
+	.datain(state_signal_apriority_aq),
+	.dataout(enable_pe_out_a0_DATAD_driver));
+
+// Location: LCCOMB_X9_Y30_N28
+cycloneive_lcell_comb enable_pe_out_a0(
+// Equation(s):
+// enable_pe_out_a0_combout = (!reset_ainput_o & state_signal_apriority_aq)
+
+	.dataa(gnd),
+	.datab(gnd),
+	.datac(enable_pe_out_a0_DATAC_driver),
+	.datad(enable_pe_out_a0_DATAD_driver),
+	.cin(gnd),
+	.combout(enable_pe_out_a0_combout),
+	.cout());
+// synopsys translate_off
+defparam enable_pe_out_a0.lut_mask = 16'h0F00;
+defparam enable_pe_out_a0.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire mux_a_a1_DATAA_routing_wire_inst (
+	.datain(alu_op_a0_combout),
+	.dataout(mux_a_a1_DATAA_driver));
+
+cycloneive_routing_wire mux_a_a1_DATAB_routing_wire_inst (
+	.datain(Equal0_a2_combout),
+	.dataout(mux_a_a1_DATAB_driver));
+
+cycloneive_routing_wire mux_a_a1_DATAC_routing_wire_inst (
+	.datain(mux_a_a0_combout),
+	.dataout(mux_a_a1_DATAC_driver));
+
+cycloneive_routing_wire mux_a_a1_DATAD_routing_wire_inst (
+	.datain(enable_pe_out_a0_combout),
+	.dataout(mux_a_a1_DATAD_driver));
+
+// Location: LCCOMB_X9_Y30_N12
+cycloneive_lcell_comb mux_a_a1(
+// Equation(s):
+// mux_a_a1_combout = (alu_op_a0_combout) # ((enable_pe_out_a0_combout) # ((!Equal0_a2_combout & mux_a_a0_combout)))
+
+	.dataa(mux_a_a1_DATAA_driver),
+	.datab(mux_a_a1_DATAB_driver),
+	.datac(mux_a_a1_DATAC_driver),
+	.datad(mux_a_a1_DATAD_driver),
+	.cin(gnd),
+	.combout(mux_a_a1_combout),
+	.cout());
+// synopsys translate_off
+defparam mux_a_a1.lut_mask = 16'hFFBA;
+defparam mux_a_a1.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire mux_b_a29_DATAA_routing_wire_inst (
+	.datain(op_code_a2_a_ainput_o),
+	.dataout(mux_b_a29_DATAA_driver));
+
+cycloneive_routing_wire mux_b_a29_DATAB_routing_wire_inst (
+	.datain(op_code_a1_a_ainput_o),
+	.dataout(mux_b_a29_DATAB_driver));
+
+cycloneive_routing_wire mux_b_a29_DATAC_routing_wire_inst (
+	.datain(op_code_a0_a_ainput_o),
+	.dataout(mux_b_a29_DATAC_driver));
+
+cycloneive_routing_wire mux_b_a29_DATAD_routing_wire_inst (
+	.datain(op_code_a3_a_ainput_o),
+	.dataout(mux_b_a29_DATAD_driver));
+
+// Location: LCCOMB_X7_Y30_N10
+cycloneive_lcell_comb mux_b_a29(
+// Equation(s):
+// mux_b_a29_combout = (!op_code_a1_a_ainput_o & (!op_code_a3_a_ainput_o & ((op_code_a2_a_ainput_o) # (op_code_a0_a_ainput_o))))
+
+	.dataa(mux_b_a29_DATAA_driver),
+	.datab(mux_b_a29_DATAB_driver),
+	.datac(mux_b_a29_DATAC_driver),
+	.datad(mux_b_a29_DATAD_driver),
+	.cin(gnd),
+	.combout(mux_b_a29_combout),
+	.cout());
+// synopsys translate_off
+defparam mux_b_a29.lut_mask = 16'h0032;
+defparam mux_b_a29.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire mux_b_a32_DATAA_routing_wire_inst (
+	.datain(mux_b_a29_combout),
+	.dataout(mux_b_a32_DATAA_driver));
+
+cycloneive_routing_wire mux_b_a32_DATAB_routing_wire_inst (
+	.datain(state_signal_anand_0_aq),
+	.dataout(mux_b_a32_DATAB_driver));
+
+cycloneive_routing_wire mux_b_a32_DATAC_routing_wire_inst (
+	.datain(reset_ainput_o),
+	.dataout(mux_b_a32_DATAC_driver));
+
+cycloneive_routing_wire mux_b_a32_DATAD_routing_wire_inst (
+	.datain(state_signal_aadd_0_aq),
+	.dataout(mux_b_a32_DATAD_driver));
+
+// Location: LCCOMB_X7_Y30_N8
+cycloneive_lcell_comb mux_b_a32(
+// Equation(s):
+// mux_b_a32_combout = (!reset_ainput_o & ((state_signal_anand_0_aq) # ((!mux_b_a29_combout & state_signal_aadd_0_aq))))
+
+	.dataa(mux_b_a32_DATAA_driver),
+	.datab(mux_b_a32_DATAB_driver),
+	.datac(mux_b_a32_DATAC_driver),
+	.datad(mux_b_a32_DATAD_driver),
+	.cin(gnd),
+	.combout(mux_b_a32_combout),
+	.cout());
+// synopsys translate_off
+defparam mux_b_a32.lut_mask = 16'h0D0C;
+defparam mux_b_a32.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire mux_b_a17_DATAA_routing_wire_inst (
+	.datain(op_code_a2_a_ainput_o),
+	.dataout(mux_b_a17_DATAA_driver));
+
+cycloneive_routing_wire mux_b_a17_DATAB_routing_wire_inst (
+	.datain(op_code_a1_a_ainput_o),
+	.dataout(mux_b_a17_DATAB_driver));
+
+cycloneive_routing_wire mux_b_a17_DATAC_routing_wire_inst (
+	.datain(op_code_a0_a_ainput_o),
+	.dataout(mux_b_a17_DATAC_driver));
+
+cycloneive_routing_wire mux_b_a17_DATAD_routing_wire_inst (
+	.datain(op_code_a3_a_ainput_o),
+	.dataout(mux_b_a17_DATAD_driver));
+
+// Location: LCCOMB_X7_Y30_N0
+cycloneive_lcell_comb mux_b_a17(
+// Equation(s):
+// mux_b_a17_combout = (!op_code_a1_a_ainput_o & (op_code_a3_a_ainput_o $ (((op_code_a2_a_ainput_o) # (op_code_a0_a_ainput_o)))))
+
+	.dataa(mux_b_a17_DATAA_driver),
+	.datab(mux_b_a17_DATAB_driver),
+	.datac(mux_b_a17_DATAC_driver),
+	.datad(mux_b_a17_DATAD_driver),
+	.cin(gnd),
+	.combout(mux_b_a17_combout),
+	.cout());
+// synopsys translate_off
+defparam mux_b_a17.lut_mask = 16'h0132;
+defparam mux_b_a17.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire mux_b_a33_DATAA_routing_wire_inst (
+	.datain(state_signal_aadd_0_aq),
+	.dataout(mux_b_a33_DATAA_driver));
+
+cycloneive_routing_wire mux_b_a33_DATAB_routing_wire_inst (
+	.datain(mux_b_a17_combout),
+	.dataout(mux_b_a33_DATAB_driver));
+
+cycloneive_routing_wire mux_b_a33_DATAC_routing_wire_inst (
+	.datain(reset_ainput_o),
+	.dataout(mux_b_a33_DATAC_driver));
+
+cycloneive_routing_wire mux_b_a33_DATAD_routing_wire_inst (
+	.datain(state_signal_abreq_1_aq),
+	.dataout(mux_b_a33_DATAD_driver));
+
+// Location: LCCOMB_X7_Y30_N26
+cycloneive_lcell_comb mux_b_a33(
+// Equation(s):
+// mux_b_a33_combout = (!reset_ainput_o & ((state_signal_abreq_1_aq) # ((state_signal_aadd_0_aq & mux_b_a17_combout))))
+
+	.dataa(mux_b_a33_DATAA_driver),
+	.datab(mux_b_a33_DATAB_driver),
+	.datac(mux_b_a33_DATAC_driver),
+	.datad(mux_b_a33_DATAD_driver),
+	.cin(gnd),
+	.combout(mux_b_a33_combout),
+	.cout());
+// synopsys translate_off
+defparam mux_b_a33.lut_mask = 16'h0F08;
+defparam mux_b_a33.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire mux_d3_a3_DATAA_routing_wire_inst (
+	.datain(state_signal_alm_0_aq),
+	.dataout(mux_d3_a3_DATAA_driver));
+
+cycloneive_routing_wire mux_d3_a3_DATAB_routing_wire_inst (
+	.datain(reset_ainput_o),
+	.dataout(mux_d3_a3_DATAB_driver));
+
+cycloneive_routing_wire mux_d3_a3_DATAC_routing_wire_inst (
+	.datain(state_signal_awb_0_aq),
+	.dataout(mux_d3_a3_DATAC_driver));
+
+cycloneive_routing_wire mux_d3_a3_DATAD_routing_wire_inst (
+	.datain(Equal0_a3_combout),
+	.dataout(mux_d3_a3_DATAD_driver));
+
+// Location: LCCOMB_X6_Y26_N8
+cycloneive_lcell_comb mux_d3_a3(
+// Equation(s):
+// mux_d3_a3_combout = (!reset_ainput_o & ((state_signal_alm_0_aq) # ((state_signal_awb_0_aq & Equal0_a3_combout))))
+
+	.dataa(mux_d3_a3_DATAA_driver),
+	.datab(mux_d3_a3_DATAB_driver),
+	.datac(mux_d3_a3_DATAC_driver),
+	.datad(mux_d3_a3_DATAD_driver),
+	.cin(gnd),
+	.combout(mux_d3_a3_combout),
+	.cout());
+// synopsys translate_off
+defparam mux_d3_a3.lut_mask = 16'h3222;
+defparam mux_d3_a3.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire Equal0_a5_DATAA_routing_wire_inst (
+	.datain(op_code_a3_a_ainput_o),
+	.dataout(Equal0_a5_DATAA_driver));
+
+cycloneive_routing_wire Equal0_a5_DATAB_routing_wire_inst (
+	.datain(op_code_a0_a_ainput_o),
+	.dataout(Equal0_a5_DATAB_driver));
+
+cycloneive_routing_wire Equal0_a5_DATAC_routing_wire_inst (
+	.datain(op_code_a2_a_ainput_o),
+	.dataout(Equal0_a5_DATAC_driver));
+
+cycloneive_routing_wire Equal0_a5_DATAD_routing_wire_inst (
+	.datain(op_code_a1_a_ainput_o),
+	.dataout(Equal0_a5_DATAD_driver));
+
+// Location: LCCOMB_X6_Y26_N12
+cycloneive_lcell_comb Equal0_a5(
+// Equation(s):
+// Equal0_a5_combout = (!op_code_a3_a_ainput_o & (op_code_a0_a_ainput_o & (!op_code_a2_a_ainput_o & op_code_a1_a_ainput_o)))
+
+	.dataa(Equal0_a5_DATAA_driver),
+	.datab(Equal0_a5_DATAB_driver),
+	.datac(Equal0_a5_DATAC_driver),
+	.datad(Equal0_a5_DATAD_driver),
+	.cin(gnd),
+	.combout(Equal0_a5_combout),
+	.cout());
+// synopsys translate_off
+defparam Equal0_a5.lut_mask = 16'h0400;
+defparam Equal0_a5.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire mux_d3_a2_DATAB_routing_wire_inst (
+	.datain(reset_ainput_o),
+	.dataout(mux_d3_a2_DATAB_driver));
+
+cycloneive_routing_wire mux_d3_a2_DATAC_routing_wire_inst (
+	.datain(state_signal_awb_0_aq),
+	.dataout(mux_d3_a2_DATAC_driver));
+
+cycloneive_routing_wire mux_d3_a2_DATAD_routing_wire_inst (
+	.datain(Equal0_a5_combout),
+	.dataout(mux_d3_a2_DATAD_driver));
+
+// Location: LCCOMB_X6_Y26_N14
+cycloneive_lcell_comb mux_d3_a2(
+// Equation(s):
+// mux_d3_a2_combout = (!reset_ainput_o & (state_signal_awb_0_aq & Equal0_a5_combout))
+
+	.dataa(gnd),
+	.datab(mux_d3_a2_DATAB_driver),
+	.datac(mux_d3_a2_DATAC_driver),
+	.datad(mux_d3_a2_DATAD_driver),
+	.cin(gnd),
+	.combout(mux_d3_a2_combout),
+	.cout());
+// synopsys translate_off
+defparam mux_d3_a2.lut_mask = 16'h3000;
+defparam mux_d3_a2.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire mux_pc_a2_DATAA_routing_wire_inst (
+	.datain(op_code_a3_a_ainput_o),
+	.dataout(mux_pc_a2_DATAA_driver));
+
+cycloneive_routing_wire mux_pc_a2_DATAB_routing_wire_inst (
+	.datain(op_code_a1_a_ainput_o),
+	.dataout(mux_pc_a2_DATAB_driver));
+
+cycloneive_routing_wire mux_pc_a2_DATAC_routing_wire_inst (
+	.datain(op_code_a0_a_ainput_o),
+	.dataout(mux_pc_a2_DATAC_driver));
+
+cycloneive_routing_wire mux_pc_a2_DATAD_routing_wire_inst (
+	.datain(state_signal_adec_0_aq),
+	.dataout(mux_pc_a2_DATAD_driver));
+
+// Location: LCCOMB_X7_Y30_N16
+cycloneive_lcell_comb mux_pc_a2(
+// Equation(s):
+// mux_pc_a2_combout = (op_code_a3_a_ainput_o & (!op_code_a1_a_ainput_o & (!op_code_a0_a_ainput_o & state_signal_adec_0_aq)))
+
+	.dataa(mux_pc_a2_DATAA_driver),
+	.datab(mux_pc_a2_DATAB_driver),
+	.datac(mux_pc_a2_DATAC_driver),
+	.datad(mux_pc_a2_DATAD_driver),
+	.cin(gnd),
+	.combout(mux_pc_a2_combout),
+	.cout());
+// synopsys translate_off
+defparam mux_pc_a2.lut_mask = 16'h0200;
+defparam mux_pc_a2.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire mux_pc_a3_DATAA_routing_wire_inst (
+	.datain(state_signal_awb_1_aq),
+	.dataout(mux_pc_a3_DATAA_driver));
+
+cycloneive_routing_wire mux_pc_a3_DATAC_routing_wire_inst (
+	.datain(reset_ainput_o),
+	.dataout(mux_pc_a3_DATAC_driver));
+
+cycloneive_routing_wire mux_pc_a3_DATAD_routing_wire_inst (
+	.datain(mux_pc_a2_combout),
+	.dataout(mux_pc_a3_DATAD_driver));
+
+// Location: LCCOMB_X7_Y30_N6
+cycloneive_lcell_comb mux_pc_a3(
+// Equation(s):
+// mux_pc_a3_combout = (!reset_ainput_o & ((state_signal_awb_1_aq) # (mux_pc_a2_combout)))
+
+	.dataa(mux_pc_a3_DATAA_driver),
+	.datab(gnd),
+	.datac(mux_pc_a3_DATAC_driver),
+	.datad(mux_pc_a3_DATAD_driver),
+	.cin(gnd),
+	.combout(mux_pc_a3_combout),
+	.cout());
+// synopsys translate_off
+defparam mux_pc_a3.lut_mask = 16'h0F0A;
+defparam mux_pc_a3.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire Equal0_a6_DATAA_routing_wire_inst (
+	.datain(op_code_a0_a_ainput_o),
+	.dataout(Equal0_a6_DATAA_driver));
+
+cycloneive_routing_wire Equal0_a6_DATAB_routing_wire_inst (
+	.datain(op_code_a2_a_ainput_o),
+	.dataout(Equal0_a6_DATAB_driver));
+
+cycloneive_routing_wire Equal0_a6_DATAC_routing_wire_inst (
+	.datain(op_code_a1_a_ainput_o),
+	.dataout(Equal0_a6_DATAC_driver));
+
+cycloneive_routing_wire Equal0_a6_DATAD_routing_wire_inst (
+	.datain(op_code_a3_a_ainput_o),
+	.dataout(Equal0_a6_DATAD_driver));
+
+// Location: LCCOMB_X9_Y30_N14
+cycloneive_lcell_comb Equal0_a6(
+// Equation(s):
+// Equal0_a6_combout = (op_code_a0_a_ainput_o & (!op_code_a2_a_ainput_o & (!op_code_a1_a_ainput_o & op_code_a3_a_ainput_o)))
+
+	.dataa(Equal0_a6_DATAA_driver),
+	.datab(Equal0_a6_DATAB_driver),
+	.datac(Equal0_a6_DATAC_driver),
+	.datad(Equal0_a6_DATAD_driver),
+	.cin(gnd),
+	.combout(Equal0_a6_combout),
+	.cout());
+// synopsys translate_off
+defparam Equal0_a6.lut_mask = 16'h0200;
+defparam Equal0_a6.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire mux_pc_a4_DATAA_routing_wire_inst (
+	.datain(reset_ainput_o),
+	.dataout(mux_pc_a4_DATAA_driver));
+
+cycloneive_routing_wire mux_pc_a4_DATAB_routing_wire_inst (
+	.datain(Equal0_a6_combout),
+	.dataout(mux_pc_a4_DATAB_driver));
+
+cycloneive_routing_wire mux_pc_a4_DATAC_routing_wire_inst (
+	.datain(state_signal_adec_0_aq),
+	.dataout(mux_pc_a4_DATAC_driver));
+
+// Location: LCCOMB_X9_Y30_N16
+cycloneive_lcell_comb mux_pc_a4(
+// Equation(s):
+// mux_pc_a4_combout = (!reset_ainput_o & (Equal0_a6_combout & state_signal_adec_0_aq))
+
+	.dataa(mux_pc_a4_DATAA_driver),
+	.datab(mux_pc_a4_DATAB_driver),
+	.datac(mux_pc_a4_DATAC_driver),
+	.datad(gnd),
+	.cin(gnd),
+	.combout(mux_pc_a4_combout),
+	.cout());
+// synopsys translate_off
+defparam mux_pc_a4.lut_mask = 16'h4040;
+defparam mux_pc_a4.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire mux_before_a_a0_DATAA_routing_wire_inst (
+	.datain(state_signal_alm_0_aq),
+	.dataout(mux_before_a_a0_DATAA_driver));
+
+cycloneive_routing_wire mux_before_a_a0_DATAB_routing_wire_inst (
+	.datain(reset_ainput_o),
+	.dataout(mux_before_a_a0_DATAB_driver));
+
+cycloneive_routing_wire mux_before_a_a0_DATAD_routing_wire_inst (
+	.datain(state_signal_asm_0_aq),
+	.dataout(mux_before_a_a0_DATAD_driver));
+
+// Location: LCCOMB_X6_Y26_N2
+cycloneive_lcell_comb mux_before_a_a0(
+// Equation(s):
+// mux_before_a_a0_combout = (!reset_ainput_o & ((state_signal_alm_0_aq) # (state_signal_asm_0_aq)))
+
+	.dataa(mux_before_a_a0_DATAA_driver),
+	.datab(mux_before_a_a0_DATAB_driver),
+	.datac(gnd),
+	.datad(mux_before_a_a0_DATAD_driver),
+	.cin(gnd),
+	.combout(mux_before_a_a0_combout),
+	.cout());
+// synopsys translate_off
+defparam mux_before_a_a0.lut_mask = 16'h3322;
+defparam mux_before_a_a0.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire enable_alu_a0_DATAA_routing_wire_inst (
+	.datain(state_signal_aadd_0_aq),
+	.dataout(enable_alu_a0_DATAA_driver));
+
+cycloneive_routing_wire enable_alu_a0_DATAB_routing_wire_inst (
+	.datain(state_signal_apriority_aq),
+	.dataout(enable_alu_a0_DATAB_driver));
+
+cycloneive_routing_wire enable_alu_a0_DATAC_routing_wire_inst (
+	.datain(state_signal_anand_0_aq),
+	.dataout(enable_alu_a0_DATAC_driver));
+
+cycloneive_routing_wire enable_alu_a0_DATAD_routing_wire_inst (
+	.datain(state_signal_adec_0_aq),
+	.dataout(enable_alu_a0_DATAD_driver));
+
+// Location: LCCOMB_X7_Y30_N20
+cycloneive_lcell_comb enable_alu_a0(
+// Equation(s):
+// enable_alu_a0_combout = (state_signal_aadd_0_aq) # ((state_signal_apriority_aq) # ((state_signal_anand_0_aq) # (state_signal_adec_0_aq)))
+
+	.dataa(enable_alu_a0_DATAA_driver),
+	.datab(enable_alu_a0_DATAB_driver),
+	.datac(enable_alu_a0_DATAC_driver),
+	.datad(enable_alu_a0_DATAD_driver),
+	.cin(gnd),
+	.combout(enable_alu_a0_combout),
+	.cout());
+// synopsys translate_off
+defparam enable_alu_a0.lut_mask = 16'hFFFE;
+defparam enable_alu_a0.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire enable_alu_a1_DATAA_routing_wire_inst (
+	.datain(state_signal_abreq_0_aq),
+	.dataout(enable_alu_a1_DATAA_driver));
+
+cycloneive_routing_wire enable_alu_a1_DATAB_routing_wire_inst (
+	.datain(enable_alu_a0_combout),
+	.dataout(enable_alu_a1_DATAB_driver));
+
+cycloneive_routing_wire enable_alu_a1_DATAC_routing_wire_inst (
+	.datain(reset_ainput_o),
+	.dataout(enable_alu_a1_DATAC_driver));
+
+cycloneive_routing_wire enable_alu_a1_DATAD_routing_wire_inst (
+	.datain(state_signal_abreq_1_aq),
+	.dataout(enable_alu_a1_DATAD_driver));
+
+// Location: LCCOMB_X7_Y30_N2
+cycloneive_lcell_comb enable_alu_a1(
+// Equation(s):
+// enable_alu_a1_combout = (!reset_ainput_o & ((state_signal_abreq_0_aq) # ((enable_alu_a0_combout) # (state_signal_abreq_1_aq))))
+
+	.dataa(enable_alu_a1_DATAA_driver),
+	.datab(enable_alu_a1_DATAB_driver),
+	.datac(enable_alu_a1_DATAC_driver),
+	.datad(enable_alu_a1_DATAD_driver),
+	.cin(gnd),
+	.combout(enable_alu_a1_combout),
+	.cout());
+// synopsys translate_off
+defparam enable_alu_a1.lut_mask = 16'h0F0E;
+defparam enable_alu_a1.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire next_state_var_a2_DATAC_routing_wire_inst (
+	.datain(state_signal_adec_0_aq),
+	.dataout(next_state_var_a2_DATAC_driver));
+
+cycloneive_routing_wire next_state_var_a2_DATAD_routing_wire_inst (
+	.datain(reset_ainput_o),
+	.dataout(next_state_var_a2_DATAD_driver));
+
+// Location: LCCOMB_X6_Y26_N24
+cycloneive_lcell_comb next_state_var_a2(
+// Equation(s):
+// next_state_var_a2_combout = (state_signal_adec_0_aq & !reset_ainput_o)
+
+	.dataa(gnd),
+	.datab(gnd),
+	.datac(next_state_var_a2_DATAC_driver),
+	.datad(next_state_var_a2_DATAD_driver),
+	.cin(gnd),
+	.combout(next_state_var_a2_combout),
+	.cout());
+// synopsys translate_off
+defparam next_state_var_a2.lut_mask = 16'h00F0;
+defparam next_state_var_a2.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire enable_a_a3_DATAA_routing_wire_inst (
+	.datain(op_code_a3_a_ainput_o),
+	.dataout(enable_a_a3_DATAA_driver));
+
+cycloneive_routing_wire enable_a_a3_DATAB_routing_wire_inst (
+	.datain(op_code_a0_a_ainput_o),
+	.dataout(enable_a_a3_DATAB_driver));
+
+cycloneive_routing_wire enable_a_a3_DATAC_routing_wire_inst (
+	.datain(op_code_a2_a_ainput_o),
+	.dataout(enable_a_a3_DATAC_driver));
+
+cycloneive_routing_wire enable_a_a3_DATAD_routing_wire_inst (
+	.datain(op_code_a1_a_ainput_o),
+	.dataout(enable_a_a3_DATAD_driver));
+
+// Location: LCCOMB_X6_Y26_N16
+cycloneive_lcell_comb enable_a_a3(
+// Equation(s):
+// enable_a_a3_combout = (op_code_a3_a_ainput_o & (!op_code_a0_a_ainput_o & (op_code_a2_a_ainput_o & !op_code_a1_a_ainput_o))) # (!op_code_a3_a_ainput_o & (((op_code_a2_a_ainput_o) # (!op_code_a1_a_ainput_o)) # (!op_code_a0_a_ainput_o)))
+
+	.dataa(enable_a_a3_DATAA_driver),
+	.datab(enable_a_a3_DATAB_driver),
+	.datac(enable_a_a3_DATAC_driver),
+	.datad(enable_a_a3_DATAD_driver),
+	.cin(gnd),
+	.combout(enable_a_a3_combout),
+	.cout());
+// synopsys translate_off
+defparam enable_a_a3.lut_mask = 16'h5175;
+defparam enable_a_a3.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire enable_a_a2_DATAA_routing_wire_inst (
+	.datain(mux_a3_a0_combout),
+	.dataout(enable_a_a2_DATAA_driver));
+
+cycloneive_routing_wire enable_a_a2_DATAB_routing_wire_inst (
+	.datain(next_state_var_a2_combout),
+	.dataout(enable_a_a2_DATAB_driver));
+
+cycloneive_routing_wire enable_a_a2_DATAC_routing_wire_inst (
+	.datain(mux_a1_a0_combout),
+	.dataout(enable_a_a2_DATAC_driver));
+
+cycloneive_routing_wire enable_a_a2_DATAD_routing_wire_inst (
+	.datain(enable_a_a3_combout),
+	.dataout(enable_a_a2_DATAD_driver));
+
+// Location: LCCOMB_X6_Y26_N4
+cycloneive_lcell_comb enable_a_a2(
+// Equation(s):
+// enable_a_a2_combout = (mux_a3_a0_combout) # ((mux_a1_a0_combout) # ((next_state_var_a2_combout & enable_a_a3_combout)))
+
+	.dataa(enable_a_a2_DATAA_driver),
+	.datab(enable_a_a2_DATAB_driver),
+	.datac(enable_a_a2_DATAC_driver),
+	.datad(enable_a_a2_DATAD_driver),
+	.cin(gnd),
+	.combout(enable_a_a2_combout),
+	.cout());
+// synopsys translate_off
+defparam enable_a_a2.lut_mask = 16'hFEFA;
+defparam enable_a_a2.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire enable_b_a2_DATAA_routing_wire_inst (
+	.datain(op_code_a3_a_ainput_o),
+	.dataout(enable_b_a2_DATAA_driver));
+
+cycloneive_routing_wire enable_b_a2_DATAB_routing_wire_inst (
+	.datain(op_code_a0_a_ainput_o),
+	.dataout(enable_b_a2_DATAB_driver));
+
+cycloneive_routing_wire enable_b_a2_DATAC_routing_wire_inst (
+	.datain(op_code_a2_a_ainput_o),
+	.dataout(enable_b_a2_DATAC_driver));
+
+cycloneive_routing_wire enable_b_a2_DATAD_routing_wire_inst (
+	.datain(op_code_a1_a_ainput_o),
+	.dataout(enable_b_a2_DATAD_driver));
+
+// Location: LCCOMB_X6_Y26_N18
+cycloneive_lcell_comb enable_b_a2(
+// Equation(s):
+// enable_b_a2_combout = (op_code_a0_a_ainput_o) # ((op_code_a3_a_ainput_o & ((op_code_a1_a_ainput_o) # (!op_code_a2_a_ainput_o))) # (!op_code_a3_a_ainput_o & (op_code_a2_a_ainput_o)))
+
+	.dataa(enable_b_a2_DATAA_driver),
+	.datab(enable_b_a2_DATAB_driver),
+	.datac(enable_b_a2_DATAC_driver),
+	.datad(enable_b_a2_DATAD_driver),
+	.cin(gnd),
+	.combout(enable_b_a2_combout),
+	.cout());
+// synopsys translate_off
+defparam enable_b_a2.lut_mask = 16'hFEDE;
+defparam enable_b_a2.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire enable_b_a3_DATAB_routing_wire_inst (
+	.datain(reset_ainput_o),
+	.dataout(enable_b_a3_DATAB_driver));
+
+cycloneive_routing_wire enable_b_a3_DATAC_routing_wire_inst (
+	.datain(state_signal_adec_0_aq),
+	.dataout(enable_b_a3_DATAC_driver));
+
+cycloneive_routing_wire enable_b_a3_DATAD_routing_wire_inst (
+	.datain(enable_b_a2_combout),
+	.dataout(enable_b_a3_DATAD_driver));
+
+// Location: LCCOMB_X6_Y26_N26
+cycloneive_lcell_comb enable_b_a3(
+// Equation(s):
+// enable_b_a3_combout = (!reset_ainput_o & (state_signal_adec_0_aq & !enable_b_a2_combout))
+
+	.dataa(gnd),
+	.datab(enable_b_a3_DATAB_driver),
+	.datac(enable_b_a3_DATAC_driver),
+	.datad(enable_b_a3_DATAD_driver),
+	.cin(gnd),
+	.combout(enable_b_a3_combout),
+	.cout());
+// synopsys translate_off
+defparam enable_b_a3.lut_mask = 16'h0030;
+defparam enable_b_a3.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire enable_alu_a2_DATAB_routing_wire_inst (
+	.datain(state_signal_apriority_aq),
+	.dataout(enable_alu_a2_DATAB_driver));
+
+cycloneive_routing_wire enable_alu_a2_DATAC_routing_wire_inst (
+	.datain(state_signal_anand_0_aq),
+	.dataout(enable_alu_a2_DATAC_driver));
+
+cycloneive_routing_wire enable_alu_a2_DATAD_routing_wire_inst (
+	.datain(state_signal_aadd_0_aq),
+	.dataout(enable_alu_a2_DATAD_driver));
+
+// Location: LCCOMB_X7_Y30_N12
+cycloneive_lcell_comb enable_alu_a2(
+// Equation(s):
+// enable_alu_a2_combout = (!state_signal_apriority_aq & (!state_signal_anand_0_aq & !state_signal_aadd_0_aq))
+
+	.dataa(gnd),
+	.datab(enable_alu_a2_DATAB_driver),
+	.datac(enable_alu_a2_DATAC_driver),
+	.datad(enable_alu_a2_DATAD_driver),
+	.cin(gnd),
+	.combout(enable_alu_a2_combout),
+	.cout());
+// synopsys translate_off
+defparam enable_alu_a2.lut_mask = 16'h0003;
+defparam enable_alu_a2.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire enable_c_a0_DATAA_routing_wire_inst (
+	.datain(enable_alu_a2_combout),
+	.dataout(enable_c_a0_DATAA_driver));
+
+cycloneive_routing_wire enable_c_a0_DATAC_routing_wire_inst (
+	.datain(reset_ainput_o),
+	.dataout(enable_c_a0_DATAC_driver));
+
+cycloneive_routing_wire enable_c_a0_DATAD_routing_wire_inst (
+	.datain(mux_pc_a2_combout),
+	.dataout(enable_c_a0_DATAD_driver));
+
+// Location: LCCOMB_X7_Y30_N18
+cycloneive_lcell_comb enable_c_a0(
+// Equation(s):
+// enable_c_a0_combout = (!reset_ainput_o & ((mux_pc_a2_combout) # (!enable_alu_a2_combout)))
+
+	.dataa(enable_c_a0_DATAA_driver),
+	.datab(gnd),
+	.datac(enable_c_a0_DATAC_driver),
+	.datad(enable_c_a0_DATAD_driver),
+	.cin(gnd),
+	.combout(enable_c_a0_combout),
+	.cout());
+// synopsys translate_off
+defparam enable_c_a0.lut_mask = 16'h0F05;
+defparam enable_c_a0.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire enable_pe_tmp_a0_DATAA_routing_wire_inst (
+	.datain(state_signal_adec_0_aq),
+	.dataout(enable_pe_tmp_a0_DATAA_driver));
+
+cycloneive_routing_wire enable_pe_tmp_a0_DATAB_routing_wire_inst (
+	.datain(Selector7_a0_combout),
+	.dataout(enable_pe_tmp_a0_DATAB_driver));
+
+cycloneive_routing_wire enable_pe_tmp_a0_DATAC_routing_wire_inst (
+	.datain(state_signal_alm_0_aq),
+	.dataout(enable_pe_tmp_a0_DATAC_driver));
+
+cycloneive_routing_wire enable_pe_tmp_a0_DATAD_routing_wire_inst (
+	.datain(reset_ainput_o),
+	.dataout(enable_pe_tmp_a0_DATAD_driver));
+
+// Location: LCCOMB_X6_Y30_N16
+cycloneive_lcell_comb enable_pe_tmp_a0(
+// Equation(s):
+// enable_pe_tmp_a0_combout = (!reset_ainput_o & ((state_signal_alm_0_aq) # ((state_signal_adec_0_aq & Selector7_a0_combout))))
+
+	.dataa(enable_pe_tmp_a0_DATAA_driver),
+	.datab(enable_pe_tmp_a0_DATAB_driver),
+	.datac(enable_pe_tmp_a0_DATAC_driver),
+	.datad(enable_pe_tmp_a0_DATAD_driver),
+	.cin(gnd),
+	.combout(enable_pe_tmp_a0_combout),
+	.cout());
+// synopsys translate_off
+defparam enable_pe_tmp_a0.lut_mask = 16'h00F8;
+defparam enable_pe_tmp_a0.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire enable_carry_flag_a3_DATAA_routing_wire_inst (
+	.datain(Equal0_a3_combout),
+	.dataout(enable_carry_flag_a3_DATAA_driver));
+
+cycloneive_routing_wire enable_carry_flag_a3_DATAB_routing_wire_inst (
+	.datain(reset_ainput_o),
+	.dataout(enable_carry_flag_a3_DATAB_driver));
+
+cycloneive_routing_wire enable_carry_flag_a3_DATAC_routing_wire_inst (
+	.datain(enable_carry_flag_a2_combout),
+	.dataout(enable_carry_flag_a3_DATAC_driver));
+
+cycloneive_routing_wire enable_carry_flag_a3_DATAD_routing_wire_inst (
+	.datain(state_signal_aadd_0_aq),
+	.dataout(enable_carry_flag_a3_DATAD_driver));
+
+// Location: LCCOMB_X8_Y30_N10
+cycloneive_lcell_comb enable_carry_flag_a3(
+// Equation(s):
+// enable_carry_flag_a3_combout = (Equal0_a3_combout) # ((reset_ainput_o) # ((enable_carry_flag_a2_combout) # (!state_signal_aadd_0_aq)))
+
+	.dataa(enable_carry_flag_a3_DATAA_driver),
+	.datab(enable_carry_flag_a3_DATAB_driver),
+	.datac(enable_carry_flag_a3_DATAC_driver),
+	.datad(enable_carry_flag_a3_DATAD_driver),
+	.cin(gnd),
+	.combout(enable_carry_flag_a3_combout),
+	.cout());
+// synopsys translate_off
+defparam enable_carry_flag_a3.lut_mask = 16'hFEFF;
+defparam enable_carry_flag_a3.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire enable_Z_flag_a8_DATAA_routing_wire_inst (
+	.datain(state_signal_anand_0_aq),
+	.dataout(enable_Z_flag_a8_DATAA_driver));
+
+cycloneive_routing_wire enable_Z_flag_a8_DATAB_routing_wire_inst (
+	.datain(reset_ainput_o),
+	.dataout(enable_Z_flag_a8_DATAB_driver));
+
+cycloneive_routing_wire enable_Z_flag_a8_DATAC_routing_wire_inst (
+	.datain(enable_carry_flag_a2_combout),
+	.dataout(enable_Z_flag_a8_DATAC_driver));
+
+cycloneive_routing_wire enable_Z_flag_a8_DATAD_routing_wire_inst (
+	.datain(state_signal_aadd_0_aq),
+	.dataout(enable_Z_flag_a8_DATAD_driver));
+
+// Location: LCCOMB_X8_Y30_N14
+cycloneive_lcell_comb enable_Z_flag_a8(
+// Equation(s):
+// enable_Z_flag_a8_combout = (!reset_ainput_o & ((state_signal_anand_0_aq) # ((!enable_carry_flag_a2_combout & state_signal_aadd_0_aq))))
+
+	.dataa(enable_Z_flag_a8_DATAA_driver),
+	.datab(enable_Z_flag_a8_DATAB_driver),
+	.datac(enable_Z_flag_a8_DATAC_driver),
+	.datad(enable_Z_flag_a8_DATAD_driver),
+	.cin(gnd),
+	.combout(enable_Z_flag_a8_combout),
+	.cout());
+// synopsys translate_off
+defparam enable_Z_flag_a8.lut_mask = 16'h2322;
+defparam enable_Z_flag_a8.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire se_6_16_a2_DATAA_routing_wire_inst (
+	.datain(state_signal_aadd_0_aq),
+	.dataout(se_6_16_a2_DATAA_driver));
+
+cycloneive_routing_wire se_6_16_a2_DATAB_routing_wire_inst (
+	.datain(state_signal_abreq_1_aq),
+	.dataout(se_6_16_a2_DATAB_driver));
+
+cycloneive_routing_wire se_6_16_a2_DATAC_routing_wire_inst (
+	.datain(mux_b_a29_combout),
+	.dataout(se_6_16_a2_DATAC_driver));
+
+cycloneive_routing_wire se_6_16_a2_DATAD_routing_wire_inst (
+	.datain(reset_ainput_o),
+	.dataout(se_6_16_a2_DATAD_driver));
+
+// Location: LCCOMB_X8_Y30_N28
+cycloneive_lcell_comb se_6_16_a2(
+// Equation(s):
+// se_6_16_a2_combout = (!reset_ainput_o & ((state_signal_abreq_1_aq) # ((state_signal_aadd_0_aq & mux_b_a29_combout))))
+
+	.dataa(se_6_16_a2_DATAA_driver),
+	.datab(se_6_16_a2_DATAB_driver),
+	.datac(se_6_16_a2_DATAC_driver),
+	.datad(se_6_16_a2_DATAD_driver),
+	.cin(gnd),
+	.combout(se_6_16_a2_combout),
+	.cout());
+// synopsys translate_off
+defparam se_6_16_a2.lut_mask = 16'h00EC;
+defparam se_6_16_a2.sum_lutc_input = "datac";
+// synopsys translate_on
+
+cycloneive_routing_wire se_9_16_a2_DATAA_routing_wire_inst (
+	.datain(state_signal_aadd_0_aq),
+	.dataout(se_9_16_a2_DATAA_driver));
+
+cycloneive_routing_wire se_9_16_a2_DATAC_routing_wire_inst (
+	.datain(reset_ainput_o),
+	.dataout(se_9_16_a2_DATAC_driver));
+
+cycloneive_routing_wire se_9_16_a2_DATAD_routing_wire_inst (
+	.datain(Equal0_a2_combout),
+	.dataout(se_9_16_a2_DATAD_driver));
+
+// Location: LCCOMB_X9_Y30_N2
+cycloneive_lcell_comb se_9_16_a2(
+// Equation(s):
+// se_9_16_a2_combout = (state_signal_aadd_0_aq & (!reset_ainput_o & Equal0_a2_combout))
+
+	.dataa(se_9_16_a2_DATAA_driver),
+	.datab(gnd),
+	.datac(se_9_16_a2_DATAC_driver),
+	.datad(se_9_16_a2_DATAD_driver),
+	.cin(gnd),
+	.combout(se_9_16_a2_combout),
+	.cout());
+// synopsys translate_off
+defparam se_9_16_a2.lut_mask = 16'h0A00;
+defparam se_9_16_a2.sum_lutc_input = "datac";
+// synopsys translate_on
+
+assign pcWrite = pcWrite_aoutput_o;
+
+assign rfWrite = rfWrite_aoutput_o;
+
+assign irWrite = irWrite_aoutput_o;
+
+assign memRead = memRead_aoutput_o;
+
+assign memWrite = memWrite_aoutput_o;
+
+assign alu_op[0] = alu_op_a0_a_aoutput_o;
+
+assign alu_op[1] = alu_op_a1_a_aoutput_o;
+
+assign mux_mem_data = mux_mem_data_aoutput_o;
+
+assign mux_mem_addr[0] = mux_mem_addr_a0_a_aoutput_o;
+
+assign mux_mem_addr[1] = mux_mem_addr_a1_a_aoutput_o;
+
+assign mux_a3 = mux_a3_aoutput_o;
+
+assign mux_a2 = mux_a2_aoutput_o;
+
+assign mux_a1[0] = mux_a1_a0_a_aoutput_o;
+
+assign mux_a1[1] = mux_a1_a1_a_aoutput_o;
+
+assign mux_a = mux_a_aoutput_o;
+
+assign mux_b[0] = mux_b_a0_a_aoutput_o;
+
+assign mux_b[1] = mux_b_a1_a_aoutput_o;
+
+assign mux_d3[0] = mux_d3_a0_a_aoutput_o;
+
+assign mux_d3[1] = mux_d3_a1_a_aoutput_o;
+
+assign mux_pc[0] = mux_pc_a0_a_aoutput_o;
+
+assign mux_pc[1] = mux_pc_a1_a_aoutput_o;
+
+assign mux_pe_tmp = mux_pe_tmp_aoutput_o;
+
+assign mux_before_a = mux_before_a_aoutput_o;
+
+assign enable_alu = enable_alu_aoutput_o;
+
+assign enable_a = enable_a_aoutput_o;
+
+assign enable_b = enable_b_aoutput_o;
+
+assign enable_c = enable_c_aoutput_o;
+
+assign enable_mdr = enable_mdr_aoutput_o;
+
+assign enable_pe_tmp = enable_pe_tmp_aoutput_o;
+
+assign enable_pe_out = enable_pe_out_aoutput_o;
+
+assign enable_pe_flag = enable_pe_flag_aoutput_o;
+
+assign enable_eqflag = enable_eqflag_aoutput_o;
+
+assign enable_carry_flag = enable_carry_flag_aoutput_o;
+
+assign enable_Z_flag = enable_Z_flag_aoutput_o;
+
+assign enable_pe = enable_pe_aoutput_o;
+
+assign enable_pe_1_3 = enable_pe_1_3_aoutput_o;
+
+assign se_6_16 = se_6_16_aoutput_o;
+
+assign se_9_16 = se_9_16_aoutput_o;
+
+assign ze_9_16 = ze_9_16_aoutput_o;
+
+endmodule
